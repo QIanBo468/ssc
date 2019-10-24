@@ -4,13 +4,21 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/User/Login.vue'
 import register from '@/components/User/register'
 import reset from '@/components/User/reset'
+
+import tabbar from '@/components/tabbarbox'
+import index from '@/components/index/index'
+import myindex from '@/components/my_centre/myindex'
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    // {
+    //   path: '/',
+    //   redirect: '/Login'
+    // },
     {
       path: '/',
-      redirect: '/Login'
+      redirect: '/index'
     },
     {
       path: '/HelloWorld',
@@ -31,6 +39,23 @@ export default new Router({
       path: '/reset',
       name: 'reset',
       component: reset
+    },
+    {
+      path: '/index',
+      name: 'tabbar',
+      component: tabbar,
+      children: [
+        {
+          path: '/',
+          name: 'index',
+          component: index
+        },
+        {
+          path: '/myindex',
+          name: '/myindex',
+          component: myindex
+        }
+      ]
     }
   ]
 })
