@@ -7,6 +7,7 @@
       active-color="#FFDDAA"
       inactive-color="#fff"
       >
+      <!-- 跳转到首页 -->
       <van-tabbar-item  to="/index">
         <img
           :src="active ? index.normal : index.active"
@@ -17,6 +18,7 @@
         />
         <span class="xz">首页</span>
       </van-tabbar-item>
+      <!-- 跳转到我的  页面 -->
       <van-tabbar-item to="/myindex">
         <img
           :src="active ? myindex.normal : myindex.active"
