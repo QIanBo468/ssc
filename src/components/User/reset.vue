@@ -5,7 +5,7 @@
       <div class="logo">
         <p>USDT</p>
         <span>|</span>
-        <p>注册</p>
+        <p>忘记密码</p>
       </div>
       <div class="redlogin">
         <van-cell-group>

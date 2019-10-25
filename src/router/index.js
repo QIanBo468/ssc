@@ -1,13 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+// 登录页
 import Login from '@/components/User/Login.vue'
 import register from '@/components/User/register'
 import reset from '@/components/User/reset'
-
+// 首页预览
 import tabbar from '@/components/tabbarbox'
 import index from '@/components/index/index'
 import myindex from '@/components/my_centre/myindex'
+// 详情页
+import Jhcode from '@/components/my_centre/JhCode'
+import gonggao from '@/components/my_centre/gonggao'
+import mydata from '@/components/my_centre/my_data'
 Vue.use(Router)
 
 export default new Router({
@@ -21,14 +25,24 @@ export default new Router({
       redirect: '/index'
     },
     {
-      path: '/HelloWorld',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
-    {
       path: '/register',
       name: 'register',
       component: register
+    },
+    {
+      path: '/mydata',
+      name: 'mydata',
+      component: mydata
+    },
+    {
+      path: '/Jhcode',
+      name: 'Jhcode',
+      component: Jhcode
+    },
+    {
+      path: '/gonggao',
+      name: 'gonggao',
+      component: gonggao
     },
     {
       path: '/Login',

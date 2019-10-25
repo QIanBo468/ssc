@@ -18,7 +18,7 @@
           <van-image  width="30px" src="../../../static/my_index/Folder@3x.png" />
           资料查看
         </van-grid-item>
-        <van-grid-item>
+        <van-grid-item to="/mydata">
           <van-image width="30px" src="../../../static/my_index/Folder@3x.png" />
           资料修改
         </van-grid-item>
@@ -85,7 +85,7 @@
           <van-image width="30px" src="../../../static/my_index/17@3x.png" />
           推广二维码
         </van-grid-item>
-        <van-grid-item>
+        <van-grid-item to="/gonggao">
           <van-image width="30px" src="../../../static/my_index/19@3x.png" />
           公告
         </van-grid-item>
