@@ -12,6 +12,10 @@ import myindex from '@/components/my_centre/myindex'
 import Jhcode from '@/components/my_centre/JhCode'
 import gonggao from '@/components/my_centre/gonggao'
 import mydata from '@/components/my_centre/my_data'
+import mydeal from '@/components/my_centre/my_deal'
+import myqiang from '@/components/my_centre/my_qiang'
+import myhelp from '@/components/my_centre/my_help'
+import helplock from '@/components/my_centre/helplock'
 Vue.use(Router)
 
 export default new Router({
@@ -28,6 +32,26 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: register
+    },
+    {
+      path: '/myhelp',
+      name: 'myhelp',
+      component: myhelp
+    },
+    {
+      path: '/helplock',
+      name: 'helplock',
+      component: helplock
+    },
+    {
+      path: '/mydeal',
+      name: 'mydeal',
+      component: mydeal
+    },
+    {
+      path: '/myqiang',
+      name: 'myqiang',
+      component: myqiang
     },
     {
       path: '/mydata',

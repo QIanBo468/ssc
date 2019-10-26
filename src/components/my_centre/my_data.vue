@@ -4,7 +4,7 @@
       <slot slot="left" name="left">
         <img width="20px" height="20px" src="../../../static/images/left@3x.png" alt />
       </slot>
-      <slot slot="title" name="激活码管理">激活码管理</slot>
+      <slot slot="title" name="个人资料">个人资料</slot>
     </van-nav-bar>
     <div class="name">
       <van-cell-group>
@@ -101,7 +101,12 @@ export default {
                 kahao: null
             }
         }
+    },
+  methods: {
+    onClickLeft() {
+      this.$router.go(-1)
     }
+  }
 };
 </script>
 
