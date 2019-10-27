@@ -20,7 +20,7 @@
         <van-grid-item to="/mydata">
           <van-image width="30px" src="../../../static/my_index/Folder@3x.png" />资料修改
         </van-grid-item>
-        <van-grid-item>
+        <van-grid-item to='changpassword'>
           <van-image width="30px" src="../../../static/my_index/lock_2@3x.png" />密码修改
         </van-grid-item>
       </van-grid>
@@ -59,7 +59,7 @@
             </div>
           </van-popup>
         </van-grid-item>
-        <van-grid-item to="myhelp">
+        <van-grid-item to="help">
           <van-image width="30px" src="../../../static/my_index/Page@3x.png" />帮助
         </van-grid-item>
       </van-grid>
@@ -84,10 +84,10 @@
     <div class="indexitem">
       <span>其他项目</span>
       <van-grid :border="false" :column-num="3" class="ziliaoicon">
-        <van-grid-item>
+        <van-grid-item to='teamm'>
           <van-image width="30px" src="../../../static/my_index/18@3x.png" />团队管理
         </van-grid-item>
-        <van-grid-item>
+        <van-grid-item to='extension'>
           <van-image width="30px" src="../../../static/my_index/17@3x.png" />推广二维码
         </van-grid-item>
         <van-grid-item to="/gonggao">

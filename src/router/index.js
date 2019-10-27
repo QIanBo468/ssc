@@ -7,7 +7,7 @@ import reset from '@/components/User/reset'
 // 首页预览
 import tabbar from '@/components/tabbarbox'
 import index from '@/components/index/index'
-import myindex from '@/components/my_centre/myindex'
+import myindex from '@/components/index/myindex'
 // 详情页
 import Jhcode from '@/components/my_centre/JhCode'
 import gonggao from '@/components/my_centre/gonggao'
@@ -16,6 +16,13 @@ import mydeal from '@/components/my_centre/my_deal'
 import myqiang from '@/components/my_centre/my_qiang'
 import myhelp from '@/components/my_centre/my_help'
 import helplock from '@/components/my_centre/helplock'
+import help from '@/components/my_centre/help'
+import changpassword from '@/components/User/changpassword'
+import extension from '@/components/my_centre/extension'
+import fm from '@/components/my_centre/f_m'
+import integral from '@/components/my_centre/integral'
+import teamall from '@/components/my_centre/teamall'
+import teamm from '@/components/my_centre/team_m'
 Vue.use(Router)
 
 export default new Router({
@@ -32,6 +39,41 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: register
+    },
+    {
+      path: '/teamall',
+      name: 'teamall',
+      component: teamall
+    },
+    {
+      path: '/teamm',
+      name: 'teamm',
+      component: teamm
+    },
+     {
+      path: '/integral',
+      name: 'integral',
+      component: integral
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: help
+    },
+    {
+      path: '/fm',
+      name: 'fm',
+      component: fm
+    },
+    {
+      path: '/changpassword',
+      name: 'changpassword',
+      component: changpassword
+    },
+    {
+      path: '/extension',
+      name: 'extension',
+      component: extension
     },
     {
       path: '/myhelp',

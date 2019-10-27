@@ -36,9 +36,21 @@
       class="moneyswiper"
     >
       <van-swipe-item>
-        <div class="money-item" v-for="item of moneySwiper.slice(0,4)" :key="item.id">
-          <img :src="item.zuimg" alt />
-          <span>{{item.zuname}}</span>
+        <div class="money-item" @click="$router.push('/integral')">
+          <img :src="moneySwiper[0].zuimg" alt />
+          <span>{{moneySwiper[0].zuname}}</span>
+        </div>
+        <div class="money-item">
+          <img :src="moneySwiper[1].zuimg" alt />
+          <span>{{moneySwiper[1].zuname}}</span>
+        </div>
+        <div class="money-item">
+          <img :src="moneySwiper[2].zuimg" alt />
+          <span>{{moneySwiper[2].zuname}}</span>
+        </div>
+        <div class="money-item">
+          <img :src="moneySwiper[3].zuimg" alt />
+          <span>{{moneySwiper[3].zuname}}</span>
         </div>
       </van-swipe-item>
       <van-swipe-item>
