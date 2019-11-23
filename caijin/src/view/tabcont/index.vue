@@ -15,10 +15,12 @@
     <div class="notice">
       <img src="@/assets/vioce.png" slot="" alt="left-icon"> <van-notice-bar text="通知内容1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" ></van-notice-bar>
     </div>
-    <div class="line"></div>
+    <div class="line">
+      <p></p>
+    </div>
 
     <div class="index-btn">
-        <router-link to=""><img src="@/assets/chongzhi.png" alt=""></router-link>
+        <router-link to="charge"><img src="@/assets/chongzhi.png" alt=""></router-link>
       <router-link to="login"><img src="@/assets/login.png" alt=""></router-link>
     </div>
 
@@ -27,8 +29,8 @@
     </div>
 
     <div class="playlist">
-            <router-link to=""><img src="@/assets/sai-1.png" alt=""></router-link>
-            <router-link to=""><img src="@/assets/sai-2.png" alt=""></router-link>
+            <router-link :to="{path:'pour',query:{type:0}}"><img src="@/assets/sai-1.png" alt=""></router-link>
+            <router-link :to="{path:'pour',query:{type:1}}"><img src="@/assets/sai-2.png" alt=""></router-link>
     </div>
 
     <div class="imgtwo">
@@ -117,7 +119,7 @@ overflow-y: auto;
       // margin-top: 10px;
       img{
           width: 100px;
-          height: 30px;
+          height: 30px; 
           // margin-bottom: 20px;
       }
   }
