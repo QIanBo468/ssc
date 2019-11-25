@@ -46,7 +46,7 @@
     </div>
 
     <div class="index-btn">
-        <img src="@/assets/chongzhi.png" alt="">
+        <img src="@/assets/chongzhi.png" alt=""  @click="$router.push('charge')">
  
         <img src="@/assets/btn_change.png" alt="">
     </div>
