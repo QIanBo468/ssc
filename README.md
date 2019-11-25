@@ -1,4 +1,4 @@
-# caijin
+# ssc
 
 ## Project setup
 ```
