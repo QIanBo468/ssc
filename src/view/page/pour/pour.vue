@@ -242,7 +242,7 @@ export default {
   },
   created() {
     let that = this,
-      sum = 0,
+      // sum = 0,
       temp;
     this.type = this.$route.query.type;
     // console.log(this.type);
@@ -345,8 +345,8 @@ export default {
     flex-direction: column;
     border-bottom: 1px solid #ffce6f;
     .logoimg {
-      width: 110px;
-      height: 78px;
+      width: 6.8rem;
+      height: 4.8rem;
     }
     .logo {
       display: flex;
@@ -359,12 +359,12 @@ export default {
         display: flex;
         justify-content: space-around;
         color: #ffc000;
-        font-size: 15px;
+        font-size: 0.8rem;
         span {
           color: #ecc788;
         }
         .qihaoimg {
-          font-size: 13px;
+          font-size: 0.5rem;
           color: #e8673e;
         }
       }
@@ -376,6 +376,8 @@ export default {
           overflow: hidden;
           img {
             // flex: 1;
+            width: 2.8rem;
+            height: 1.7rem;
             margin-right: 8px;
             margin-top: 5px;
           }
@@ -439,11 +441,11 @@ export default {
         // flex: 1;
         background: #fff;
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        width: 2.5rem;
+        height: 2.5rem;
         text-align: center;
-        line-height: 40px;
-        font-size: 16px;
+        line-height: 2.5rem;
+        font-size: 1rem;
         font-weight: bold;
         color: #7b7b7b;
         margin: 10px 0px;

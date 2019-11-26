@@ -48,19 +48,19 @@
     <div class="index-btn">
         <img src="@/assets/chongzhi.png" alt=""  @click="$router.push('charge')">
  
-        <img src="@/assets/btn_change.png" alt="">
+        <img src="@/assets/btn_change.png" @click="$router.push('edSwitch')" alt="">
     </div>
       <ul class="list">
-        <li><router-link to="login"><img src="@/assets/btn-1.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-2.png" alt=""></router-link></li>
+        <li><router-link to=""><img src="@/assets/btn-1.png" alt=""></router-link></li>
+        <li><router-link to="notice"><img src="@/assets/btn-2.png" alt=""></router-link></li>
         <li><router-link to=""><img src="@/assets/btn-3.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-4.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-5.png" alt=""></router-link></li>
+        <li><router-link to="setting"><img src="@/assets/btn-4.png" alt=""></router-link></li>
+        <li><router-link to="topUp"><img src="@/assets/btn-5.png" alt=""></router-link></li>
         <li><router-link to=""><img src="@/assets/btn-6.png" alt=""></router-link></li>
         <li><router-link to=""><img src="@/assets/btn-7.png" alt=""></router-link></li>
         <li><router-link to=""><img src="@/assets/btn-8.png" alt=""></router-link></li>
         <li><router-link to=""><img src="@/assets/btn-9.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-10.png" alt=""></router-link></li>
+        <li><router-link to="addpople"><img src="@/assets/btn-10.png" alt=""></router-link></li>
         <li><router-link to=""><img src="@/assets/btn-11.png" alt=""></router-link></li>
         <li><router-link to=""><img src="@/assets/btn-12.png" alt=""></router-link></li>
       </ul>
@@ -196,10 +196,11 @@ export default {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 50px;
+  justify-content: center;
   li{
-    width: 70px;
-    height: 70px;
-    margin: 8px 5px;
+    width: 4rem;
+    height: 4rem;
+    margin:0.5rem;
     img{
       width: 100%;
       height: 100%;
