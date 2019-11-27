@@ -1,10 +1,11 @@
 <template>
-  <div class="topup">
-      <titlebar title="充值记录"></titlebar>
-      <times title="充值记录"></times>
-      <button class="topupbtn">查询</button>
-      <recordList :searchpop=true></recordList>
-  </div>
+<div class="depositrocrd">
+  <titlebar title="提现记录"></titlebar>
+  <times title="提现记录"></times>
+  <button class="topupbtn" >查询</button>
+  <recordList></recordList>
+</div>
+
 </template>
 
 <script>
@@ -14,7 +15,7 @@ import times from '@/components/recordTime'
 import recordList from '@/components/recordList'
 
 export default {
-    components:{
+ components:{
         times,
         titlebar,
         recordList
@@ -23,8 +24,8 @@ export default {
 </script>
 
 <style>
-.topup{
-    display: flex;
+.depositrocrd{
+     display: flex;
     flex-direction: column;
     align-content: center;
 }

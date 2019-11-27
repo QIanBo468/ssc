@@ -56,13 +56,13 @@
         <li><router-link to=""><img src="@/assets/btn-3.png" alt=""></router-link></li>
         <li><router-link to="setting"><img src="@/assets/btn-4.png" alt=""></router-link></li>
         <li><router-link to="topUp"><img src="@/assets/btn-5.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-6.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-7.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-8.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-9.png" alt=""></router-link></li>
+        <li><router-link to="depositRecord"><img src="@/assets/btn-6.png" alt=""></router-link></li>
+        <li><router-link to="touzhu"><img src="@/assets/btn-7.png" alt=""></router-link></li>
+        <li><router-link to="zhongjiang"><img src="@/assets/btn-8.png" alt=""></router-link></li>
+        <li><router-link to="mingxi"><img src="@/assets/btn-9.png" alt=""></router-link></li>
         <li><router-link to="addpople"><img src="@/assets/btn-10.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-11.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-12.png" alt=""></router-link></li>
+        <li><router-link to="linkadd"><img src="@/assets/btn-11.png" alt=""></router-link></li>
+        <li><router-link to="myteam"><img src="@/assets/btn-12.png" alt=""></router-link></li>
       </ul>
 
   </div>

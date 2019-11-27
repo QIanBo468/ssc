@@ -1,0 +1,182 @@
+<template>
+  <div class="mingxi">
+    <titlebar title="账变明细"></titlebar>
+    <times title="账变记录"></times>
+
+    <div class="zhonglei">
+      <div class="zlName">
+        <p>账变类型</p>
+        <van-dropdown-menu active-color="#d3b787">
+          <van-dropdown-item v-model="val" :options="mingxi" />
+        </van-dropdown-menu>
+      </div>
+    </div>
+    <button class="topupbtn">查询</button>
+
+    <div class="list-c">
+      <ul class="title">
+        <li>账变类型</li>
+        <li>单号</li>
+        <li>金额</li>
+      </ul>
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <ul class="list-content">
+          <li v-for="(item,index) of lists" :key="index">
+            <span>{{item.type}}</span>
+            <span>{{item.number}}</span>
+            <span>{{item.money}}</span>
+          </li>
+        </ul>
+      </van-list>
+      <div class="upDown">
+        <!-- <p>显示{{}}</p> -->
+        <button @click="updown(-1)">上一页</button>
+        <button @click="updown(1)">下一页</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import titlebar from "@/components/NavBar";
+import times from "@/components/recordTime";
+export default {
+  components: {
+    titlebar,
+    times
+  },
+  data() {
+    return {
+      val: 0,
+      mingxi: [
+        { text: "所有账变类型", value: 0 },
+        { text: "账户充值", value: 1 },
+        { text: "游戏返点", value: 2 },
+        { text: "奖金派送", value: 3 },
+        { text: "撤单返款", value: 4 },
+        { text: "账户提现", value: 5 },
+        { text: "提现失败", value: 6 },
+        { text: "提现成功", value: 7 },
+        { text: "系统充值", value: 8 },
+        { text: "活动礼金", value: 9 },
+        { text: "消费佣金", value: 10 },
+        { text: "投注扣款", value: 11 },
+        { text: "追号扣款", value: 12 }
+      ],
+      loading: false,
+      finished: false,
+      list: [
+        { money: "0.00", number: "123456", type: "转账" },
+        { money: "0.00", number: "123456", type: "转账" },
+        { money: "0.00", number: "123456", type: "转账" },
+        { money: "0.00", number: "123456", type: "转账" },
+        { money: "0.00", number: "123456", type: "转账" },
+        { money: "0.00", number: "123456", type: "转账" },
+        { money: "0.00", number: "123456", type: "转账" },
+        { money: "0.00", number: "123456", type: "转账" }
+      ],
+      lists: [],
+      page: 0,
+      paginal: 10
+    };
+  },
+  methods: {
+    onLoad(a, num) {
+      if (a >= 0) {
+        if (this.lists.length < this.paginal && num > 0) {
+          this.$toast("没有更多了");
+          return;
+        }
+        this.lists = this.list.slice(a, a + this.paginal);
+      } else {
+        this.lists = this.list.slice(0, this.paginal);
+        this.loading = true;
+      }
+    },
+    updown(num) {
+      if (this.page < 0) return;
+      this.page += num;
+      this.onLoad(this.page * this.paginal, num);
+    }
+  }
+};
+</script>
+
+<style lang='less' scope>
+.mingxi {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  .zhonglei {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    margin-top: 1rem;
+    background: #eee;
+    margin-bottom: 1rem;
+    .zlName {
+      display: flex;
+      align-items: center;
+      color: #666;
+    }
+    .zlActive {
+      display: flex;
+      align-items: center;
+      color: #666;
+    }
+  }
+}
+.topupbtn {
+  margin: 1rem;
+  height: 2rem;
+  border: none;
+  border-radius: 8px;
+}
+
+.title {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #999;
+  li {
+    flex: 1;
+    text-align: center;
+    height: 2.5rem;
+    color: #fff;
+    line-height: 2.5rem;
+    font-weight: bold;
+  }
+}
+.list-content {
+  background: #666;
+  padding: 1rem;
+  li {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    margin-top: 0.5rem;
+
+    span {
+      color: #eeeeee;
+      display: inline-block;
+      flex: 1;
+      text-align: center;
+    }
+  }
+}
+.upDown {
+  display: flex;
+  justify-content: center;
+  button {
+    border: none;
+    //   padding: 0.5rem;
+    width: 8rem;
+    height: 2.5rem;
+    margin-left: 0.2rem;
+    border-right: 6px;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+  }
+}
+</style>

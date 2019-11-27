@@ -1,9 +1,9 @@
 <template>
-  <div class="topup">
-      <titlebar title="充值记录"></titlebar>
-      <times title="充值记录"></times>
-      <button class="topupbtn">查询</button>
-      <recordList :searchpop=true></recordList>
+  <div class="touzhurecord">
+      <titlebar title="投注记录"></titlebar>
+  <times title="投注记录"></times>
+  <button class="topupbtn" >查询</button>
+  <recordList :zhonglei=true :searchpop=true></recordList>
   </div>
 </template>
 
@@ -23,8 +23,8 @@ export default {
 </script>
 
 <style>
-.topup{
-    display: flex;
+.touzhurecord{
+     display: flex;
     flex-direction: column;
     align-content: center;
 }
