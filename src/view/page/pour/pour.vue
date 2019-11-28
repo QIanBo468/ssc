@@ -376,7 +376,7 @@ export default {
           overflow: hidden;
           img {
             // flex: 1;
-            width: 2.8rem;
+            width: 2.7rem;
             height: 1.7rem;
             margin-right: 8px;
             margin-top: 5px;
