@@ -53,7 +53,7 @@
       <ul class="list">
         <li><router-link to=""><img src="@/assets/btn-1.png" alt=""></router-link></li>
         <li><router-link to="notice"><img src="@/assets/btn-2.png" alt=""></router-link></li>
-        <li><router-link to=""><img src="@/assets/btn-3.png" alt=""></router-link></li>
+        <li><router-link to="myAddress"><img src="@/assets/btn-3.png" alt=""></router-link></li>
         <li><router-link to="setting"><img src="@/assets/btn-4.png" alt=""></router-link></li>
         <li><router-link to="topUp"><img src="@/assets/btn-5.png" alt=""></router-link></li>
         <li><router-link to="depositRecord"><img src="@/assets/btn-6.png" alt=""></router-link></li>

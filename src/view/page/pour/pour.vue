@@ -475,6 +475,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       padding: 0 10px;
+      color: #fff;
       span {
         display: inline-block;
         color: #fff;

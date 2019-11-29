@@ -46,6 +46,9 @@ export default {
         this.$toast('请确认密码')
         return
       }
+      this.$axios.fetchPost('portal',{
+        
+      })
     }
   }
 };

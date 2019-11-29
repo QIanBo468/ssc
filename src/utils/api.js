@@ -8,7 +8,7 @@ axios.defaults.timeout = 10000
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
 // axios.defaults.baseURL = '/api'
-// axios.defaults.baseURL = 'http://www.batchina.top/'
+axios.defaults.baseURL = 'http://ssc.qdunzi.cn/'
 axios.interceptors.request.use((config) => {
   // this.$cookies.set('status', res.data.status)
   let token = localStorage.getItem('accessToken')

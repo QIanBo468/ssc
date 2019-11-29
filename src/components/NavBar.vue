@@ -1,5 +1,5 @@
 <template>
-      <van-nav-bar class="nav" @click-left="onClickLeft">
+      <van-nav-bar class="nav" @click-left="onClickLeft" :right-text="right" @click-right="onClickRight">
       <slot slot="left" name="left">
         <img width="30px" height="20px" src="@/assets/back.png" alt />
       </slot>
@@ -10,11 +10,7 @@
 <script>
 
 export default {
-    props:{
-      title: {
-         type: String
-      }
-    },
+    props:["title","right","url"],
     data() {
         return{
 
@@ -23,11 +19,18 @@ export default {
     methods:{
         onClickLeft() {
             this.$router.go(-1)
+        },
+        onClickRight() {
+          window.console.log(this.url)
+          let _url = this.url
+          this.$router.push(_url)
         }
     }
 }
 </script>
 
 <style>
-
+.van-nav-bar__text{
+  color:#fff;
+}
 </style>

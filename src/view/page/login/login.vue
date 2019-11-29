@@ -8,7 +8,7 @@
       </van-cell-group>
       <van-cell-group :border='false' >
           <img src="@/assets/icon_pass.png" alt="">
-        <van-field maxlength='16' v-model="password" placeholder="请输入密码" />
+        <van-field maxlength='16' v-model="password" type="password" placeholder="请输入密码" />
       </van-cell-group>
       <van-cell-group :border='false'>
         <img src="@/assets/icon_code.png" alt />
@@ -36,7 +36,31 @@ export default {
   },
   methods: {
     submit() {
-      this.$router.push('/')
+       if(!this.name){
+        this.$toast('请输入用户名')
+        return
+      } else if (! this.password){
+        this.$toast('请输入密码')
+        return
+      }
+      this.$axios.fetchPost('portal',{
+        source:"web",
+        version:'v1',
+        module:"Account",
+        interface:'1000',
+        data:{
+        account: this.name,
+        password:this.password
+        }
+      }).then(res=>{
+        if(res.code ==0) {
+this.$router.push('/')
+        } else{
+          this.$toast(res.message)
+        }
+        window.console.log(res)
+      })
+      // 
     }
   }
 };
