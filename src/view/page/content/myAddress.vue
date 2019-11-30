@@ -34,7 +34,6 @@ export default {
       loading: false,
       finished: false,
       list: [
-          {name:'zhangsan',address:'sadasgasgasgsagsagg'}
       ]
       // param: '1'
     }
@@ -92,52 +91,47 @@ export default {
     },
     get_address () {
 
-    //   var lastid = ''
-    //   if (this.lastId) {
-    //     lastid = this.lastId
-    //   } else {
-    //     lastid = 0
-    //   }
-    //   var page = this.page++
-    //   setTimeout(() => {
-    //     this.$axios
-    //       .fetchPost('/portal/Digiccy', {
-    //         interface: '1000',
-    //         module: 'Address',
-    //         source: 'web',
-    //         version: 'v1',
-    //         data: {
-    //           lastId: lastid,
-    //           page: page,
-    //         }
-    //       })
-    //       .then(res => {
-    //         this.lastId = res.data.lastId
-
-    //         if (res.code == 0) {
-    //           if (res.data.list.length == 0) {
-    //             this.finished = true
-    //           } else {
-    //             var ret = res.data.list
-    //             console.log('我的地址', res)
-    //             if (page == 1) {
-    //               this.list = ret
-    //             } else {
-    //               for (var x in ret) {
-    //                 this.list.push(ret[x])
-    //               }
-    //             }
-    //           }
-    //         } else {
-    //           this.finished = true
-    //         }
-    //         this.loading = false
-
-
-    //         //this.list = res.data
-    //         console.log(this.list)
-    //       })
-    //   }, 500)
+      var lastid = ''
+      if (this.lastId) {
+        lastid = this.lastId
+      } else {
+        lastid = 0
+      }
+      var page = this.page++
+      setTimeout(() => {
+        this.$axios
+          .fetchPost('/portal/Digiccy', {
+            interface: '1000',
+            module: 'Address',
+            source: 'web',
+            version: 'v1',
+            data: {
+              lastId: lastid,
+              page: page,
+            }
+          })
+          .then(res => {
+            window.console.log('我的地址', res)
+            this.lastId = res.data.lastId
+            if (res.code == 0) {
+              if (res.data.list.length == 0) {
+                this.finished = true
+              } else {
+                var ret = res.data.list
+                if (page == 1) {
+                  this.list = ret
+                } else {
+                  for (var x in ret) {
+                    this.list.push(ret[x])
+                  }
+                }
+              }
+            } else {
+              this.finished = true
+            }
+            this.loading = false
+          })
+      }, 500)
     }
   },
   created () {

@@ -8,13 +8,12 @@
       </div>
       <div>
         <img src="@/assets/icon_pass1.png" alt />
-        <input v-model="password" maxlength="16"  type="text" placeholder="请输入登录密码"  />
+        <input v-model="password" maxlength="16" type="text" placeholder="请输入登录密码" />
       </div>
       <div>
         <img src="@/assets/icon_pass2.png" alt />
-        <input v-model="repassword" maxlength="16"  type="text" placeholder="确认登陆密码"  />
+        <input v-model="repassword" maxlength="16" type="text" placeholder="确认登陆密码" />
       </div>
-
       <van-button class="btn" @click="submit">注册</van-button>
     </div>
   </div>
@@ -25,29 +24,39 @@ import titlebar from "@/components/NavBar";
 
 export default {
   data() {
-    return{
-      name:'',
-      password:'',
-      repassword:''
-    }
+    return {
+      name: "",
+      password: "",
+      repassword: ""
+    };
   },
   components: {
     titlebar
   },
   methods: {
     submit() {
-      if(!this.name){
-        this.$toast('请输入账号')
-        return
-      } else if (! this.password){
-        this.$toast('请输入密码')
-        return
-      } else if (!this.repassword){
-        this.$toast('请确认密码')
-        return
+      if (!this.name) {
+        this.$toast("请输入账号");
+        return;
+      } else if (!this.password) {
+        this.$toast("请输入密码");
+        return;
+      } else if (!this.repassword) {
+        this.$toast("请确认密码");
+        return;
       }
-      this.$axios.fetchPost('portal',{
-        
+      this.$axios.fetchPost("portal", {
+        source: "web",
+          version: "v1",
+          module: "Account",
+          interface: "1002",
+          data: {
+            account: this.name,
+            password: this.password,
+            password_confirmation:this.repassword
+          }
+      }).then(res => {
+        window.console.log(res)
       })
     }
   }
@@ -66,31 +75,30 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    div{
+    div {
       width: 70%;
       border-bottom: 1px solid #73684f;
       display: flex;
       margin-bottom: 30px;
-      img{
+      img {
         width: 25px;
         height: 24px;
       }
-      input{
+      input {
         width: 100%;
         background: transparent;
         border: none;
-        color:#c7ab7b;
+        color: #c7ab7b;
         padding-left: 30px;
       }
     }
   }
-  .btn{
+  .btn {
     background: #c7ab7b;
     border: none;
     width: 60%;
     font-size: 16px;
     font-weight: bold;
   }
-
 }
 </style>

@@ -12,14 +12,14 @@
         <div class="user">
           <img src="@/assets/avatar.jpg" alt />
           <div>
-            <p>{{user.name}}</p>
-            <p>ID{{user.id}}</p>
-            <h3>中心钱包：{{user.wallet}}</h3>
+            <p>{{user.account}}</p>
+            <p>ID：{{user.id}}</p>
+            <h3>中心钱包：{{tixian.credit_1.value}}</h3>
           </div>
         </div>
 
         <div class="wallet" @click="$router.push('qrCharge')">
-          <div class="walletone" >
+          <div class="walletone">
             <img src="@/assets/cz_1.png" alt />
             <span>USDT</span>
           </div>
@@ -76,14 +76,24 @@
           <img src="@/assets/cz_icon.png" alt />
         </div>
 
-       <ul>
-           <li>温馨提示</li>
-           <li><span>1.</span>出款需达到兑换金币30%流水</li>
-           <li><span>2.</span>盈利钱包，收益钱包提现无手续费，中心钱包提现手续费10%</li>
-           <li><span>3.</span>每日提现时间为00:00至23:59</li>
-           <li><span>4.</span>人民币提现5000元以内，每日限一次</li>
-           <li><span>5.</span>USDT提现无上限</li>
-       </ul>
+        <ul>
+          <li>温馨提示</li>
+          <li>
+            <span>1.</span>出款需达到兑换金币30%流水
+          </li>
+          <li>
+            <span>2.</span>盈利钱包，收益钱包提现无手续费，中心钱包提现手续费10%
+          </li>
+          <li>
+            <span>3.</span>每日提现时间为00:00至23:59
+          </li>
+          <li>
+            <span>4.</span>人民币提现5000元以内，每日限一次
+          </li>
+          <li>
+            <span>5.</span>USDT提现无上限
+          </li>
+        </ul>
       </van-tab>
     </van-tabs>
   </div>
@@ -97,9 +107,6 @@ export default {
     return {
       active: 0,
       user: {
-        name: "lil891229",
-        id: 5259,
-        wallet: "0.00"
       },
       tixian: {
         yingli: "0.00",
@@ -108,8 +115,38 @@ export default {
       }
     };
   },
+
   components: {
     titlebar
+  },
+  created() {
+    this.$axios
+      .fetchPost("portal", {
+        source: "web",
+        version: "v1",
+        module: "User",
+        interface: "1000"
+      })
+      .then(res => {
+        if (res.code == 0) {
+          this.user = res.data;
+        } else {
+          this.$toast(res.message);
+        }
+        window.console.log(res);
+      });
+
+    this.$axios
+      .fetchPost("portal", {
+        source: "web",
+        version: "v1",
+        module: "Finance",
+        interface: "1000"
+      })
+      .then(res => {
+        this.tixian = res.data.creditList;
+        window.console.log("钱包信息", res);
+      });
   },
   methods: {
     onClickLeft() {
@@ -168,13 +205,12 @@ export default {
         width: 35px;
         height: 35px;
       }
-     
     }
-     span {
-        //   line-height: 60px;
-        margin-left: 5px;
-        color: #e1cc9e;
-      }
+    span {
+      //   line-height: 60px;
+      margin-left: 5px;
+      color: #e1cc9e;
+    }
     img {
       width: 25px;
       height: 25px;
@@ -187,8 +223,8 @@ export default {
       font-size: 14px;
       margin-bottom: 10px;
     }
-    span{
-        color: #f00;
+    span {
+      color: #f00;
     }
   }
 

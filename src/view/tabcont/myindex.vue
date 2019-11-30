@@ -6,65 +6,122 @@
         <div class="avatar">
           <img :src="user.avatar" alt />
           <div class="level">
-            <span>{{user.name}}</span>
+            <span>{{user.account}}</span>
             <span>id: {{user.id}}</span>
           </div>
         </div>
         <div class="level">
           <span>级别</span>
-          <span>VIP{{user.level}}</span>
+          <span>{{user.level}}</span>
         </div>
       </div>
       <!-- <div class="index-jindu"> -->
-        <div class="jindu">
-          <span>VIP{{user.level}}</span>
-          <span>VIP{{user.level+1}}</span>
-        </div>
-        <van-progress stroke-width="8" track-color="#000" color="#ffc000" pivot-text :percentage="user.progress" />
-        <p>距离升级还需要{{user.money}}流水</p>
+      <div class="jindu">
+        <span>{{user.level}}</span>
+        <span>{{user.level+1}}</span>
+      </div>
+      <van-progress
+        stroke-width="8"
+        track-color="#000"
+        color="#ffc000"
+        pivot-text
+        :percentage="80" 
+      />
+      <!-- 进度条 所需流水 {{user.money}} -->
+      <p>距离升级还需要流水</p>
       <!-- </div> -->
     </div>
 
     <div class="wallet">
       <div>
         <p>中心钱包</p>
-        <span>￥{{wallet.zhongxin}}</span>
+        <span>￥{{wallet.credit_1.value}}</span>
       </div>
       <div>
         <p>金币钱包</p>
-        <span>￥{{wallet.jinbi}}</span>
+        <span>￥{{wallet.credit_2.value}}</span>
       </div>
       <div>
         <p>盈利钱包</p>
-        <span>￥{{wallet.yingli}}</span>
+        <span>￥{{wallet.credit_3.value}}</span>
       </div>
       <div>
         <p>收益钱包</p>
-        <span>￥{{wallet.shouyi}}</span>
+        <span>￥{{wallet.credit_4.value}}</span>
       </div>
-
     </div>
 
     <div class="index-btn">
-        <img src="@/assets/chongzhi.png" alt=""  @click="$router.push('charge')">
- 
-        <img src="@/assets/btn_change.png" @click="$router.push('edSwitch')" alt="">
-    </div>
-      <ul class="list">
-        <li><router-link to=""><img src="@/assets/btn-1.png" alt=""></router-link></li>
-        <li><router-link to="notice"><img src="@/assets/btn-2.png" alt=""></router-link></li>
-        <li><router-link to="myAddress"><img src="@/assets/btn-3.png" alt=""></router-link></li>
-        <li><router-link to="setting"><img src="@/assets/btn-4.png" alt=""></router-link></li>
-        <li><router-link to="topUp"><img src="@/assets/btn-5.png" alt=""></router-link></li>
-        <li><router-link to="depositRecord"><img src="@/assets/btn-6.png" alt=""></router-link></li>
-        <li><router-link to="touzhu"><img src="@/assets/btn-7.png" alt=""></router-link></li>
-        <li><router-link to="zhongjiang"><img src="@/assets/btn-8.png" alt=""></router-link></li>
-        <li><router-link to="mingxi"><img src="@/assets/btn-9.png" alt=""></router-link></li>
-        <li><router-link to="addpople"><img src="@/assets/btn-10.png" alt=""></router-link></li>
-        <li><router-link to="linkadd"><img src="@/assets/btn-11.png" alt=""></router-link></li>
-        <li><router-link to="myteam"><img src="@/assets/btn-12.png" alt=""></router-link></li>
-      </ul>
+      <img src="@/assets/chongzhi.png" alt @click="$router.push('charge')" />
 
+      <img src="@/assets/btn_change.png" @click="$router.push('edSwitch')" alt />
+    </div>
+    <ul class="list">
+      <li>
+        <router-link to>
+          <img src="@/assets/btn-1.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="notice">
+          <img src="@/assets/btn-2.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="myAddress">
+          <img src="@/assets/btn-3.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="setting">
+          <img src="@/assets/btn-4.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="topUp">
+          <img src="@/assets/btn-5.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="depositRecord">
+          <img src="@/assets/btn-6.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="touzhu">
+          <img src="@/assets/btn-7.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="zhongjiang">
+          <img src="@/assets/btn-8.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="mingxi">
+          <img src="@/assets/btn-9.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="addpople">
+          <img src="@/assets/btn-10.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="linkadd">
+          <img src="@/assets/btn-11.png" alt />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="myteam">
+          <img src="@/assets/btn-12.png" alt />
+        </router-link>
+      </li>
+    </ul>
+
+    <div class="mindexbtn" @click="exit">
+      <img class="mindexbtn-img" src="@/assets/btn_loginout.png" alt="">
+    </div>
   </div>
 </template>
 
@@ -73,20 +130,50 @@ export default {
   data() {
     return {
       user: {
-        avatar: require("../../assets/avatar.jpg"),
-        name: "zhangsan",
-        id: "5259",
-        level: "0",
-        money: 180000,
-        progress: 50
       },
-      wallet:{
-        zhongxin:0.00,
-        jinbi:111,
-        yingli:222,
-        shouyi:333
+      wallet: {
       }
     };
+  },
+  created() {
+    this.$axios.fetchPost("portal", {
+      source: "web",
+      version: "v1",
+      module: "User",
+      interface: "1000"
+    }).then(res=>{
+      if(res.code ==0 ){
+        this.user = res.data
+      } else {
+        this.$toast(res.message)
+      }
+      window.console.log(res)
+    })
+
+    this.$axios.fetchPost("portal", {
+      source: "web",
+      version: "v1",
+      module: "Finance",
+      interface: "1000"
+    }).then(res=>{
+      this.wallet = res.data.creditList
+      window.console.log("钱包信息",res)
+    })
+  },
+  methods: {
+    exit() {
+      this.$axios.fetchPost("portal", {
+      source: "web",
+      version: "v1",
+      module: "Account",
+      interface: "2000"
+    }).then(res=>{
+      window.console.log(res)
+      this.$toast(res.message)
+      localStorage.setItem("accessToken",'')
+      this.$router.push('login')
+    })
+    }
   }
 };
 </script>
@@ -96,6 +183,8 @@ export default {
   width: 100%;
   height: 100%;
   background: url(../../assets/myBg.jpg);
+  display: flex;
+  flex-direction: column;
   .userdata {
     margin-top: 15px;
     width: 100%;
@@ -116,17 +205,17 @@ export default {
         }
       }
     }
-      .jindu {
-        width: 80%;
-        display: flex;
-        justify-content: space-between;
-        margin: 0 auto;
-        span{
-          color: #f2e5ca;
-        }
+    .jindu {
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 auto;
+      span {
+        color: #f2e5ca;
+      }
       // }
     }
-    p{
+    p {
       color: #f2e5ca;
       font-size: 14px;
       text-align: center;
@@ -148,70 +237,76 @@ export default {
 }
 
 // 钱包
-.wallet{
+.wallet {
   display: flex;
   justify-content: space-around;
   padding: 20px 0;
   border-top: 1px solid #504339;
   border-bottom: 1px solid #504339;
   margin-top: 10px;
-  div{
+  div {
     width: 88px;
     height: 55px;
-    background: url(../../assets/wallet_bg.png) no-repeat ;
+    background: url(../../assets/wallet_bg.png) no-repeat;
     background-size: 88px 55px;
-    p{
+    p {
       font-size: 15px;
       margin: 0;
       padding: 0;
       color: #756142;
       text-align: center;
       margin-bottom: 10px;
-
     }
-    span{
+    span {
       display: block;
       font-size: 15px;
-      color:#ffc000;
-       text-align: center;
+      color: #ffc000;
+      text-align: center;
     }
   }
 }
 
-.index-btn{
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-      img{
-          width: 130px;
-          height: 50px;
-          margin-bottom: 20px;
-      }
+.index-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  img {
+    width: 130px;
+    height: 50px;
+    margin-bottom: 20px;
   }
+}
 
-
-.list{
-  padding:0 27px;
+.list {
+  padding: 0 27px;
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   justify-content: center;
-  li{
+  li {
     width: 4rem;
     height: 4rem;
-    margin:0.5rem;
-    img{
+    margin: 0.5rem;
+    img {
       width: 100%;
       height: 100%;
     }
   }
 }
-.van-progress{
+.mindexbtn{
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  .mindexbtn-img{
+    width: 100%;
+    margin-bottom: 60px;
+  }
+}
+.van-progress {
   margin-top: 10px;
   width: 80%;
   border: 1px solid #f2e5ca;
   margin: 0 auto;
 }
-
 </style>

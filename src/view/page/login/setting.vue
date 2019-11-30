@@ -34,7 +34,7 @@
       </van-tab>
     </van-tabs>
     <div class="setBtn">
-      <van-button class="setbtn">确认修改</van-button>
+      <van-button class="setbtn" @click="submit">确认修改</van-button>
     </div>
 
     <p
@@ -62,6 +62,30 @@ export default {
       repassword: null,
       tikuan: null
     };
+  },
+  methods:{
+    submit() {
+      let inactive ='';
+      if (this.active == 0) {
+          inactive = 2001
+      } else {
+        inactive = 2005
+      }
+      this.$axios.fetchPost("portal", {
+        source: "web",
+          version: "v1",
+          module: "User",
+          interface: inactive,
+          data: {
+            // account: this.name,
+            oldPassword: this.oldpassword,
+            password:this.password
+          }
+      }).then(res => {
+        window.console.log(res)
+        this.$toast(res.message)
+      })
+    }
   }
 };
 </script>

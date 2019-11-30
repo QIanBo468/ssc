@@ -12,7 +12,7 @@ Object.keys(pages).forEach(item => {
     routes.push({
         name: file_name_fun(file_name, folder),
         path: path_name_fun(file_name, folder),
-        component: () => import('@/view/page/' + item)
+        component: () => import('@/view/page/' + item) 
     })
 })
 

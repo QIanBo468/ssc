@@ -260,58 +260,75 @@ export default {
       });
     });
     // console.log(this.num);
+    this.singular()
   },
 
   methods: {
     finish() {
       // console.log("时间结束");
     },
-
+    //单注价格
+    singular() {
+      this.$axios.fetchPost('/portal',{
+        source: "web",
+      version: "v1",
+      module: "Lottery",
+      interface: "10001",
+      data: {
+        type:"1"
+      }
+      }).then(res =>{
+        window.console.log(res)
+      })
+    },
     // 选择号码
     xuanzhong(item) {
       let sum = 0;
+      // 循环当前选中个数
       this.arry.forEach(e => {
-        if (e.flg && sum <= 4) {
+        if (e.flg && sum <= 3) {
           sum += 1;
-
           this.beilv = false;
         }
         if (sum > 3 && !item.flg) {
           this.$toast("最多可选四个数");
+          // sum = 3
           this.beilv = true;
           // return;
         }
       });
-      if (sum >= 3) {
-        this.beilv = true;
-        // console.log(this.beilv);
-      }
-      if (sum < 4) {
+      // 如果是未选项和总数不到4个 可以选中  且将其添加到选中数组
+      if (!item.flg && sum <= 3) {
+        if (sum > 2) {
+          //当总数为4个的时间显示下方的标注
+          this.beilv = true;
+        }
         item.flg = !item.flg;
         let a = this.number.findIndex(value => {
           return value.num == item.num;
         });
-        // console.log(a);
         if (a != -1) {
           this.number.splice(a, 1);
-          // console.log(this.number);
           return;
         } else {
           this.number.push(item);
-          // console.log(this.number);
           return;
         }
       }
-      // console.log(sum);
 
-      if (sum == 4 && item.flg) {
+      // 如果 是已经选中 则将其变为未选中  且从选中数组中删除
+      if (item.flg) {
         item.flg = !item.flg;
+        sum--;
+        if (sum <= 3) {
+          this.beilv = false;
+        }
         let a = this.number.findIndex(value => {
           return value.num == item.num;
         });
         if (a != -1) {
           this.number.splice(a, 1);
-          // console.log(this.number);
+
           return;
         }
       }
@@ -625,7 +642,6 @@ export default {
       height: 30px;
       align-self: flex-end;
       border: none;
-
     }
     .pop-title {
       display: flex;

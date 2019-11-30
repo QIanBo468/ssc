@@ -6,10 +6,10 @@
       <ul>
         <li v-for="(item, index) of notice" :key="index">
           <div>
-            <p>{{item.title}}</p>
+            <p>{{item.id}}</p>
             <p>
               <van-icon name="clock-o" />
-              {{item.time}}
+              {{item.title}}
             </p>
           </div>
           <button @click="showPop(item)">查看</button>
@@ -19,8 +19,8 @@
 
     <van-popup class="pop" v-model="show">
       <div>
-        <h3>{{shows.title}}</h3>
-        <p>1312321321321321</p>
+        <h3>{{noticeing.title}}</h3>
+        <p v-html="noticeing.content"></p>
         <van-button class="showBtn" @click="show = false">关闭</van-button>
       </div>
     </van-popup>
@@ -37,17 +37,45 @@ export default {
   data() {
     return {
       show: false,
-      shows: {},
-      notice: [
-        { title: "彩金彩123", time: "2019-10-21  00:00:00" },
-        { title: "彩金彩132", time: "2019-10-21  00:00:00" },
-        { title: "彩金彩231", time: "2019-10-21  00:00:00" },
-        { title: "彩金彩321", time: "2019-10-21  00:00:00" }
-      ]
+      notice: [],
+      noticeing:{
+
+      }
     };
+  },
+  created() {
+    this.$axios
+      .fetchPost("portal", {
+        source: "web",
+        version: "v1",
+        module: "Content",
+        interface: "3000",
+        data: {
+          lastId: 0,
+          page: 1
+        }
+      })
+      .then(res => {
+        if (res.code == 0) {
+          this.notice = res.data.list;
+        }
+        
+      });
   },
   methods: {
     showPop(item) {
+      this.$axios.fetchPost("portal", {
+        source: "web",
+        version: "v1",
+        module: "Content",
+        interface: "3001",
+        data: {
+          id:item.id
+        }
+      }).then(res=>{
+        this.noticeing = res.data
+window.console.log(res);
+      })
       this.show = true;
       this.shows = item;
     }
@@ -84,6 +112,10 @@ export default {
           background: #ff6600;
           border-radius: 8px;
         }
+        p {
+          display: flex;
+          align-items: center;
+        }
       }
     }
   }
@@ -101,24 +133,24 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: space-around;
-      h3{
-          color: #ff6600;
-          font-size: 1.5rem;
+      h3 {
+        color: #ff6600;
+        font-size: 1.5rem;
       }
-      p{
-          background: #f8fafb;
-          width: 100%;
-          text-align: center;
-          padding: 1rem;
-          box-sizing: border-box;
-          border: 1px solid #eee;
+      p {
+        background: #f8fafb;
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        box-sizing: border-box;
+        border: 1px solid #eee;
       }
-      .showBtn{
-          align-self: flex-end;
-          margin-right: 2rem;
-          background: #FF632C;
-          color: #eee;
-          border-radius: 6px;
+      .showBtn {
+        align-self: flex-end;
+        margin-right: 2rem;
+        background: #ff632c;
+        color: #eee;
+        border-radius: 6px;
       }
     }
   }

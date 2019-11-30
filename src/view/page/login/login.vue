@@ -1,26 +1,25 @@
 <template>
   <div class="container">
-    <img  class="logo" src="../../../assets/logo.png" alt="">
+    <img class="logo" src="../../../assets/logo.png" alt />
     <div>
-      <van-cell-group :border='false' >
+      <van-cell-group :border="false">
         <img src="@/assets/icon_user.png" alt />
-        <van-field maxlength='16' v-model="name" placeholder="请输入用户名" />
+        <van-field maxlength="16" v-model="name" placeholder="请输入用户名" />
       </van-cell-group>
-      <van-cell-group :border='false' >
-          <img src="@/assets/icon_pass.png" alt="">
-        <van-field maxlength='16' v-model="password" type="password" placeholder="请输入密码" />
+      <van-cell-group :border="false">
+        <img src="@/assets/icon_pass.png" alt />
+        <van-field maxlength="16" v-model="password" type="password" placeholder="请输入密码" />
       </van-cell-group>
-      <van-cell-group :border='false'>
+      <van-cell-group :border="false">
         <img src="@/assets/icon_code.png" alt />
-        <van-field   maxlength=6 v-model="catpah" placeholder="请输入验证码" />
+        <van-field maxlength="6" v-model="catpah" placeholder="请输入验证码" />
       </van-cell-group>
     </div>
     <button class="login-btn" @click="submit">登录</button>
 
     <div class="foot">
       未满18周岁禁止购买
-      <br>
-       Copyright © LOTTERY  |彩金彩| 版权所有
+      <br />Copyright © LOTTERY |彩金彩| 版权所有
     </div>
   </div>
 </template>
@@ -34,33 +33,47 @@ export default {
       catpah: null
     };
   },
+  created() {
+    if (localStorage.getItem("accessToken")) {
+      this.$router.push("/");
+    }
+  },
   methods: {
     submit() {
-       if(!this.name){
-        this.$toast('请输入用户名')
-        return
-      } else if (! this.password){
-        this.$toast('请输入密码')
-        return
+      if (!this.name) {
+        this.$toast("请输入用户名");
+        return;
+      } else if (!this.password) {
+        this.$toast("请输入密码");
+        return;
       }
-      this.$axios.fetchPost('portal',{
-        source:"web",
-        version:'v1',
-        module:"Account",
-        interface:'1000',
-        data:{
-        account: this.name,
-        password:this.password
-        }
-      }).then(res=>{
-        if(res.code ==0) {
-this.$router.push('/')
-        } else{
-          this.$toast(res.message)
-        }
-        window.console.log(res)
-      })
-      // 
+      this.$axios
+        .fetchPost("portal", {
+          source: "web",
+          version: "v1",
+          module: "Account",
+          interface: "1000",
+          data: {
+            account: this.name,
+            password: this.password
+          }
+        })
+        .then(res => {
+          if (res.code == 0) {
+            localStorage.setItem(
+              "accessToken",
+              res.data.tokenType + " " + res.data.accessToken,
+              res.data.expiresIn
+            );
+            this.$router.push("/");
+
+           window.console.log(this.$router)
+          } else {
+            this.$toast(res.message);
+          }
+          window.console.log(res);
+        });
+      //
     }
   }
 };
@@ -76,23 +89,23 @@ this.$router.push('/')
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  .logo{
-    width:280px;
+  .logo {
+    width: 280px;
     height: 170px;
     position: absolute;
     top: 5%;
   }
-  img{
-  width: 28px;
-  height: 28px;
-  line-height: 44px;
-}
+  img {
+    width: 28px;
+    height: 28px;
+    line-height: 44px;
+  }
 }
 
-.van-cell-group{
-margin-top: 10px;
-}  
-.login-btn{
+.van-cell-group {
+  margin-top: 10px;
+}
+.login-btn {
   width: 80%;
   margin: 0 auto;
   color: #190e0e;
@@ -102,7 +115,7 @@ margin-top: 10px;
   font-weight: bold;
   font-size: 16px;
 }
-.foot{
+.foot {
   box-sizing: border-box;
   margin-top: 30px;
   color: #ae9287;
