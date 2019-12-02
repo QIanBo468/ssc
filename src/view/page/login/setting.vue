@@ -13,23 +13,29 @@
         <div class="tab-content">
           <van-cell-group class="userSet">
             <van-field
-              v-model="oldpassword"
+              v-model="mima.oldpassword"
               label-class="left-input"
               :border="false"
               label="输入原登入密码"
             />
           </van-cell-group>
           <van-cell-group class="userSet">
-            <van-field v-model="password" label-class="left-input" label="输入新登入密码" />
+            <van-field v-model="mima.password" label-class="left-input" label="输入新登入密码" />
           </van-cell-group>
           <van-cell-group class="userSet">
-            <van-field v-model="repassword" label-class="left-input" label="确认新登入密码" />
+            <van-field v-model="mima.repassword" label-class="left-input" label="确认新登入密码" />
           </van-cell-group>
         </div>
       </van-tab>
       <van-tab title="设置提款密码">
         <van-cell-group class="userSet">
-          <van-field v-model="tikuan" label-class="left-input" label="输入提款密码" />
+          <van-field v-model="pay.oldtikuan" label-class="left-input" label="确认提款密码" />
+        </van-cell-group>
+        <van-cell-group class="userSet">
+          <van-field v-model="pay.tikuan" label-class="left-input" label="输入提款密码" />
+        </van-cell-group>
+        <van-cell-group class="userSet">
+          <van-field v-model="pay.retikuan" label-class="left-input" label="确认提款密码" />
         </van-cell-group>
       </van-tab>
     </van-tabs>
@@ -56,35 +62,66 @@ export default {
   },
   data() {
     return {
-      active: 0,
-      oldpassword: null,
-      password: null,
-      repassword: null,
-      tikuan: null
+      mima: {
+        oldpassword: null,
+        password: null,
+        repassword: null
+      },
+      pay: {
+        tikuan: null,
+        retikuan: null,
+        oldtikuan: null
+      },
+      active: 0
     };
   },
-  methods:{
+  methods: {
     submit() {
-      let inactive ='';
+      // let inactive = "";
       if (this.active == 0) {
-          inactive = 2001
+        this.$axios
+          .fetchPost("portal", {
+            source: "web",
+            version: "v1",
+            module: "User",
+            interface: "2001",
+            data: {
+              // account: this.name,
+              oldPassword: this.mima.oldpassword,
+              password: this.mima.password
+              // oldSafeword: this.pay.oldtikuan,
+              // safeword:this.pay.tikuan
+            }
+          })
+          .then(res => {
+            this.mima.oldpassword = "",
+              this.mima.password = "",
+              this.mima.repassword = "",
+              this.$toast(res.message);
+            if (res.code == 0) {
+              localStorage.setItem("accessToken", "");
+              this.$router.push("login");
+            }
+          });
       } else {
-        inactive = 2005
+        this.$axios
+          .fetchPost("portal", {
+            source: "web",
+            version: "v1",
+            module: "User",
+            interface: "2005",
+            data: {
+              oldSafeword: this.pay.oldtikuan,
+              safeword: this.pay.tikuan
+            }
+          })
+          .then(res => {
+          this.pay.tikuan = "",
+              this.pay.oldtikuan = "",
+              this.pay.retikuan =""
+              this.$toast(res.message);
+          });
       }
-      this.$axios.fetchPost("portal", {
-        source: "web",
-          version: "v1",
-          module: "User",
-          interface: inactive,
-          data: {
-            // account: this.name,
-            oldPassword: this.oldpassword,
-            password:this.password
-          }
-      }).then(res => {
-        window.console.log(res)
-        this.$toast(res.message)
-      })
     }
   }
 };

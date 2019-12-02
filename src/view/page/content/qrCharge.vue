@@ -11,15 +11,15 @@
       </div>
       <div class="qrCodecent">
         <p>收款码</p>
-        <img src="@/assets/111.png" alt />
+        <img :src="resdata.qrCode" alt />
       </div>
       <div class="qrCodecent">
         <div>
           <p>收款钱包</p>
-          <span>复制</span>
+          <span @click="copy(resdata.address)">复制</span>
         </div>
 
-        <span>113132132123123123</span>
+        <span>{{resdata.address}}</span>
       </div>
     </div>
 
@@ -37,42 +37,38 @@
       </div>
       <div class="qrCodecent">
         <p>USDT</p>
-        <input
-            placeholder="请输入USDT地址"
-         v-model="usdt" type="text" />
+        <input placeholder="请输入USDT地址" v-model="usdt" type="text" />
       </div>
       <div class="qrCodecent">
-        <p>RMB</p>
-        <input 
-         placeholder="请输入RMB金额"
-        v-model="RMB"  type="text" />
+        <p>金额</p>
+        <input placeholder="请输入金额" v-model="RMB" type="text" />
       </div>
-      <div class="qrCodecent">
+      <!-- <div class="qrCodecent">
         <p>存款人姓名</p>
         <input 
         placeholder="请输入存款人姓名"
         v-model="name"  type="text" />
+      </div>-->
+
+      <ul>
+        <li>充值步骤：</li>
+        <li>1.在火币网购买USDT</li>
+        <li>2.从法币账户转入币币账户</li>
+        <li>3.点击提笔输入USDT复制彩金彩钱包地址，输入提笔数量确定</li>
+        <li>4后台提交褪影的USDT数量，就会有折合人民币的提示，输入姓名提交</li>
+        <li>温馨提示：请每次充值时务必核对最新的二维码钱包地址信息!平台会用不定期更换新的二维码钱包地址。如因本人原因造成的损失平台概不负责！</li>
+      </ul>
+
+      <div class="btn" @click="submit">
+        <img src="@/assets/confirm.png" alt />
       </div>
-
-        <ul>
-      <li>充值步骤：</li>
-      <li>1.在火币网购买USDT</li>
-      <li>2.从法币账户转入币币账户</li>
-      <li>3.点击提笔输入USDT复制彩金彩钱包地址，输入提笔数量确定</li>
-      <li>4后台提交褪影的USDT数量，就会有折合人民币的提示，输入姓名提交</li>
-      <li>温馨提示：请每次充值时务必核对最新的二维码钱包地址信息!平台会用不定期更换新的二维码钱包地址。如因本人原因造成的损失平台概不负责！</li>
-    </ul>
-
-    <div class="btn" @click="submit">
-        <img src="@/assets/confirm.png" alt="">
     </div>
-    </div>
-
   </div>
 </template>
 
 <script>
 import titlebar from "@/components/NavBar";
+// import QRCode from 'qrcodejs2'
 
 export default {
   components: {
@@ -81,9 +77,10 @@ export default {
   data() {
     return {
       date: "",
-      usdt:'',
-      RMB:null,
-      name:''
+      usdt: "",
+      RMB: null,
+      name: "",
+      resdata: {}
     };
   },
   created() {
@@ -95,21 +92,57 @@ export default {
     // let week = date.getDay(); //星期
     // let hour = date.getHours(); //小时
     this.date = date;
+
+    this.$axios
+      .fetchPost("portal/Digiccy", {
+        source: "web",
+        version: "v1",
+        module: "Finance",
+        interface: "1000"
+      })
+      .then(res => {
+        this.resdata = res.data;
+        window.console.log(this.resdata);
+      });
   },
   methods: {
-      submit() {
-          if(!this.usdt) {
-              this.$toast('请输入USDT')
-              return
-          } else if (!this.RMB) {
-              this.$toast('请输入RMB')
-              return
-          } else if (!this.name) {
-              this.$toast('请输入姓名')
-              return
-          }
-        //   console.log('确认')
+    submit() {
+      if (!this.usdt) {
+        this.$toast("请输入USDT");
+        return;
+      } else if (!this.RMB) {
+        this.$toast("请输入RMB");
+        return;
       }
+      this.$axios
+        .fetchPost("portal/Digiccy", {
+          source: "web",
+          version: "v1",
+          module: "Finance",
+          interface: "1001",
+          data:{
+            address: this.usdt,
+            amount: this.RMB
+          }
+        })
+        .then(res => {
+          this.$toast(res.message)
+          window.console.log(res);
+        });
+      //   console.log('确认')
+    },
+    copy(num) {
+      // this.show = true;
+      this.$toast("已复制");
+      const input = document.createElement("input");
+      document.body.appendChild(input);
+      input.setAttribute("value", num);
+      input.select();
+      if (document.execCommand("copy")) {
+        document.execCommand("copy");
+      }
+      document.body.removeChild(input);
+    }
   }
 };
 </script>
@@ -169,7 +202,7 @@ export default {
       }
     }
   }
-  .qrCode:last-child{
+  .qrCode:last-child {
     .qrCodecent {
       span {
         color: #edd39a;
@@ -182,25 +215,25 @@ export default {
         border-bottom: 1px solid #edd39a;
       }
     }
-     ul {
-    padding: 20px;
-    li {
-      color: #ff6600;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-    span{
-        color: #f00;
-    }
-  }
-
-  .btn{
-      text-align: center;
-      img{
-          width: 150px;
-          height: 45px;
+    ul {
+      padding: 20px;
+      li {
+        color: #ff6600;
+        font-size: 14px;
+        margin-bottom: 10px;
       }
-  }
+      span {
+        color: #f00;
+      }
+    }
+
+    .btn {
+      text-align: center;
+      img {
+        width: 150px;
+        height: 45px;
+      }
+    }
   }
 
   .hint {

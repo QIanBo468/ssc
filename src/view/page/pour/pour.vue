@@ -273,7 +273,7 @@ export default {
         source: "web",
       version: "v1",
       module: "Lottery",
-      interface: "10001",
+      interface: "1000",
       data: {
         type:"1"
       }

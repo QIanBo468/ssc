@@ -64,7 +64,7 @@
         </div>
 
         <div class="wallet" @click="$router.push({path:'deposit',query:{item:0}})">
-          <span>盈利钱包提现</span>
+          <span>中心钱包提现</span>
           <img src="@/assets/cz_icon.png" alt />
         </div>
         <div class="wallet" @click="$router.push({path:'deposit',query:{item:1}})">
@@ -72,7 +72,7 @@
           <img src="@/assets/cz_icon.png" alt />
         </div>
         <div class="wallet" @click="$router.push({path:'deposit',query:{item:2}})">
-          <span>中心钱包提现</span>
+          <span>盈利钱包提现</span>
           <img src="@/assets/cz_icon.png" alt />
         </div>
 

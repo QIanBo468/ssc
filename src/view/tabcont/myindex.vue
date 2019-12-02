@@ -12,13 +12,13 @@
         </div>
         <div class="level">
           <span>级别</span>
-          <span>{{user.level}}</span>
+          <span>{{user.levelPercent}}</span>
         </div>
       </div>
       <!-- <div class="index-jindu"> -->
       <div class="jindu">
-        <span>{{user.level}}</span>
-        <span>{{user.level+1}}</span>
+        <span>VIP{{user.levelLeft}}</span>
+        <span>VIP{{user.levelRight}}</span>
       </div>
       <van-progress
         stroke-width="8"
@@ -28,7 +28,7 @@
         :percentage="80" 
       />
       <!-- 进度条 所需流水 {{user.money}} -->
-      <p>距离升级还需要流水</p>
+      <p>{{user.levelTxt}}</p>
       <!-- </div> -->
     </div>
 
