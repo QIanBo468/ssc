@@ -95,6 +95,7 @@ export default {
         this.start = y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
         this.minDate = value
       } else {
+        this.maxDate = value
         this.end = y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
       }
 

@@ -3,14 +3,14 @@
     <div class="zhonglei" v-if="zhonglei">
       <div class="zlName">
         <p>彩种名称</p>
-        <van-dropdown-menu active-color='#d3b787'>
-          <van-dropdown-item v-model="cainame" :options="cai1" />
+        <van-dropdown-menu active-color='#d3b787' >
+          <van-dropdown-item @change="xialaone"	 v-model="cainame" :options="cai1" />
         </van-dropdown-menu>
       </div>
       <div class="zlActive">
         <p>彩种状态</p>
         <van-dropdown-menu active-color='#d3b787'>
-          <van-dropdown-item v-model="caiactive" :options="cai2" />
+          <van-dropdown-item @change="xialatwo" v-model="caiactive" :options="cai2" />
         </van-dropdown-menu>
       </div>
     </div>
@@ -39,17 +39,17 @@
     <div class="list-c">
       <ul class="title">
         <li>金额</li>
-        <li>地址</li>
-        <li>钱包名称</li>
+        <li>投注号码</li>
+        <li>期号</li>
         <li>状态</li>
       </ul>
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul class="list-content">
           <li v-for="(item,index) of pantData" :key="index">
             <span>{{item.amount}}</span>
-            <span>{{item.address}}</span>
-            <span>{{item.money ?item.money :item.creditName}}</span>
-            <span>{{item.status == 0 ? '申请中': (item.status == 1 ? '成功':'失败')}}</span>
+            <span>{{item.number}}</span>
+            <span>{{item.number_periods}}</span>
+            <span>{{item.isWinName}}</span>
           </li>
         </ul>
       </van-list>
@@ -76,9 +76,8 @@ export default {
       ],
       cai2: [
         { text: "所有状态", value: 0 },
-        { text: "已派奖", value: 1 },
-        { text: "未中奖", value: 2 },
-        { text: "未开奖", value: 3 },
+        { text: "未中奖", value: 1 },
+        { text: "未开奖", value: 2 },
       ],
       dropdown: "",
       option1: [
@@ -206,6 +205,13 @@ export default {
           this.onLoad();
           break;
       }
+    },
+    xialaone() {
+      window.console.log(this.cainame)
+      this.$emit('showSubmit',this.cainame,'')
+    },
+     xialatwo() {
+      this.$emit('showSubmit',this.cainame,this.caiactive)
     }
   }
 };

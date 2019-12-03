@@ -108,7 +108,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="linkadd">
+        <router-link to="yaoqing">
           <img src="@/assets/btn-11.png" alt />
         </router-link>
       </li>
@@ -132,6 +132,10 @@ export default {
       user: {
       },
       wallet: {
+        credit_1:'',
+        credit_2:'',
+        credit_3:'',
+        credit_4:''
       }
     };
   },
@@ -156,7 +160,10 @@ export default {
       module: "Finance",
       interface: "1000"
     }).then(res=>{
-      this.wallet = res.data.creditList
+      this.wallet.credit_1 = res.data.creditList.credit_1
+      this.wallet.credit_2 = res.data.creditList.credit_2
+      this.wallet.credit_3 = res.data.creditList.credit_3
+      this.wallet.credit_4 = res.data.creditList.credit_4
       window.console.log("钱包信息",res)
     })
   },

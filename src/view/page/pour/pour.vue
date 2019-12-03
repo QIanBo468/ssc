@@ -63,7 +63,7 @@
 
     <!-- 倍率 -->
     <div class="beilv">
-      <p v-if="beilv">共4注，金额{{beishu*8}}.00元</p>
+      <p v-if="beilv">共4注，金额{{beishu*4* +price}}.00元</p>
       <p v-else>请选择四位数字</p>
 
       <div class="touzhu">
@@ -77,7 +77,7 @@
       <div class="pours">
         <div v-if="pourzhu">
           <p>[4注]</p>
-          <p>{{beishu*8}}.00元</p>
+          <p>{{beishu* 4 * +price}}.00元</p>
           <p>{{beishu}}倍</p>
           <p>元模式</p>
           <van-icon name="close" @click="pourzhu = false"></van-icon>
@@ -90,12 +90,12 @@
       <div class="affirm-content">
         <div>
           <p>总注数4注</p>
-          <div @click="tzRecord = true">
+          <div @click="tzRecordes">
             <img src="@/assets/iconfont-2jilu.png" alt />投注记录
           </div>
         </div>
-        <h3>总金额 {{8*beishu}}.00 元</h3>
-        <van-button class="affirm-btn">确认投注</van-button>
+        <h3 v-if="pourzhu">总金额 {{beishu*4* +price}}.00 元</h3>
+        <van-button class="affirm-btn" @click="submit">确认投注</van-button>
       </div>
     </div>
 
@@ -105,8 +105,8 @@
         <h3>近期开奖</h3>
         <ul>
           <li v-for="item of kjRecords" :key="item.qihao">
-            <p>{{item.qihao}}</p>
-            <span>{{item.number}}</span>
+            <p>{{item.thirdNumberPeriods}}</p>
+            <span>{{item.thirdNumber}}</span>
           </li>
         </ul>
         <div @click="kjRecord = !kjRecord">关闭</div>
@@ -122,16 +122,16 @@
             <li>倍数</li>
             <li>模式</li>
             <li>状态</li>
-            <li>操作</li>
+            <!-- <li>操作</li> -->
           </ul>
           <ul class="pop-content">
             <li v-for="item of tzRecords" :key="item.bianhao">
-              <span>{{item.bianhao}}</span>
-              <span>{{item.qihao}}</span>
-              <span>{{item.beishu}}</span>
-              <span>{{item.moshi}}</span>
-              <span>{{item.zhangtai}}</span>
-              <span>{{item.caozuo}}</span>
+              <span>{{item.id}}</span>
+              <span>{{item.number_periods}}</span>
+              <span>{{item.multiple}}</span>
+              <span>{{item.typeName}}</span>
+              <span>{{item.isWinName}}</span>
+              <!-- <span>{{item.caozuo}}</span> -->
             </li>
             <li class="wu">没有更多了</li>
           </ul>
@@ -154,17 +154,19 @@ export default {
     return {
       type: 0,
       jiang: {
+        //
         qihao: 741635,
         jinbi: "0.00",
         liushui: 0
       },
-      kjRecord: false,
-      tzRecord: false,
-      time: 5 * 60 * 1000,
+      kjRecord: false, //开奖记录
+      tzRecord: false, // 投注记录
+      time: 100000, //倒计时
       daojishi: true,
       logo: require("../../../assets/bj_pk10.png"),
       logo1: require("../../../assets/tw_pk10.png"),
       num: [
+        // 上期中奖号码
         { nums: "01", src1: require("../../../assets/m_c_01.png") },
         { nums: "03", src1: require("../../../assets/m_c_03.png") },
         { nums: "02", src1: require("../../../assets/m_c_02.png") },
@@ -177,6 +179,7 @@ export default {
         { nums: "10", src1: require("../../../assets/m_c_10.png") }
       ],
       arry: [
+        // 选择奖号
         { num: "01", flg: false },
         { num: "02", flg: false },
         { num: "03", flg: false },
@@ -189,6 +192,7 @@ export default {
         { num: "10", flg: false }
       ],
       kjRecords: [
+        //开奖记录列表
         { qihao: 741725, number: "03-05-04-07-02-06-10-08-01" },
         { qihao: 741724, number: "03-05-04-07-02-06-10-08-01" },
         { qihao: 741723, number: "03-05-04-07-02-06-10-08-01" },
@@ -198,46 +202,51 @@ export default {
         { qihao: 741719, number: "03-05-04-07-02-06-10-08-01" }
       ],
       tzRecords: [
-        {
-          bianhao: 0,
-          qihao: 741725,
-          beishu: 4,
-          moshi: "幸运飞艇",
-          zhangtai: "未开奖",
-          caozuo: "已投注"
-        },
-        {
-          bianhao: 1,
-          qihao: 741725,
-          beishu: 4,
-          moshi: "幸运飞艇",
-          zhangtai: "未开奖",
-          caozuo: "已投注"
-        },
-        {
-          bianhao: 2,
-          qihao: 741725,
-          beishu: 4,
-          moshi: "幸运飞艇",
-          zhangtai: "未开奖",
-          caozuo: "已投注"
-        },
-        {
-          bianhao: 3,
-          qihao: 741725,
-          beishu: 4,
-          moshi: "幸运飞艇",
-          zhangtai: "未开奖",
-          caozuo: "已投注"
-        }
+        // 投注记录
+        // {
+        //   bianhao: 0,
+        //   qihao: 741725,
+        //   beishu: 4,
+        //   moshi: "幸运飞艇",
+        //   zhangtai: "未开奖",
+        //   caozuo: "已投注"
+        // },
+        // {
+        //   bianhao: 1,
+        //   qihao: 741725,
+        //   beishu: 4,
+        //   moshi: "幸运飞艇",
+        //   zhangtai: "未开奖",
+        //   caozuo: "已投注"
+        // },
+        // {
+        //   bianhao: 2,
+        //   qihao: 741725,
+        //   beishu: 4,
+        //   moshi: "幸运飞艇",
+        //   zhangtai: "未开奖",
+        //   caozuo: "已投注"
+        // },
+        // {
+        //   bianhao: 3,
+        //   qihao: 741725,
+        //   beishu: 4,
+        //   moshi: "幸运飞艇",
+        //   zhangtai: "未开奖",
+        //   caozuo: "已投注"
+        // }
       ],
-      number: [],
+      number: [], //选择的奖号
       sums: -1,
       temp: "",
       pitch: ["06", "04", "03", "02", "01", "05", "07", "08", "09", "10"],
       beilv: false,
-      pourzhu: false,
-      beishu: 1
+      pourzhu: false, //添加投注 显示
+      beishu: 1, //当前选择倍数
+      lastId: 0,
+      page: 1,
+      playtype: "", // 玩法类型
+      price: "" //单价
     };
   },
   created() {
@@ -245,6 +254,11 @@ export default {
       // sum = 0,
       temp;
     this.type = this.$route.query.type;
+    if (this.type == 0) {
+      this.playtype = "1";
+    } else if (this.type == 1) {
+      this.playtype = "2";
+    }
     // console.log(this.type);
     // console.log(this.num);
 
@@ -260,7 +274,9 @@ export default {
       });
     });
     // console.log(this.num);
-    this.singular()
+    this.singular();
+    this.dangqian();
+    this.jinqikaijiang();
   },
 
   methods: {
@@ -269,17 +285,106 @@ export default {
     },
     //单注价格
     singular() {
-      this.$axios.fetchPost('/portal',{
-        source: "web",
-      version: "v1",
-      module: "Lottery",
-      interface: "1000",
-      data: {
-        type:"1"
+      this.$axios
+        .fetchPost("/portal", {
+          source: "web",
+          version: "v1",
+          module: "Lottery",
+          interface: "1000",
+          data: {
+            type: this.playtype
+          }
+        })
+        .then(res => {
+          this.price = res.data.price;
+          // window.console.log(typeof this.price);
+        });
+    },
+    dangqian() {
+      this.$axios
+        .fetchPost("/portal", {
+          source: "web",
+          version: "v1",
+          module: "Lottery",
+          interface: "10001",
+          data: {
+            type: this.playtype
+          }
+        })
+        .then(res => {
+          // this.price = res.data.price;
+           this.jiang.qihao = res.data.qishu;
+           this.time = res.data.kaijiang
+          window.console.log(this.time);
+        });
+    },
+    jinqikaijiang() {
+      this.$axios
+        .fetchPost("/portal", {
+          source: "web",
+          version: "v1",
+          module: "Lottery",
+          interface: "1004",
+          data: {
+            lastId: this.lastId,
+            page: this.page,
+            type: this.playtype
+          }
+        })
+        .then(res => {
+          this.kjRecords = res.data.list;
+         
+          // window.console.log("近期开奖", res);
+        });
+    },
+    tzRecordes() {
+      this.$axios
+        .fetchPost("/portal", {
+          source: "web",
+          version: "v1",
+          module: "Lottery",
+          interface: "1003",
+          data: {
+            timeRange:'',
+            lastId: this.lastId,
+            page: this.page,
+            type: this.playtype
+          }
+        })
+        .then(res => {
+         this.tzRecords = res.data.list;
+         
+          window.console.log("投注记录", res);
+        });
+      this.tzRecord = true
+    },
+    submit() {
+      if (this.number.length < 4) {
+        this.$toast("请选择冠军号码");
+        return;
       }
-      }).then(res =>{
-        window.console.log(res)
-      })
+      if (!this.pourzhu) {
+        this.$toast("请添加投注");
+        return;
+      }
+      this.$axios
+        .fetchPost("/portal", {
+          source: "web",
+          version: "v1",
+          module: "Lottery",
+          interface: "1002",
+          data: {
+            number: this.number.join(","), //下注号码
+            price: this.price, //价格
+            quantity: "4",
+            multiple: this.beishu.toString(),
+            type: this.playtype
+          }
+        })
+        .then(res => {
+          this.$toast(res.message);
+          window.console.log(res);
+        });
     },
     // 选择号码
     xuanzhong(item) {
@@ -311,7 +416,7 @@ export default {
           this.number.splice(a, 1);
           return;
         } else {
-          this.number.push(item);
+          this.number.push(item.num);
           return;
         }
       }

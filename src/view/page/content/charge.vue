@@ -14,7 +14,7 @@
           <div>
             <p>{{user.account}}</p>
             <p>ID：{{user.id}}</p>
-            <h3>中心钱包：{{tixian.credit_1.value}}</h3>
+            <h3>中心钱包：{{tixian.value}}</h3>
           </div>
         </div>
 
@@ -28,13 +28,15 @@
 
         <ul>
           <li>充值步骤：</li>
-          <li>1.在火币网购买USDT</li>
-          <li>2.从法币账户转入币币账户</li>
+          <li style="white-space: pre-wrap;
+        word-wrap: break-word;
+        word-break: break-all;" v-html="chongzhiText"></li>
+          <!-- <li>2.从法币账户转入币币账户</li>
           <li>3.点击提笔输入USDT复制彩金彩钱包地址，输入提笔数量确定</li>
           <li>4后台提交褪影的USDT数量，就会有折合人民币的提示，输入姓名提交</li>
           <li>重要提示：请每次充值时务必核对最新的二维码钱包地址信息!平台会用不定期更换新的二维码钱包地址。如因本人原因造成的损失平台概不负责！</li>
           <li>温馨提示：人民币提现每日仅限1次，金额5000元以内。</li>
-          <li>USDT提现无上限</li>
+          <li>USDT提现无上限</li> -->
         </ul>
       </van-tab>
 
@@ -42,8 +44,8 @@
         <div class="user">
           <img src="@/assets/avatar.jpg" alt />
           <div>
-            <p>{{user.name}}</p>
-            <p>ID{{user.id}}</p>
+            <p>{{user.account}}</p>
+            <p>ID:{{user.id}}</p>
             <!-- <h3>中心钱包：{{user.wallet}}</h3> -->
           </div>
         </div>
@@ -78,20 +80,10 @@
 
         <ul>
           <li>温馨提示</li>
-          <li>
-            <span>1.</span>出款需达到兑换金币30%流水
-          </li>
-          <li>
-            <span>2.</span>盈利钱包，收益钱包提现无手续费，中心钱包提现手续费10%
-          </li>
-          <li>
-            <span>3.</span>每日提现时间为00:00至23:59
-          </li>
-          <li>
-            <span>4.</span>人民币提现5000元以内，每日限一次
-          </li>
-          <li>
-            <span>5.</span>USDT提现无上限
+          <li style="white-space: pre-wrap;
+        word-wrap: break-word;
+        word-break: break-all;" v-html="tixianText">
+            
           </li>
         </ul>
       </van-tab>
@@ -106,13 +98,14 @@ export default {
   data() {
     return {
       active: 0,
-      user: {
-      },
+      user: {},
       tixian: {
         yingli: "0.00",
         shouyi: "0.00",
         zhongxin: "0.00"
-      }
+      },
+      tixianText:'',
+      chongzhiText:''
     };
   },
 
@@ -144,8 +137,31 @@ export default {
         interface: "1000"
       })
       .then(res => {
-        this.tixian = res.data.creditList;
+        this.tixian = res.data.creditList.credit_1;
         window.console.log("钱包信息", res);
+      });
+
+    this.$axios
+      .fetchPost("portal/Digiccy", {
+        source: "web",
+        version: "v1",
+        module: "Finance",
+        interface: "1000"
+      })
+      .then(res => {
+        this.chongzhiText = res.data.statement
+        window.console.log(res);
+      });
+        this.$axios
+      .fetchPost("portal/Digiccy", {
+        source: "web",
+        version: "v1",
+        module: "Finance",
+        interface: "2000"
+      })
+      .then(res => {
+        this.tixianText = res.data.params.statement
+        window.console.log(res);
       });
   },
   methods: {

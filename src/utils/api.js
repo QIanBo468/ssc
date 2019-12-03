@@ -9,6 +9,7 @@ axios.defaults.timeout = 10000
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
 // axios.defaults.baseURL = '/api'
 axios.defaults.baseURL = 'http://ssc.qdunzi.cn/'
+// axios.defaults.baseURL = 'http://api.caijinduo.cn/'
 axios.interceptors.request.use((config) => {
   // this.$cookies.set('status', res.data.status)
   let token = localStorage.getItem('accessToken')
@@ -25,6 +26,7 @@ axios.interceptors.response.use((res) => {
   // 对响应数据做些事
   if ((res.data.code == 4500 && res.data.message == '该接口需要进行Auth认证，请核实认证信息后重试') || (res.data.code == 4700 && (res.data.message == '登录异常，请重新登录' || res.data.message == '您的账号已被冻结，请联系管理员'))) {
     Toast('登录异常，请重新登录')
+    localStorage.setItem('accessToken','')
     router.push('login')
   }
   // if (VueCookies.get('status') != 1) {
