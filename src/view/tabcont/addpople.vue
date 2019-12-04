@@ -12,7 +12,7 @@
       </div>
       <div>
         <img src="@/assets/icon_pass2.png" alt />
-        <input v-model="repassword" maxlength="16" type="text" placeholder="确认登陆密码" />
+        <input v-model="repassword" maxlength="16" type="text" placeholder="确认登录密码" />
       </div>
       <van-button class="btn" @click="submit">注册</van-button>
     </div>
@@ -56,6 +56,15 @@ export default {
             password_confirmation:this.repassword
           }
       }).then(res => {
+        if (res.code == 0) {
+          this.$toast('注册成功')
+          this.name = '',
+          this.password= "",
+          this.repassword =""
+        } else {
+          this.$toast(res.message)
+        }
+        
         window.console.log(res)
       })
     }

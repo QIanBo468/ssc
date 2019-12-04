@@ -45,5 +45,7 @@ export default {
 .van-tabbar{
   background-color: #000;
 }
-
+.van-hairline--top-bottom::after{
+  border-width: 0;
+}
 </style>

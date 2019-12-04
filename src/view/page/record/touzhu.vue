@@ -28,7 +28,7 @@ export default {
     };
   },
   mounted() {
-    //   this.submit()
+      this.submit()
   },
   methods: {
     submit(type,status) {
@@ -50,8 +50,8 @@ export default {
             timeRange: timeArry,
             lastId: this.lastId,
             page: this.page,
-            type: type.toString(),
-            status:status.toString()
+            type: type,
+            status:status
           }
         })
         .then(res => {

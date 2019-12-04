@@ -25,14 +25,24 @@ export default {
         pantData:''
     };
   },
+  mounted() {
+    this.submit()
+  },
   methods: {
     submit() {
-      let timeArry = [this.$refs.headerChild.start, this.$refs.headerChild.end];
+       let timeArry;
+      if (this.$refs.headerChild.start != "" && !this.$refs.headerChild.end) {
+        timeArry = [this.$refs.headerChild.start, this.$refs.headerChild.end];
+          
+      } else {
+        timeArry = "";
+        window.console.log('1111')
+      }
       this.$axios.fetchPost("portal/Digiccy", {
         source: "web",
         version: "v1",
         module: "Finance",
-        interface: "1002",
+        interface: "1003",
         data: {
           timeRange:timeArry,
           lastId: this.lastId,
@@ -40,7 +50,7 @@ export default {
         }
       }).then(res=>{
           this.pantData = res.data.list
-          this.lastId = res.lastId
+          this.lastId = res.data.lastId
           window.console.log(res)
       })
     }

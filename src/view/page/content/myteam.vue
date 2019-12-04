@@ -91,13 +91,13 @@ export default {
         { le: "VIP6", liushui: 6888, money: "30‰" }
       ],
       xiaji: [
-        { id: 123456, le: "VIP0", liushui: 0, money: 1 },
-        { id: 123456, le: "VIP1", liushui: 18, money: 2 },
-        { id: 123456, le: "VIP2", liushui: 58, money: 3 },
-        { id: 123456, le: "VIP3", liushui: 188, money: 3 },
-        { id: 123456, le: "VIP4", liushui: 588, money: 4 },
-        { id: 123456, le: "VIP5", liushui: 2088, money: 5 },
-        { id: 123456, le: "VIP6", liushui: 6888, money: 6 }
+        // { id: 123456, le: "VIP0", liushui: 0, money: 1 },
+        // { id: 123456, le: "VIP1", liushui: 18, money: 2 },
+        // { id: 123456, le: "VIP2", liushui: 58, money: 3 },
+        // { id: 123456, le: "VIP3", liushui: 188, money: 3 },
+        // { id: 123456, le: "VIP4", liushui: 588, money: 4 },
+        // { id: 123456, le: "VIP5", liushui: 2088, money: 5 },
+        // { id: 123456, le: "VIP6", liushui: 6888, money: 6 }
       ]
     };
   }

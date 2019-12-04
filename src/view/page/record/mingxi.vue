@@ -7,7 +7,7 @@
       <div class="zlName">
         <p>账变类型</p>
         <van-dropdown-menu active-color="#d3b787">
-          <van-dropdown-item v-model="val" :options="mingxi" />
+          <van-dropdown-item @change="xialatwo" v-model="val" :options="mingxi" />
         </van-dropdown-menu>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul class="list-content">
           <li v-for="(item,index) of lists" :key="index">
-            <span>{{item.typeName}}</span>
+            <span>{{item.typeName}}<br>{{item.creditName}}</span>
             <span>{{item.id}}</span>
             <span>{{item.createdAt}}</span>
             <span>{{item.num}}</span>
@@ -78,12 +78,15 @@ export default {
         { money: "0.00", number: "123456", type: "转账" }
       ],
       lists: [],
-      page: 10,
+      page: 1,
       paginal: 10,
       lastId: 0
     };
   },
-  created() {},
+  mounted() {
+    this.submit()
+    
+  },
   methods: {
     onLoad(a, num) {
       if (a >= 0) {
@@ -127,10 +130,11 @@ export default {
         .then(res => {
           //  this.tzRecords = res.data.list;
           if (res.code == 0) {
-            this.lastId = res.lastId;
+            this.lastId = res.data.lastId;
             this.list = res.data.list;
             this.loading = false;
             this.finished = true;
+            this.onLoad()
           } else {
             this.$toast(res.message);
           }
@@ -202,6 +206,7 @@ export default {
       display: inline-block;
       flex: 1;
       text-align: center;
+      font-size: 12px;
     }
   }
 }

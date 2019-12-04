@@ -10,7 +10,7 @@
     >
       <van-tab title-style="font-size:18px" title="充值">
         <div class="user">
-          <img src="@/assets/avatar.jpg" alt />
+          <img :src="user.avatar" alt />
           <div>
             <p>{{user.account}}</p>
             <p>ID：{{user.id}}</p>

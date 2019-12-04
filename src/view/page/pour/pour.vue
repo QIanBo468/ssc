@@ -10,7 +10,7 @@
           <div class="qihao">
             <div class="qihaonum">
               {{type ==0 ? '北京PK拾': '幸运飞艇'}}
-              <span>{{jiang.qihao}}</span> 期
+              <span>{{qihao}}</span> 期
             </div>
             <div class="qihaoimg" @click.stop="kjRecord = !kjRecord">
               <img src="@/assets/louhao.png" alt />近期开奖
@@ -38,12 +38,12 @@
       <!-- 期号 -->
       <div class="issue">
         <div>
-          {{jiang.qihao}} 期 &nbsp;
+          {{qihao}} 期 &nbsp;
           <span></span> &nbsp;
-          <van-count-down :time="time" />
+          <van-count-down @finish="finished" :time="time*1000" />
         </div>
 
-        <p>金币: {{jiang.jinbi}} 当前流水: {{jiang.liushui}}</p>
+        <p>金币: {{jinbi}} 当前流水: {{jiangliushui}}</p>
       </div>
     </div>
 
@@ -100,7 +100,7 @@
     </div>
 
     <!-- 开奖记录 -->
-    <div class="kjRecord" v-if="kjRecord">
+    <van-popup class="kjRecord" v-model="kjRecord">
       <div class="kjRecord-content">
         <h3>近期开奖</h3>
         <ul>
@@ -111,7 +111,7 @@
         </ul>
         <div @click="kjRecord = !kjRecord">关闭</div>
       </div>
-    </div>
+    </van-popup>
     <!-- 投注记录 -->
     <van-popup class="tzRecord" v-model="tzRecord">
       <div class="pops">
@@ -130,7 +130,7 @@
               <span>{{item.number_periods}}</span>
               <span>{{item.multiple}}</span>
               <span>{{item.typeName}}</span>
-              <span>{{item.isWinName}}</span>
+              <span @click="revocation(item)">{{item.isWinName}}</span>
               <!-- <span>{{item.caozuo}}</span> -->
             </li>
             <li class="wu">没有更多了</li>
@@ -153,12 +153,10 @@ export default {
   data() {
     return {
       type: 0,
-      jiang: {
-        //
-        qihao: 741635,
+    
+        qihao: "",
         jinbi: "0.00",
-        liushui: 0
-      },
+        jiangliushui: 0,
       kjRecord: false, //开奖记录
       tzRecord: false, // 投注记录
       time: 100000, //倒计时
@@ -193,13 +191,13 @@ export default {
       ],
       kjRecords: [
         //开奖记录列表
-        { qihao: 741725, number: "03-05-04-07-02-06-10-08-01" },
-        { qihao: 741724, number: "03-05-04-07-02-06-10-08-01" },
-        { qihao: 741723, number: "03-05-04-07-02-06-10-08-01" },
-        { qihao: 741722, number: "03-05-04-07-02-06-10-08-01" },
-        { qihao: 741721, number: "03-05-04-07-02-06-10-08-01" },
-        { qihao: 741720, number: "03-05-04-07-02-06-10-08-01" },
-        { qihao: 741719, number: "03-05-04-07-02-06-10-08-01" }
+        // { qihao: 741725, number: "03-05-04-07-02-06-10-08-01" },
+        // { qihao: 741724, number: "03-05-04-07-02-06-10-08-01" },
+        // { qihao: 741723, number: "03-05-04-07-02-06-10-08-01" },
+        // { qihao: 741722, number: "03-05-04-07-02-06-10-08-01" },
+        // { qihao: 741721, number: "03-05-04-07-02-06-10-08-01" },
+        // { qihao: 741720, number: "03-05-04-07-02-06-10-08-01" },
+        // { qihao: 741719, number: "03-05-04-07-02-06-10-08-01" }
       ],
       tzRecords: [
         // 投注记录
@@ -250,39 +248,45 @@ export default {
     };
   },
   created() {
-    let that = this,
-      // sum = 0,
-      temp;
     this.type = this.$route.query.type;
-    if (this.type == 0) {
-      this.playtype = "1";
-    } else if (this.type == 1) {
-      this.playtype = "2";
-    }
-    // console.log(this.type);
+      if (this.type == 0) {
+        this.playtype = "1";
+      } else if (this.type == 1) {
+        this.playtype = "2";
+      }
     // console.log(this.num);
-
-    // 根据数组，进行排序
-    this.pitch.forEach(item => {
-      that.sums++;
-      that.num.findIndex((value, index) => {
-        if (value.nums == item) {
-          temp = that.num[index];
-          that.num[index] = that.num[that.sums];
-          that.num[that.sums] = temp;
-        }
-      });
-    });
-    // console.log(this.num);
+    this.zhushubefore();
     this.singular();
     this.dangqian();
     this.jinqikaijiang();
+    this.liushui();
   },
 
   methods: {
-    finish() {
+    finished() {
       // console.log("时间结束");
+      // this.zhushubefore();
+      this.singular();
+      this.dangqian();
+      this.jinqikaijiang();
+      // debugger
     },
+    //钱包流水
+    liushui() {
+      this.$axios
+        .fetchPost("portal", {
+          source: "web",
+          version: "v1",
+          module: "Finance",
+          interface: "1000"
+        })
+        .then(res => {
+          this.jinbi = res.data.creditList.credit_2.value;
+          this.jiangliushui = res.data.prize
+          window.console.log("钱包信息", res);
+        });
+    },
+    zhushubefore() {},
     //单注价格
     singular() {
       this.$axios
@@ -312,10 +316,11 @@ export default {
           }
         })
         .then(res => {
+          window.console.log(res);
           // this.price = res.data.price;
-           this.jiang.qihao = res.data.qishu;
-           this.time = res.data.kaijiang
-          window.console.log(this.time);
+          this.qihao = res.data.qishu;
+          this.time = res.data.kaijiang;
+          
         });
     },
     jinqikaijiang() {
@@ -333,9 +338,27 @@ export default {
         })
         .then(res => {
           this.kjRecords = res.data.list;
-         
-          // window.console.log("近期开奖", res);
+          this.pitch = res.data.list.slice(0,1)
+          window.console.log("近期开奖", this.pitch);
         });
+      let that = this,
+        // sum = 0,
+        temp;
+      
+      // console.log(this.type);
+      // console.log(this.num);
+
+      // 根据数组，进行排序
+      this.pitch.forEach(item => {
+        that.sums++;
+        that.num.findIndex((value, index) => {
+          if (value.nums == item) {
+            temp = that.num[index];
+            that.num[index] = that.num[that.sums];
+            that.num[that.sums] = temp;
+          }
+        });
+      });
     },
     tzRecordes() {
       this.$axios
@@ -345,18 +368,18 @@ export default {
           module: "Lottery",
           interface: "1003",
           data: {
-            timeRange:'',
+            timeRange: "",
             lastId: this.lastId,
             page: this.page,
             type: this.playtype
           }
         })
         .then(res => {
-         this.tzRecords = res.data.list;
-         
+          this.tzRecords = res.data.list;
+
           window.console.log("投注记录", res);
         });
-      this.tzRecord = true
+      this.tzRecord = true;
     },
     submit() {
       if (this.number.length < 4) {
@@ -382,9 +405,29 @@ export default {
           }
         })
         .then(res => {
+
           this.$toast(res.message);
+          if (res.code == 0) {
+            this.this.number = [],
+            this.beishu=""
+          }
           window.console.log(res);
         });
+    },
+    revocation(item){
+      if (item.isWinName == '未开奖') {
+          
+           Dialog.confirm({
+          confirmButtonColor: "#ffdd00",
+          cancelButtonColor: "#cdaa6f",
+          // title: "标题",
+          message: "是否撤销"
+        }).then(() => {
+          window.console.log('撤销')
+        }).catch(() => {
+  window.console.log('quxiao')
+});
+      }
     },
     // 选择号码
     xuanzhong(item) {
@@ -691,14 +734,14 @@ export default {
   }
 }
 .kjRecord {
-  height: 100%;
+  height: 50%;
 
   width: 100%;
 
   .kjRecord-content {
     width: 100%;
-    position: fixed;
-    top: 15%;
+    // position: fixed;
+    // top: 15%;
     background: #fff;
     display: flex;
     flex-direction: column;

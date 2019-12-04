@@ -2,7 +2,7 @@
   <div class="index">
     <div class="nav">
       <img src="@/assets/logo.png" alt />
-      <p>欢迎回来{{user}}</p>
+      <!-- <p>欢迎回来{{user}}</p> -->
     </div>
     <div class="index-ad">
       <van-swipe :height="150" :autoplay="3000" indicator-color="#f00">
@@ -12,11 +12,9 @@
       </van-swipe>
     </div>
 
-    <div class="notice">
+    <div class="notice" @click="$router.push('notice')">
       <img src="@/assets/vioce.png" slot alt="left-icon" />
-      <van-notice-bar
-        text="通知内容1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
-      ></van-notice-bar>
+      <van-notice-bar text="热烈祝贺彩金多app全新上线！！"></van-notice-bar>
     </div>
     <div class="line">
       <p></p>
@@ -26,12 +24,12 @@
       <router-link to="charge">
         <img src="@/assets/chongzhi.png" alt />
       </router-link>
-      <router-link to="login">
+      <div @click="exit">
         <img src="@/assets/login.png" alt />
-      </router-link>
+      </div>
     </div>
 
-    <div class="imgone">
+    <div class="indeximgone">
       <img :src="one" alt />
     </div>
 
@@ -44,7 +42,7 @@
       </router-link>
     </div>
 
-    <div class="imgtwo">
+    <div class="indeximgtwo">
       <img :src="two" alt />
     </div>
   </div>
@@ -60,34 +58,54 @@ export default {
         require("../../assets/1570505099.png"),
         require("../../assets/1570505102.png")
       ],
-      one:'',
-      two:''
+      one: "",
+      two: ""
     };
   },
   created() {
-    this.$axios.fetchPost("portal", {
-      source: "web",
-      version: "v1",
-      module: "Content",
-      interface: "getSlides",
-      data:{}
-    }).then(res=>{
-      window.console.log(res)
-      this.swiper = res.data
-    })
-    this.$axios.fetchPost('portal',{
-      source: "web",
-      version: "v1",
-      module: "Content",
-      interface: "advertisingLists",
-      data:{}
-    }).then(res=>{
-      this.one = res.data.one
-      this.two = res.data.two
-      window.console.log(res)
-    })
+    this.$axios
+      .fetchPost("portal", {
+        source: "web",
+        version: "v1",
+        module: "Content",
+        interface: "getSlides",
+        data: {}
+      })
+      .then(res => {
+        window.console.log(res);
+        this.swiper = res.data;
+      });
+    this.$axios
+      .fetchPost("portal", {
+        source: "web",
+        version: "v1",
+        module: "Content",
+        interface: "advertisingLists",
+        data: {}
+      })
+      .then(res => {
+        this.one = res.data.one;
+        this.two = res.data.two;
+        window.console.log(res);
+      });
   },
-  methods: {}
+  methods: {
+     exit() {
+      this.$axios
+        .fetchPost("portal", {
+          source: "web",
+          version: "v1",
+          module: "Account",
+          interface: "2000"
+        })
+        .then(res => {
+          window.console.log(res);
+          // this.$toast(res.message);
+          localStorage.setItem("accessToken", "");
+          this.$router.push("login");
+        });
+    }
+  }
 };
 </script>
 
@@ -132,6 +150,7 @@ export default {
     display: flex;
     padding-left: 30px;
     align-items: center;
+    height: 3rem;
     img {
       width: 20px;
       height: 20px;
@@ -141,42 +160,54 @@ export default {
       background: transparent;
     }
   }
-  .line {
-    width: 100%;
-    background: url(../../assets/line.png);
-    background-size: 108%;
-    height: 16px;
-    margin: 10px 0;
-  }
+  // .line {
+  //   width: 100%;
+  //   background: url(../../assets/line.png);
+  //   background-size: 108%;
+  //   height: 16px;
+  //   margin: 10px 0;
+  // }
   .index-btn {
     width: 100%;
     display: flex;
     justify-content: space-around;
     // margin-top: 10px;
+    height: 3.5rem;
     img {
       width: 100px;
       height: 30px;
-      // margin-bottom: 20px;
+      margin-bottom: 20px;
     }
   }
-  .imgone img {
+  .indeximgone {
     width: 100%;
     height: 100px;
     margin-bottom: 20px;
+    img {
+      width: 100%;
+      height: 100px;
+    }
   }
+
   .playlist {
+    width: 100%;
+    height: 8rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin-bottom: 2rem;
     img {
       width: 180px;
       height: 95px;
     }
   }
-  .imgtwo img {
+  .indeximgtwo {
+    margin-bottom: 3rem;
+    height: 180px;
+  }
+  img {
     height: 180px;
     width: 100%;
-    margin-bottom: 3rem;
   }
 }
 </style>

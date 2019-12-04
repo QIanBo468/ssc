@@ -208,10 +208,10 @@ export default {
     },
     xialaone() {
       window.console.log(this.cainame)
-      this.$emit('showSubmit',this.cainame,'')
+      this.$emit('showSubmit',this.cainame.toString(),'')
     },
      xialatwo() {
-      this.$emit('showSubmit',this.cainame,this.caiactive)
+      this.$emit('showSubmit',this.cainame.toString(),this.caiactive.toString())
     }
   }
 };
@@ -256,6 +256,7 @@ export default {
   .list-content {
     background: #666;
     padding: 1rem;
+    font-size: 12px;
     li {
       display: flex;
       justify-content: space-around;

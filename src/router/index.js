@@ -12,6 +12,10 @@ Object.keys(components).forEach(item => {
 export default new router({
     routes: [
         ...routes,
+        // {
+        //     path: '/',
+        //     redirect: '/login'
+        //   },
         {
             path: '/',
             component: () => import('@/components/tabbar'),

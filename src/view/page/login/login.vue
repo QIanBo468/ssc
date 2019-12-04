@@ -10,10 +10,10 @@
         <img src="@/assets/icon_pass.png" alt />
         <van-field maxlength="16" v-model="password" type="password" placeholder="请输入密码" />
       </van-cell-group>
-      <van-cell-group :border="false">
+      <!-- <van-cell-group :border="false">
         <img src="@/assets/icon_code.png" alt />
         <van-field maxlength="6" v-model="catpah" placeholder="请输入验证码" />
-      </van-cell-group>
+      </van-cell-group> -->
     </div>
     <button class="login-btn" @click="submit">登录</button>
 

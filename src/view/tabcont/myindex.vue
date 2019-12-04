@@ -1,126 +1,128 @@
 <template>
   <div class="myindex">
     <van-nav-bar title="我的" :border="false" />
-    <div class="userdata">
-      <div class="user">
-        <div class="avatar">
-          <img :src="user.avatar" alt />
+    <div class="mindex-contnet">
+      <div class="userdata">
+        <div class="user">
+          <div class="avatar">
+            <img :src="user.avatar" alt />
+            <div class="level">
+              <span>{{user.account}}</span>
+              <span>id: {{user.id}}</span>
+            </div>
+          </div>
           <div class="level">
-            <span>{{user.account}}</span>
-            <span>id: {{user.id}}</span>
+            <span>级别</span>
+            <span>VIP{{user.level}}</span>
           </div>
         </div>
-        <div class="level">
-          <span>级别</span>
-          <span>{{user.levelPercent}}</span>
+        <!-- <div class="index-jindu"> -->
+        <div class="jindu">
+          <span>VIP{{user.levelLeft}}</span>
+          <span>VIP{{user.levelRight}}</span>
+        </div>
+        <van-progress
+          stroke-width="8"
+          track-color="#000"
+          color="#ffc000"
+          pivot-text
+          :percentage="user.levelPercent"
+        />
+        <!-- 进度条 所需流水 {{user.money}} -->
+        <p>{{user.levelTxt}}</p>
+        <!-- </div> -->
+      </div>
+
+      <div class="wallet">
+        <div>
+          <p>中心钱包</p>
+          <span>￥{{wallet.credit_1.value}}</span>
+        </div>
+        <div>
+          <p>金币钱包</p>
+          <span>￥{{wallet.credit_2.value}}</span>
+        </div>
+        <div>
+          <p>盈利钱包</p>
+          <span>￥{{wallet.credit_3.value}}</span>
+        </div>
+        <div>
+          <p>收益钱包</p>
+          <span>￥{{wallet.credit_4.value}}</span>
         </div>
       </div>
-      <!-- <div class="index-jindu"> -->
-      <div class="jindu">
-        <span>VIP{{user.levelLeft}}</span>
-        <span>VIP{{user.levelRight}}</span>
-      </div>
-      <van-progress
-        stroke-width="8"
-        track-color="#000"
-        color="#ffc000"
-        pivot-text
-        :percentage="80" 
-      />
-      <!-- 进度条 所需流水 {{user.money}} -->
-      <p>{{user.levelTxt}}</p>
-      <!-- </div> -->
-    </div>
 
-    <div class="wallet">
-      <div>
-        <p>中心钱包</p>
-        <span>￥{{wallet.credit_1.value}}</span>
-      </div>
-      <div>
-        <p>金币钱包</p>
-        <span>￥{{wallet.credit_2.value}}</span>
-      </div>
-      <div>
-        <p>盈利钱包</p>
-        <span>￥{{wallet.credit_3.value}}</span>
-      </div>
-      <div>
-        <p>收益钱包</p>
-        <span>￥{{wallet.credit_4.value}}</span>
-      </div>
-    </div>
+      <div class="index-btn">
+        <img src="@/assets/chongzhi.png" alt @click="$router.push('charge')" />
 
-    <div class="index-btn">
-      <img src="@/assets/chongzhi.png" alt @click="$router.push('charge')" />
+        <img src="@/assets/btn_change.png" @click="$router.push('edSwitch')" alt />
+      </div>
+      <ul class="list">
+        <li>
+          <router-link to="online">
+            <img src="@/assets/btn-1.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="notice">
+            <img src="@/assets/btn-2.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="myAddress">
+            <img src="@/assets/btn-3.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="setting">
+            <img src="@/assets/btn-4.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="topUp">
+            <img src="@/assets/btn-5.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="depositRecord">
+            <img src="@/assets/btn-6.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="touzhu">
+            <img src="@/assets/btn-7.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="zhongjiang">
+            <img src="@/assets/btn-8.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="mingxi">
+            <img src="@/assets/btn-9.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="addpople">
+            <img src="@/assets/btn-10.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="yaoqing">
+            <img src="@/assets/btn-11.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="myteam">
+            <img src="@/assets/btn-12.png" alt />
+          </router-link>
+        </li>
+      </ul>
 
-      <img src="@/assets/btn_change.png" @click="$router.push('edSwitch')" alt />
-    </div>
-    <ul class="list">
-      <li>
-        <router-link to>
-          <img src="@/assets/btn-1.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="notice">
-          <img src="@/assets/btn-2.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="myAddress">
-          <img src="@/assets/btn-3.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="setting">
-          <img src="@/assets/btn-4.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="topUp">
-          <img src="@/assets/btn-5.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="depositRecord">
-          <img src="@/assets/btn-6.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="touzhu">
-          <img src="@/assets/btn-7.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="zhongjiang">
-          <img src="@/assets/btn-8.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="mingxi">
-          <img src="@/assets/btn-9.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="addpople">
-          <img src="@/assets/btn-10.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="yaoqing">
-          <img src="@/assets/btn-11.png" alt />
-        </router-link>
-      </li>
-      <li>
-        <router-link to="myteam">
-          <img src="@/assets/btn-12.png" alt />
-        </router-link>
-      </li>
-    </ul>
-
-    <div class="mindexbtn" @click="exit">
-      <img class="mindexbtn-img" src="@/assets/btn_loginout.png" alt="">
+      <div class="mindexbtn" @click="exit">
+        <img class="mindexbtn-img" src="@/assets/btn_loginout.png" alt />
+      </div>
     </div>
   </div>
 </template>
@@ -129,57 +131,62 @@
 export default {
   data() {
     return {
-      user: {
-      },
+      user: {},
       wallet: {
-        credit_1:'',
-        credit_2:'',
-        credit_3:'',
-        credit_4:''
+        credit_1: "",
+        credit_2: "",
+        credit_3: "",
+        credit_4: ""
       }
     };
   },
   created() {
-    this.$axios.fetchPost("portal", {
-      source: "web",
-      version: "v1",
-      module: "User",
-      interface: "1000"
-    }).then(res=>{
-      if(res.code ==0 ){
-        this.user = res.data
-      } else {
-        this.$toast(res.message)
-      }
-      window.console.log(res)
-    })
+    this.$axios
+      .fetchPost("portal", {
+        source: "web",
+        version: "v1",
+        module: "User",
+        interface: "1000"
+      })
+      .then(res => {
+        if (res.code == 0) {
+          this.user = res.data;
+        } else {
+          this.$toast(res.message);
+        }
+        window.console.log(res);
+      });
 
-    this.$axios.fetchPost("portal", {
-      source: "web",
-      version: "v1",
-      module: "Finance",
-      interface: "1000"
-    }).then(res=>{
-      this.wallet.credit_1 = res.data.creditList.credit_1
-      this.wallet.credit_2 = res.data.creditList.credit_2
-      this.wallet.credit_3 = res.data.creditList.credit_3
-      this.wallet.credit_4 = res.data.creditList.credit_4
-      window.console.log("钱包信息",res)
-    })
+    this.$axios
+      .fetchPost("portal", {
+        source: "web",
+        version: "v1",
+        module: "Finance",
+        interface: "1000"
+      })
+      .then(res => {
+        this.wallet.credit_1 = res.data.creditList.credit_1;
+        this.wallet.credit_2 = res.data.creditList.credit_2;
+        this.wallet.credit_3 = res.data.creditList.credit_3;
+        this.wallet.credit_4 = res.data.creditList.credit_4;
+        window.console.log("钱包信息", res);
+      });
   },
   methods: {
     exit() {
-      this.$axios.fetchPost("portal", {
-      source: "web",
-      version: "v1",
-      module: "Account",
-      interface: "2000"
-    }).then(res=>{
-      window.console.log(res)
-      this.$toast(res.message)
-      localStorage.setItem("accessToken",'')
-      this.$router.push('login')
-    })
+      this.$axios
+        .fetchPost("portal", {
+          source: "web",
+          version: "v1",
+          module: "Account",
+          interface: "2000"
+        })
+        .then(res => {
+          window.console.log(res);
+          this.$toast(res.message);
+          localStorage.setItem("accessToken", "");
+          this.$router.push("login");
+        });
     }
   }
 };
@@ -188,20 +195,28 @@ export default {
 <style lang='less' sceop>
 .myindex {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: url(../../assets/myBg.jpg);
-  display: flex;
+  // display: flex;
+  // flex-direction: column;
+  .mindex-contnet{
+    height: 100vh;
+    display: flex;
   flex-direction: column;
+  }
   .userdata {
     margin-top: 15px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-content: center;
+
     .user {
       display: flex;
       justify-content: space-around;
       align-items: center;
+      margin-bottom: 1rem;
+      height:5rem;
       .avatar {
         display: flex;
         img {
@@ -236,6 +251,7 @@ export default {
     justify-content: space-around;
     align-items: center;
     margin-left: 10px;
+    
     span {
       font-size: 16px;
       color: #f2e5ca;
@@ -247,6 +263,7 @@ export default {
 .wallet {
   display: flex;
   justify-content: space-around;
+  height: 5rem;
   padding: 20px 0;
   border-top: 1px solid #504339;
   border-bottom: 1px solid #504339;
@@ -278,10 +295,11 @@ export default {
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
+  margin-bottom: 20px;
+  height: 4rem;
   img {
     width: 130px;
     height: 50px;
-    margin-bottom: 20px;
   }
 }
 
@@ -291,9 +309,11 @@ export default {
   flex-wrap: wrap;
   margin-bottom: 20px;
   justify-content: center;
+  // width: 100%;
+  height: 16rem;
   li {
-    width: 4rem;
-    height: 4rem;
+    width: 3.5rem;
+    height: 3.5rem;
     margin: 0.5rem;
     img {
       width: 100%;
@@ -301,13 +321,13 @@ export default {
     }
   }
 }
-.mindexbtn{
+.mindexbtn {
   width: 80%;
-  height: 100%;
+  // height: 100%;
   margin: 0 auto;
-  .mindexbtn-img{
+  margin-bottom: 50px;
+  .mindexbtn-img {
     width: 100%;
-    margin-bottom: 60px;
   }
 }
 .van-progress {

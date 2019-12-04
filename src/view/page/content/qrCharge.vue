@@ -27,8 +27,8 @@
       <img src="@/assets/icon_tips.png" alt />扫码支付或者钱包支付
     </div>
 
-    <div class="qrCode">
-      <div class="qrCodecent">
+     <div class="qrCode">
+      <!-- <div class="qrCodecent">
         <p>入款确认信息</p>
       </div>
       <div class="qrCodecent">
@@ -42,13 +42,13 @@
       <div class="qrCodecent">
         <p>金额</p>
         <input placeholder="请输入金额" v-model="RMB" type="text" />
-      </div>
+      </div> -->
       <!-- <div class="qrCodecent">
         <p>存款人姓名</p>
         <input 
         placeholder="请输入存款人姓名"
         v-model="name"  type="text" />
-      </div>-->
+      </div>  -->
 
       <ul>
         <li>充值步骤：</li>
@@ -58,10 +58,10 @@
         <li>4后台提交褪影的USDT数量，就会有折合人民币的提示，输入姓名提交</li>
         <li>温馨提示：请每次充值时务必核对最新的二维码钱包地址信息!平台会用不定期更换新的二维码钱包地址。如因本人原因造成的损失平台概不负责！</li>
       </ul>
-
+<!-- 
       <div class="btn" @click="submit">
         <img src="@/assets/confirm.png" alt />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

@@ -25,9 +25,19 @@ export default {
       page: 1
     };
   },
+  mounted() {
+    this.submit()
+  },
   methods: {
     submit() {
-      let timeArry = [this.$refs.headerChild.start, this.$refs.headerChild.end];
+       let timeArry;
+      if (this.$refs.headerChild.start != "" && !this.$refs.headerChild.end) {
+        timeArry = [this.$refs.headerChild.start, this.$refs.headerChild.end];
+          
+      } else {
+        timeArry = "";
+        window.console.log('1111')
+      }
       this.$axios
         .fetchPost("portal/Digiccy", {
           source: "web",

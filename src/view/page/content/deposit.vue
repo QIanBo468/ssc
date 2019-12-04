@@ -12,8 +12,8 @@
         <input placeholder="请输入金额" v-model="RMB" type="text" />
       </div>
       <div class="qrCodecent">
-        <p>提款密码</p>
-        <input placeholder="请输入金额" v-model="pay" type="text" />
+        <p>提现密码</p>
+        <input placeholder="请输入提现密码" v-model="pay" type="text" />
       </div>
       <!-- <div class="qrCodecent">
         <p>存款人姓名</p>
@@ -53,8 +53,32 @@ export default {
       type: ""
     };
   },
+  created() {
+     this.$axios
+        .fetchPost("/portal/Digiccy", {
+          source: "web",
+          version: "v1",
+          module: "Finance",
+          interface: "2000",
+          data: {
+
+          }
+        }).then(res=>{
+          window.console.log(res)
+        })
+  },
   methods: {
     submit() {
+      if (!this.usdt) {
+          this.$toast('请输入USDT地址')
+          return
+      } else if (!this.RMB) {
+        this.$toast('请输入金额')
+        return
+      } else if (!this.pay) {
+        this.$toast('请输入提现密码')
+        return
+      }
       this.$axios
         .fetchPost("/portal/Digiccy", {
           source: "web",
@@ -69,7 +93,7 @@ export default {
           }
         })
         .then(res => {
-      
+          
           this.usdt = "";
           this.RMB = "";
           this.pay = "";

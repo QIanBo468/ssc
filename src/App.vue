@@ -23,10 +23,12 @@ body {
   width: 100%;
   height: 100%;
   background: url(./assets/bg.jpg);
+  font-size: 16px;
 }
 #app {
-  width: 100%;
-  height: 100%;
+   min-height: 768px;
+    /* 原来定义的高度 100% */
+    height: 100vh;
 }
 
 .van-nav-bar {

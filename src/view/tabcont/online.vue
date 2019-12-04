@@ -1,6 +1,6 @@
 <template>
   <div class="online">
-    <titlebar title="联系客服n"></titlebar>
+    <titlebar title="联系客服"></titlebar>
     <!-- <img src="../../assets/111.png" alt=""> -->
     <van-cell-group>
       <van-field v-model="online.leave" placeholder="请留言" />
@@ -46,14 +46,20 @@ export default {
           module: "Account",
           interface: 4000,
           data: {
-            message: this.leave,
-            account: this.phone,
-            nickname: this.name,
-            QQ: this.QQ
+            message: this.online.leave,
+            account: this.online.phone,
+            nickname: this.online.name,
+            QQ: this.online.QQ
           }
         })
         .then(res => {
           this.$toast(res.message);
+          if (res.code ==0 ) {
+              this.online.leave = ""
+            this.online.phone =""
+            this.online.name =""
+            this.online.QQ= ""
+          }
         });
     }
   }

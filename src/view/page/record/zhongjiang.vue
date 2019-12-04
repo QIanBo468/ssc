@@ -1,7 +1,7 @@
 <template>
   <div class="zhongjian">
     <titlebar title="中奖记录"></titlebar>
-    <times ref="headerChild" title="中将记录"></times>
+    <times ref="headerChild" title="中奖记录"></times>
     <button @click="submit" class="topupbtn">查询</button>
     <recordList :pantData="pantData" :searchpop="true"></recordList>
   </div>
@@ -27,7 +27,9 @@ export default {
       status:''
     };
   },
-
+mounted() {
+  this.submit()
+},
   methods: {
     submit() {
        let timeArry;

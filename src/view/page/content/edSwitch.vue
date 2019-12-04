@@ -6,47 +6,47 @@
         <div class="avatar">
           <img :src="user.avatar" alt />
           <div class="level">
-            <span>{{user.name}}</span>
+            <span>{{user.account}}</span>
             <span>id: {{user.id}}</span>
           </div>
         </div>
         <div class="level">
           <span>级别</span>
-          <span>VIP{{user.level}}</span>
+          <span>VIP{{user.levelLeft}}</span>
         </div>
       </div>
       <!-- <div class="index-jindu"> -->
       <div class="jindu">
-        <span>VIP{{user.level}}</span>
-        <span>VIP{{user.level+1}}</span>
+        <span>VIP{{user.levelLeft}}</span>
+        <span>VIP{{user.levelRight}}</span>
       </div>
       <van-progress
         stroke-width="8"
         track-color="#000"
         color="#ffc000"
         pivot-text
-        :percentage="user.progress"
+        :percentage="user.levelPercent"
       />
-      <p>距离升级还需要{{user.money}}流水</p>
+      <p>{{user.levelTxt}}</p>
       <!-- </div> -->
     </div>
 
     <div class="wallet">
       <div>
         <p>中心钱包</p>
-        <span>￥{{wallet.zhongxin}}</span>
+        <span>￥{{wallet.credit_1}}</span>
       </div>
       <div>
         <p>金币钱包</p>
-        <span>￥{{wallet.jinbi}}</span>
+        <span>￥{{wallet.credit_2}}</span>
       </div>
       <div>
         <p>盈利钱包</p>
-        <span>￥{{wallet.yingli}}</span>
+        <span>￥{{wallet.credit_3}}</span>
       </div>
       <div>
         <p>收益钱包</p>
-        <span>￥{{wallet.shouyi}}</span>
+        <span>￥{{wallet.credit_4}}</span>
       </div>
     </div>
 
@@ -55,28 +55,26 @@
         readonly
         clickable
         label="转换类型:"
-        :value="value"
+        :value="leixing"
         placeholder="请选择类型"
         @click="showPicker = true"
       />
     </div>
     <div class="wallet-switch">
-      <van-field
-        label="转换金额:"
-        :values="value"
-        placeholder="请输入金额"
-        type='number'
-      />
+      <van-field label="转换金额:" v-model="jine" placeholder="请输入金额" type="number" />
     </div>
 
-    <div class="btn"></div>
+    <div class="btn" @click="submit"></div>
 
     <ul class="switch-hint">
-        <li>温馨提示:</li>
-        <li><span>*</span>中心钱包转金币钱包每日首次加赠5%</li>
-        <li><span>*</span>金币钱包转中心钱包投注流水大于30%</li>
+      <li>温馨提示:</li>
+      <li>
+        <span>*</span>中心钱包转金币钱包每日首次加赠5%
+      </li>
+      <li>
+        <span>*</span>金币钱包转中心钱包投注流水大于30%
+      </li>
     </ul>
-
 
     <!-- 类型选择 -->
     <van-popup v-model="showPicker" position="bottom">
@@ -99,8 +97,8 @@ export default {
   },
   data() {
     return {
-      value: "",
-      values:'',
+      leixing: "",
+      jine: "",
       showPicker: false,
       columns: [
         "中心钱包转金币",
@@ -109,25 +107,114 @@ export default {
         "收益钱包转中心"
       ],
       user: {
-        avatar: require("../../../assets/avatar.jpg"),
-        name: "zhangsan",
-        id: "5259",
-        level: "0",
-        money: 180000,
-        progress: 50
+        // avatar: require("../../../assets/avatar.jpg"),
+        // name: "zhangsan",
+        // id: "5259",
+        // level: "0",
+        // money: 180000,
+        // progress: 50
       },
-      wallet: {
-        zhongxin: 0.0,
-        jinbi: 111,
-        yingli: 222,
-        shouyi: 333
-      }
+      wallet: {}
     };
   },
+  created() {
+    this.$axios
+      .fetchPost("portal", {
+        source: "web",
+        version: "v1",
+        module: "User",
+        interface: "1000"
+      })
+      .then(res => {
+        if (res.code == 0) {
+          this.user = res.data;
+          window.console.log(this.user.levelPercent);
+        } else {
+          this.$toast(res.message);
+        }
+      });
+      this.$axios
+        .fetchPost("portal", {
+          source: "web",
+          version: "v1",
+          module: "Finance",
+          interface: "1000"
+        })
+        .then(res => {
+          this.wallet.credit_1 = res.data.creditList.credit_1.value;
+          this.wallet.credit_2 = res.data.creditList.credit_2.value;
+          this.wallet.credit_3 = res.data.creditList.credit_3.value;
+          this.wallet.credit_4 = res.data.creditList.credit_4.value;
+          window.console.log("钱包信息", res);
+        });
+  },
   methods: {
-    onConfirm(value) {
-      this.value = value;
+    onConfirm(Avalue) {
+      window.console.log(Avalue)
+      this.leixing = Avalue;
       this.showPicker = false;
+    },
+    qianbao() {
+      this.$axios
+        .fetchPost("portal", {
+          source: "web",
+          version: "v1",
+          module: "Finance",
+          interface: "1000"
+        })
+        .then(res => {
+          this.wallet.credit_1 = res.data.creditList.credit_1.value;
+          this.wallet.credit_2 = res.data.creditList.credit_2.value;
+          this.wallet.credit_3 = res.data.creditList.credit_3.value;
+          this.wallet.credit_4 = res.data.creditList.credit_4.value;
+          window.console.log("钱包信息", res);
+        });
+    },
+    submit() {
+      window.console.log(this.values);
+      let zhuanchu, zhuanru;
+      if (this.leixing == "中心钱包转金币") {
+        zhuanchu = "credit_1";
+        zhuanru = "credit_2";
+      }
+      if (this.leixing == "金币钱包转中心") {
+        zhuanchu = "credit_2";
+        zhuanru = "credit_1";
+      }
+      if (this.leixing == "盈利钱包转中心") {
+        zhuanchu = "credit_3";
+        zhuanru = "credit_1";
+      }
+      if (this.leixing == "收益钱包转中心") {
+        zhuanchu = "credit_4";
+        zhuanru = "credit_1";
+      }
+      let that = this
+      this.$axios
+        .fetchPost("portal", {
+          source: "web",
+          version: "v1",
+          module: "Finance",
+          interface: "4001",
+          data: {
+            fromCredit: zhuanchu,
+            toCredit: zhuanru,
+            amount: this.jine,
+            safeword: ""
+          }
+        })
+        .then(res => {
+          this.$toast(res.message);
+          window.console.log(res);
+          if (res.code == 0) {
+            this.jine = "";
+            this.qianbao()
+           setTimeout(() => {
+             that.$router.go(0)
+           }, 500);
+            // 
+          }
+        });
     }
   }
 };
@@ -215,36 +302,35 @@ export default {
     }
   }
   .wallet-switch {
-      padding: 1.5rem;
-      border-bottom:1px solid #504339;
-      span{
-          color: #f2e5ca;
-          font-size: 1rem;
-      }
-      input{
-          border:1px solid #f2e5ca;
-          padding: 0.2rem;
-      }
-      
-  }
-  .btn{
-      width: 12rem;
-      height: 2.5rem;
-      background: url(../../../assets/btn_save.png)no-repeat;
-      background-size: 100%;
-      margin: 2rem auto;
-  }
-    .switch-hint{
-        padding-left: 2rem;
-        color: #ff6600;
-        font-size: 0.9rem;
-        span{
-            color: #f00;
-            margin-right: 5px;
-        }
-        li{
-            margin-bottom: 0.2rem;
-        }
+    padding: 1.5rem;
+    border-bottom: 1px solid #504339;
+    span {
+      color: #f2e5ca;
+      font-size: 1rem;
     }
+    input {
+      border: 1px solid #f2e5ca;
+      padding: 0.2rem;
+    }
+  }
+  .btn {
+    width: 12rem;
+    height: 2.5rem;
+    background: url(../../../assets/btn_save.png) no-repeat;
+    background-size: 100%;
+    margin: 2rem auto;
+  }
+  .switch-hint {
+    padding-left: 2rem;
+    color: #ff6600;
+    font-size: 0.9rem;
+    span {
+      color: #f00;
+      margin-right: 5px;
+    }
+    li {
+      margin-bottom: 0.2rem;
+    }
+  }
 }
 </style>
