@@ -67,9 +67,13 @@
       <p v-else>请选择四位数字</p>
 
       <div class="touzhu">
-        <div>
+        <div class="stepper">
           <span>元</span>
-          <input onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" type="text" v-model="beishu" />倍
+          <div class="stepper-cont">
+            <p @click="jianhao">-</p>
+            <input onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" type="text" v-model="beishu" />
+            <p @click="beishu++">+</p>
+          </div>倍
         </div>
         <button @click="pourzhus">添加投注</button>
       </div>
@@ -125,12 +129,12 @@
             <!-- <li>操作</li> -->
           </ul>
           <ul class="pop-content">
-            <li v-for="item of tzRecords" :key="item.bianhao">
+            <li v-for="item of tzRecords" :key="item.bianhao" @click="tzxq(item)">
               <span>{{item.id}}</span>
               <span>{{item.number_periods}}</span>
               <span>{{item.multiple}}</span>
               <span>{{item.typeName}}</span>
-              <span @click="revocation(item)">{{item.isWinName}}</span>
+              <span>{{item.isWinName}}</span>
               <!-- <span>{{item.caozuo}}</span> -->
             </li>
             <li class="wu">没有更多了</li>
@@ -138,7 +142,32 @@
           <button class="btn" @click="tzRecord = false">关闭</button>
         </div>
       </div>
+
     </van-popup>
+    
+      <van-popup class="Tzxiangqing" v-model="touzhuxiangqing">
+        <div class="tzxq-cont">
+          <h3>投注信息</h3>
+          <div>
+            <p>购买金额:{{TZXQ.amount}}</p>
+            <p>期号:{{TZXQ.numberPeriods}}</p>
+          </div>
+          <div>
+            <p>中奖金额:{{TZXQ.winAmount}}</p>
+            <p>投注时间:{{TZXQ.createdAt}}</p>
+          </div>
+          <div>
+            <p>订单状态:{{TZXQ.isWinName}}</p>
+            <p>开奖时间:{{TZXQ.lotteryTime}}</p>
+          </div>
+          <div>购买盈亏:{{TZXQ.profit}}</div>
+          <div>开奖号码:{{TZXQ.winNumber}}</div>
+          <div>投注内容:{{TZXQ.number}}</div>
+
+          <van-button v-if="TZXQ.isWinName =='未开奖'"  @click="revocation(TZXQ)">是否撤单</van-button>
+          <van-button @click="touzhuxiangqing = false">关闭</van-button>
+        </div>
+      </van-popup>
   </div>
 </template>
 
@@ -153,10 +182,11 @@ export default {
   data() {
     return {
       type: 0,
-    
-        qihao: "",
-        jinbi: "0.00",
-        jiangliushui: 0,
+      touzhuxiangqing: false,
+      TZXQ:{},
+      qihao: "",
+      jinbi: "0.00",
+      jiangliushui: 0,
       kjRecord: false, //开奖记录
       tzRecord: false, // 投注记录
       time: 100000, //倒计时
@@ -189,51 +219,8 @@ export default {
         { num: "09", flg: false },
         { num: "10", flg: false }
       ],
-      kjRecords: [
-        //开奖记录列表
-        // { qihao: 741725, number: "03-05-04-07-02-06-10-08-01" },
-        // { qihao: 741724, number: "03-05-04-07-02-06-10-08-01" },
-        // { qihao: 741723, number: "03-05-04-07-02-06-10-08-01" },
-        // { qihao: 741722, number: "03-05-04-07-02-06-10-08-01" },
-        // { qihao: 741721, number: "03-05-04-07-02-06-10-08-01" },
-        // { qihao: 741720, number: "03-05-04-07-02-06-10-08-01" },
-        // { qihao: 741719, number: "03-05-04-07-02-06-10-08-01" }
-      ],
-      tzRecords: [
-        // 投注记录
-        // {
-        //   bianhao: 0,
-        //   qihao: 741725,
-        //   beishu: 4,
-        //   moshi: "幸运飞艇",
-        //   zhangtai: "未开奖",
-        //   caozuo: "已投注"
-        // },
-        // {
-        //   bianhao: 1,
-        //   qihao: 741725,
-        //   beishu: 4,
-        //   moshi: "幸运飞艇",
-        //   zhangtai: "未开奖",
-        //   caozuo: "已投注"
-        // },
-        // {
-        //   bianhao: 2,
-        //   qihao: 741725,
-        //   beishu: 4,
-        //   moshi: "幸运飞艇",
-        //   zhangtai: "未开奖",
-        //   caozuo: "已投注"
-        // },
-        // {
-        //   bianhao: 3,
-        //   qihao: 741725,
-        //   beishu: 4,
-        //   moshi: "幸运飞艇",
-        //   zhangtai: "未开奖",
-        //   caozuo: "已投注"
-        // }
-      ],
+      kjRecords: [],
+      tzRecords: [],
       number: [], //选择的奖号
       sums: -1,
       temp: "",
@@ -249,11 +236,11 @@ export default {
   },
   created() {
     this.type = this.$route.query.type;
-      if (this.type == 0) {
-        this.playtype = "1";
-      } else if (this.type == 1) {
-        this.playtype = "2";
-      }
+    if (this.type == 0) {
+      this.playtype = "1";
+    } else if (this.type == 1) {
+      this.playtype = "2";
+    }
     // console.log(this.num);
     this.zhushubefore();
     this.singular();
@@ -282,7 +269,7 @@ export default {
         })
         .then(res => {
           this.jinbi = res.data.creditList.credit_2.value;
-          this.jiangliushui = res.data.prize
+          this.jiangliushui = res.data.prize;
           window.console.log("钱包信息", res);
         });
     },
@@ -319,8 +306,7 @@ export default {
           window.console.log(res);
           // this.price = res.data.price;
           this.qihao = res.data.qishu;
-          this.time = res.data.kaijiang;
-          
+          this.time = res.data.fengpan;
         });
     },
     jinqikaijiang() {
@@ -338,13 +324,13 @@ export default {
         })
         .then(res => {
           this.kjRecords = res.data.list;
-          this.pitch = res.data.list.slice(0,1)
+          this.pitch = res.data.list.slice(0, 1);
           window.console.log("近期开奖", this.pitch);
         });
       let that = this,
         // sum = 0,
         temp;
-      
+
       // console.log(this.type);
       // console.log(this.num);
 
@@ -405,30 +391,76 @@ export default {
           }
         })
         .then(res => {
-
           this.$toast(res.message);
           if (res.code == 0) {
-            this.this.number = [],
-            this.beishu=""
+            setTimeout(() => {
+              window.location.reload();
+            }, 500)((this.this.number = [])),
+              (this.beishu = "");
           }
           window.console.log(res);
         });
     },
-    revocation(item){
-      if (item.isWinName == '未开奖') {
-          
-           Dialog.confirm({
+    revocation(item) {
+      let that = this;
+      if (item.isWinName == "未开奖") {
+        Dialog.confirm({
           confirmButtonColor: "#ffdd00",
           cancelButtonColor: "#cdaa6f",
           // title: "标题",
           message: "是否撤销"
-        }).then(() => {
-          window.console.log('撤销')
-        }).catch(() => {
-  window.console.log('quxiao')
-});
+        })
+          .then(() => {
+            that.$axios
+              .fetchPost("/portal", {
+                source: "web",
+                version: "v1",
+                module: "Lottery",
+                interface: "1006",
+                data: {
+                  id: item.id.toString()
+                }
+              })
+              .then(res => {
+                that.$toast(res.message);
+                if (res.code == 0) {
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 500);
+                }
+                window.console.log(res);
+              });
+          })
+          .catch(() => {});
       }
     },
+    tzxq(item) {
+      this.touzhuxiangqing = true
+      this.$axios
+              .fetchPost("/portal", {
+                source: "web",
+                version: "v1",
+                module: "Lottery",
+                interface: "1007",
+                data: {
+                  id: item.id.toString()
+                }
+              })
+              .then(res => {
+              this.TZXQ = res.data
+                window.console.log(res);
+              });
+    },
+
+
+jianhao() {
+  if (this.beishu<=1) {
+      return
+  } else {
+    this.beishu --
+  }
+},
+
     // 选择号码
     xuanzhong(item) {
       let sum = 0;
@@ -641,6 +673,20 @@ export default {
       align-items: center;
       padding: 0 10px;
       color: #fff;
+      .stepper {
+        display: flex;
+        align-items: center;
+        .stepper-cont {
+          display: flex;
+          align-items: center;
+          p {
+            background: #fff;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin: 0;
+          }
+        }
+      }
       span {
         display: inline-block;
         color: #fff;
@@ -824,6 +870,34 @@ export default {
         height: 40px;
         font-size: 16px;
         line-height: 40px;
+      }
+    }
+  }
+}
+.Tzxiangqing {
+  display: flex;
+  flex-direction: column;
+  .tzxq-cont {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+    h3 {
+      font-size: 22px;
+      margin-bottom: 1rem;
+    }
+    div{
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 1rem;
+      font-size: 18px;
+      p{
+        flex: 4;
+        text-align: start;
+        
+      }
+      p:last-child{
+       flex: 6; 
       }
     }
   }

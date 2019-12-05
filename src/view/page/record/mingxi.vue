@@ -22,8 +22,12 @@
       </ul>
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <ul class="list-content">
-          <li v-for="(item,index) of lists" :key="index">
-            <span>{{item.typeName}}<br>{{item.creditName}}</span>
+          <li v-for="(item,index) of list" :key="index">
+            <span>
+              {{item.typeName}}
+              <br />
+              {{item.creditName}}
+            </span>
             <span>{{item.id}}</span>
             <span>{{item.createdAt}}</span>
             <span>{{item.num}}</span>
@@ -80,40 +84,48 @@ export default {
       lists: [],
       page: 1,
       paginal: 10,
-      lastId: 0
+      lastId: 0,
+      financeType: ""
     };
   },
-  mounted() {
-    this.submit()
-    
-  },
   methods: {
-    onLoad(a, num) {
-      if (a >= 0) {
-        if (this.lists.length < this.paginal && num > 0) {
-          this.$toast("没有更多了");
-          return;
-        }
-        this.lists = this.list.slice(a, a + this.paginal);
-      } else {
-        this.lists = this.list.slice(0, this.paginal);
-      }
+    xialatwo(value) {
+      // let financeType;
+      this.financeType = value;
+      window.console.log(value);
+      // this.submit(value);
+    },
+    onLoad() {
+      // if (a >= 0) {
+      //   if (this.lists.length < this.paginal && num > 0) {
+      //     this.$toast("没有更多了");
+      //     return;
+      //   }
+      //   this.lists = this.list.slice(a, a + this.paginal);
+      // } else {
+      //   this.lists = this.list.slice(0, this.paginal);
+      // }
     },
     updown(num) {
-      if (this.page < 0) return;
-      this.page += num;
-      this.onLoad(this.page * this.paginal, num);
+      this.page = this.page + num;
+      window.console.log(this.page);
+      this.submit();
     },
     submit() {
       let timeArry;
       if (this.$refs.headerChild.start != "" && !this.$refs.headerChild.end) {
         timeArry = [this.$refs.headerChild.start, this.$refs.headerChild.end];
-          
       } else {
         timeArry = "";
-        window.console.log('1111')
       }
 
+      // if (!isNaN(financeType)) {
+
+      //   Ftype = financeType;
+      // } else {
+      //   Ftype = "";
+      // }
+      // window.console.log(typeof financeType)
       this.$axios
         .fetchPost("/portal", {
           source: "web",
@@ -124,7 +136,7 @@ export default {
             timeRange: timeArry,
             lastId: this.lastId,
             page: this.page,
-            financeType: ""
+            financeType: this.financeType
           }
         })
         .then(res => {
@@ -134,7 +146,9 @@ export default {
             this.list = res.data.list;
             this.loading = false;
             this.finished = true;
-            this.onLoad()
+            this.onLoad();
+          } else if(res.code == 4500) {
+              this.$toast('没有上一页了')
           } else {
             this.$toast(res.message);
           }

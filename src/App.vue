@@ -22,11 +22,11 @@ html,
 body {
   width: 100%;
   height: 100%;
-  background: url(./assets/bg.jpg);
+  // background: url(./assets/bg.jpg);
   font-size: 16px;
 }
 #app {
-   min-height: 768px;
+  //  min-height: 768px;
     /* 原来定义的高度 100% */
     height: 100vh;
 }

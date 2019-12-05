@@ -66,16 +66,24 @@ export default {
 };
 </script>
 
-<style>
+<style lang='less' scope>
 .online {
   display: flex;
   flex-direction: column;
+  /deep/.van-field__control{
+    color: rgb(165, 52, 231) !important;
+    border-bottom: 1px solid rgb(165, 52, 231);
+  }
 }
 .onlinesubmit {
   width: 80%;
   height: 2.5rem;
   margin: 5rem auto;
   border: none;
-  background: #d3b787;
+  // background: #d3b787;
+  background: url(../../assets/btn_big@3x.png)  no-repeat ;
+  background-size: 100%;
+  color: #fff;
+
 }
 </style>

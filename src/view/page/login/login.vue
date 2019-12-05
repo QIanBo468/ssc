@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <img class="logo" src="../../../assets/logo.png" alt />
+    <!-- <img class="logo" src="../../../assets/logo.png" alt /> -->
     <div>
       <van-cell-group :border="false">
-        <img src="@/assets/icon_user.png" alt />
+        <img src="@/assets/xingming@3x.png" alt />
         <van-field maxlength="16" v-model="name" placeholder="请输入用户名" />
       </van-cell-group>
       <van-cell-group :border="false">
-        <img src="@/assets/icon_pass.png" alt />
+        <img src="@/assets/jihuoma@3x.png" alt />
         <van-field maxlength="16" v-model="password" type="password" placeholder="请输入密码" />
       </van-cell-group>
       <!-- <van-cell-group :border="false">
@@ -83,7 +83,8 @@ export default {
 .container {
   width: 100%;
   height: 100%;
-  background: url(../../../assets/login_bg.png);
+  background: url(../../../assets/bg@3x.png) no-repeat;
+  // background: #fff;
   background-size: 100%;
   display: flex;
   flex-direction: column;
@@ -100,6 +101,12 @@ export default {
     height: 28px;
     line-height: 44px;
   }
+  input{
+    color: #AF53D1 !important;
+  }
+  /deep/.van-field__control{
+    color: #AF53D1;
+  }
 }
 
 .van-cell-group {
@@ -108,8 +115,10 @@ export default {
 .login-btn {
   width: 80%;
   margin: 0 auto;
-  color: #190e0e;
-  background: #caa43f;
+  color: #FFF;
+  // background: #caa43f;
+  background: url(../../../assets/btn_big@3x.png) no-repeat;
+  background-size: 100%;
   border: none;
   height: 40px;
   font-weight: bold;

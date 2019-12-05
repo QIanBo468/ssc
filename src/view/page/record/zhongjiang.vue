@@ -53,7 +53,7 @@ mounted() {
         .then(res => {
           //  this.tzRecords = res.data.list;
           if (res.code == 0) {
-            this.lastId = res.lastId;
+            this.lastId = res.data.lastId;
             this.pantData = res.data.list;
           } else {
             this.$toast(res.message);

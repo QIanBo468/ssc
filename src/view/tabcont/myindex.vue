@@ -1,128 +1,176 @@
 <template>
   <div class="myindex">
-    <van-nav-bar title="我的" :border="false" />
+    <van-nav-bar title="我的" :border="false">
+
+      <slot slot="right" name="right">
+        <img width="30px" height="30px" src="@/assets/set@3x.png" alt />
+      </slot>
+    </van-nav-bar>
     <div class="mindex-contnet">
       <div class="userdata">
         <div class="user">
           <div class="avatar">
-            <img :src="user.avatar" alt />
+            <img class="touxiang" :src="user.avatar" alt />
             <div class="level">
               <span>{{user.account}}</span>
               <span>id: {{user.id}}</span>
             </div>
+            <div class="indexAdderss">
+              <img src="@/assets/card_icon@3x.png" alt />
+              地址簿
+            </div>
           </div>
-          <div class="level">
+          <!-- <div class="level">
             <span>级别</span>
             <span>VIP{{user.level}}</span>
-          </div>
+          </div>-->
         </div>
         <!-- <div class="index-jindu"> -->
         <div class="jindu">
           <span>VIP{{user.levelLeft}}</span>
+          <van-progress
+            stroke-width="8"
+            track-color="#DCDEEA"
+            color="#6803A3"
+            pivot-text
+            :percentage="user.levelPercent"
+          />
           <span>VIP{{user.levelRight}}</span>
         </div>
-        <van-progress
-          stroke-width="8"
-          track-color="#000"
-          color="#ffc000"
-          pivot-text
-          :percentage="user.levelPercent"
-        />
-        <!-- 进度条 所需流水 {{user.money}} -->
         <p>{{user.levelTxt}}</p>
-        <!-- </div> -->
       </div>
 
-      <div class="wallet">
-        <div>
-          <p>中心钱包</p>
-          <span>￥{{wallet.credit_1.value}}</span>
+      <div class="myindex-wallet">
+        <div class="wallet-item">
+          <img src="@/assets/zhongxinqianbao_icon@3x.png" alt />
+          <div>
+            <p>中心钱包</p>
+            <span>￥{{wallet.credit_1.value}}</span>
+          </div>
         </div>
-        <div>
-          <p>金币钱包</p>
-          <span>￥{{wallet.credit_2.value}}</span>
+        <div class="wallet-item">
+          <img src="@/assets/jinbiqianbao_icon@3x.png" alt />
+          <div>
+            <p>金币钱包</p>
+            <span>￥{{wallet.credit_2.value}}</span>
+          </div>
         </div>
-        <div>
-          <p>盈利钱包</p>
-          <span>￥{{wallet.credit_3.value}}</span>
+        <div class="wallet-item">
+          <img src="@/assets/yingliqianbao_icon@3x.png" alt />
+          <div>
+            <p>盈利钱包</p>
+            <span>￥{{wallet.credit_3.value}}</span>
+          </div>
         </div>
-        <div>
-          <p>收益钱包</p>
-          <span>￥{{wallet.credit_4.value}}</span>
+        <div class="wallet-item">
+          <img src="@/assets/shouyiqianbao_icon@3x.png" alt />
+          <div>
+            <p>收益钱包</p>
+            <span>￥{{wallet.credit_4.value}}</span>
+          </div>
         </div>
       </div>
 
-      <div class="index-btn">
+      <div class="myindexrouter">
+        <div class="router-cont" @click="$router.push('charge')">
+          <img width="58px" height="58px" src="@/assets/home_recharge@3x.png" alt />
+          <span>充值</span>
+        </div>
+        <div class="router-cont" @click="$router.push('deposit')">
+          <img width="58px" height="58px" src="@/assets/home_withdrawal@3x.png" alt />
+          <span>提现</span>
+        </div>
+        <div class="router-cont" @click="$router.push('edSwitch')">
+          <img width="58px" height="58px" src="@/assets/home_conversion@3x.png" alt />
+          <span>额度转换</span>
+        </div>
+        <div class="router-cont"  @click="$router.push('notice')">
+          <img width="58px" height="58px" src="@/assets/home_money@3x.png" alt />
+          <span>公告</span>
+        </div>
+      </div>
+
+      <!-- <div class="index-btn">
         <img src="@/assets/chongzhi.png" alt @click="$router.push('charge')" />
 
         <img src="@/assets/btn_change.png" @click="$router.push('edSwitch')" alt />
-      </div>
+      </div>-->
       <ul class="list">
         <li>
-          <router-link to="online">
-            <img src="@/assets/btn-1.png" alt />
-          </router-link>
-        </li>
-        <li>
-          <router-link to="notice">
-            <img src="@/assets/btn-2.png" alt />
-          </router-link>
-        </li>
-        <li>
-          <router-link to="myAddress">
-            <img src="@/assets/btn-3.png" alt />
-          </router-link>
-        </li>
-        <li>
-          <router-link to="setting">
-            <img src="@/assets/btn-4.png" alt />
+          <router-link to="touzhu">
+            <p>投注记录</p>
+            <img src="@/assets/more@3x.png" alt />
           </router-link>
         </li>
         <li>
           <router-link to="topUp">
-            <img src="@/assets/btn-5.png" alt />
+            <p>充值记录</p>
+            <img src="@/assets/more@3x.png" alt />
           </router-link>
         </li>
         <li>
           <router-link to="depositRecord">
-            <img src="@/assets/btn-6.png" alt />
-          </router-link>
-        </li>
-        <li>
-          <router-link to="touzhu">
-            <img src="@/assets/btn-7.png" alt />
-          </router-link>
-        </li>
-        <li>
-          <router-link to="zhongjiang">
-            <img src="@/assets/btn-8.png" alt />
+            <p>提现记录</p>
+            <img src="@/assets/more@3x.png" alt />
           </router-link>
         </li>
         <li>
           <router-link to="mingxi">
-            <img src="@/assets/btn-9.png" alt />
+            <p>账变明细</p>
+            <img src="@/assets/more@3x.png" alt />
           </router-link>
         </li>
         <li>
           <router-link to="addpople">
-            <img src="@/assets/btn-10.png" alt />
+            <p>增加会员</p>
+            <img src="@/assets/more@3x.png" alt />
           </router-link>
         </li>
         <li>
           <router-link to="yaoqing">
-            <img src="@/assets/btn-11.png" alt />
+            <p>邀请好友</p>
+            <img src="@/assets/more@3x.png" alt />
           </router-link>
         </li>
         <li>
           <router-link to="myteam">
-            <img src="@/assets/btn-12.png" alt />
+            <p>我的团队</p>
+            <img src="@/assets/more@3x.png" alt />
           </router-link>
         </li>
+        <li>
+          <router-link to="setting">
+            <p>安全设置</p>
+            <img src="@/assets/more@3x.png" alt />
+          </router-link>
+        </li>
+        <!-- <li>
+          <router-link to="notice">
+            <p></p>
+            <img src="@/assets/more@3x.png" alt />
+          </router-link>
+        </li>
+        <li>
+          <router-link to="myAddress">
+            <p></p>
+            <img src="@/assets/more@3x.png" alt />
+          </router-link>
+        </li>
+        
+
+        <li>
+          <router-link to="zhongjiang">
+            <p></p>
+            <img src="@/assets/more@3x.png" alt />
+          </router-link>
+        </li> -->
+
+        
       </ul>
 
-      <div class="mindexbtn" @click="exit">
+      <!-- <div class="mindexbtn" @click="exit">
         <img class="mindexbtn-img" src="@/assets/btn_loginout.png" alt />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -196,34 +244,78 @@ export default {
 .myindex {
   width: 100%;
   height: 100vh;
-  background: url(../../assets/myBg.jpg);
+  // background: url(../../assets/myBg.jpg);
   // display: flex;
   // flex-direction: column;
-  .mindex-contnet{
+  background: url("../../assets/index@3x.png") no-repeat;
+  background-size: 100%;
+  .mindex-contnet {
     height: 100vh;
     display: flex;
-  flex-direction: column;
+    flex-direction: column;
+    padding: 1rem;
   }
   .userdata {
-    margin-top: 15px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-content: center;
-
+    background: #fff;
+    position: relative;
+    box-shadow: 2px 6px 10px #ddd4ec;
     .user {
       display: flex;
-      justify-content: space-around;
+      // justify-content: space-around;
       align-items: center;
       margin-bottom: 1rem;
-      height:5rem;
+      height: 5rem;
       .avatar {
+        width: 100%;
         display: flex;
-        img {
+        justify-content: space-between;
+        align-items: center;
+        .level {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: flex-start;
+          margin-left: 2rem;
+          margin-top: 2.5rem;
+          // span {
+          span:first-child {
+            font-size: 15px;
+            color: #333;
+          }
+          span:last-child {
+            font-size: 13px;
+            color: #666;
+          }
+          // }
+        }
+        .indexAdderss {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #e3cfff;
+          width: 4.5rem;
+          height: 2rem;
+          font-size: 13px;
+          text-align: center;
+          border-top-left-radius: 11px;
+          border-bottom-left-radius: 11px;
+          img {
+            width: 1rem;
+            height: 1rem;
+          }
+        }
+        .touxiang {
           width: 72px;
           height: 72px;
           border-radius: 50%;
           border: 1px solid #ffc000;
+          position: absolute;
+          top: -2rem;
+          left: 2rem;
         }
       }
     }
@@ -231,95 +323,129 @@ export default {
       width: 80%;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin: 0 auto;
+
       span {
-        color: #f2e5ca;
+        color: #6803a3;
+        font-size: 13px;
       }
       // }
     }
     p {
-      color: #f2e5ca;
+      color: #999999;
       font-size: 14px;
       text-align: center;
       margin: 0;
       padding: 0;
     }
   }
-  .level {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    margin-left: 10px;
-    
-    span {
-      font-size: 16px;
-      color: #f2e5ca;
-    }
-  }
 }
 
 // 钱包
-.wallet {
+.myindex-wallet {
   display: flex;
   justify-content: space-around;
-  height: 5rem;
+  flex-wrap: wrap;
+  // height: 5rem;
   padding: 20px 0;
-  border-top: 1px solid #504339;
-  border-bottom: 1px solid #504339;
+  // border-top: 1px solid #504339;
+  // border-bottom: 1px solid #504339;
   margin-top: 10px;
-  div {
-    width: 88px;
-    height: 55px;
-    background: url(../../assets/wallet_bg.png) no-repeat;
-    background-size: 88px 55px;
+  width: 100%;
+  .wallet-item {
+    width: 50%;
+    height: 3.75rem;
+    // background: url(../../assets/wallet_bg.png) no-repeat;
+    box-shadow: 2px 6px 10px #ddd4ec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
     p {
-      font-size: 15px;
+      font-size: 10px;
       margin: 0;
       padding: 0;
-      color: #756142;
+      color: #333;
       text-align: center;
-      margin-bottom: 10px;
+      // margin-bottom: 10px;
     }
     span {
       display: block;
       font-size: 15px;
-      color: #ffc000;
+      color: #333333;
       text-align: center;
+    }
+    img {
+      width: 22px;
+      height: 22px;
+      margin-right: 0.2rem;
     }
   }
 }
-
-.index-btn {
-  width: 100%;
+.myindexrouter {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  height: 4rem;
-  img {
-    width: 130px;
-    height: 50px;
+  .router-cont {
+    color: #333;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 13px;
   }
 }
+// .index-btn {
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-around;
+//   margin-top: 20px;
+//   margin-bottom: 20px;
+//   height: 4rem;
+//   img {
+//     width: 130px;
+//     height: 50px;
+//   }
+// }
 
 .list {
-  padding: 0 27px;
-  display: flex;
-  flex-wrap: wrap;
+  margin-top: 1.5rem;
   margin-bottom: 20px;
-  justify-content: center;
   // width: 100%;
   height: 16rem;
   li {
-    width: 3.5rem;
-    height: 3.5rem;
-    margin: 0.5rem;
+    // width: 3.5rem;
+    height: 3.2rem;
+    // margin: 0.5rem;
+    a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      p{
+        font-size: 13px;
+        color: #666;
+        font-weight: bold;
+      }
+      
+    }
     img {
-      width: 100%;
-      height: 100%;
+      width: 18px;
+      height: 18px;
     }
   }
+}
+/deep/.van-nav-bar__title {
+  color: #fff;
+}
+.van-nav-bar__right{
+  display: flex;
+  align-items: center;
 }
 .mindexbtn {
   width: 80%;

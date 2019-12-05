@@ -29,7 +29,7 @@
       </van-tab>
       <van-tab title="设置提款密码">
         <van-cell-group class="userSet">
-          <van-field v-model="pay.oldtikuan" label-class="left-input" label="确认提款密码" />
+          <van-field v-model="pay.oldtikuan" label-class="left-input" label="请输入原密码" />
         </van-cell-group>
         <van-cell-group class="userSet">
           <van-field v-model="pay.tikuan" label-class="left-input" label="输入提款密码" />
@@ -78,7 +78,19 @@ export default {
   methods: {
     submit() {
       // let inactive = "";
+
       if (this.active == 0) {
+        if (!this.mima.oldpassword) {
+          this.$toast("请输入原密码");
+          return;
+        } else if (!this.mima.password) {
+          this.$toast("请输入新密码");
+          return;
+        } else if (!this.mima.repassword) {
+          this.$toast("请再次输入密码");
+          return;
+        }
+
         this.$axios
           .fetchPost("portal", {
             source: "web",
@@ -94,9 +106,9 @@ export default {
             }
           })
           .then(res => {
-            this.mima.oldpassword = "",
-              this.mima.password = "",
-              this.mima.repassword = "",
+            (this.mima.oldpassword = ""),
+              (this.mima.password = ""),
+              (this.mima.repassword = ""),
               this.$toast(res.message);
             if (res.code == 0) {
               localStorage.setItem("accessToken", "");
@@ -104,6 +116,16 @@ export default {
             }
           });
       } else {
+        if (!this.mima.oldtikuan) {
+          this.$toast("请输入原密码");
+          return;
+        } else if (!this.mima.tikuan) {
+          this.$toast("请输入新密码");
+          return;
+        } else if (!this.mima.retikuan) {
+          this.$toast("请再次输入密码");
+          return;
+        }
         this.$axios
           .fetchPost("portal", {
             source: "web",
@@ -116,10 +138,10 @@ export default {
             }
           })
           .then(res => {
-          this.pay.tikuan = "",
-              this.pay.oldtikuan = "",
-              this.pay.retikuan =""
-              this.$toast(res.message);
+            (this.pay.tikuan = ""),
+              (this.pay.oldtikuan = ""),
+              (this.pay.retikuan = "");
+            this.$toast(res.message);
           });
       }
     }

@@ -9,6 +9,10 @@
         <p>收款方式</p>
         <span>USDT</span>
       </div>
+       <div class="qrCodecent">
+        <p>链名称</p>
+        <span>ERC20</span>
+      </div>
       <div class="qrCodecent">
         <p>收款码</p>
         <img :src="resdata.qrCode" alt />
@@ -28,40 +32,6 @@
     </div>
 
      <div class="qrCode">
-      <!-- <div class="qrCodecent">
-        <p>入款确认信息</p>
-      </div>
-      <div class="qrCodecent">
-        <p>存款时间</p>
-        <span>{{date}}</span>
-      </div>
-      <div class="qrCodecent">
-        <p>USDT</p>
-        <input placeholder="请输入USDT地址" v-model="usdt" type="text" />
-      </div>
-      <div class="qrCodecent">
-        <p>金额</p>
-        <input placeholder="请输入金额" v-model="RMB" type="text" />
-      </div> -->
-      <!-- <div class="qrCodecent">
-        <p>存款人姓名</p>
-        <input 
-        placeholder="请输入存款人姓名"
-        v-model="name"  type="text" />
-      </div>  -->
-
-      <ul>
-        <li>充值步骤：</li>
-        <li>1.在火币网购买USDT</li>
-        <li>2.从法币账户转入币币账户</li>
-        <li>3.点击提笔输入USDT复制彩金彩钱包地址，输入提笔数量确定</li>
-        <li>4后台提交褪影的USDT数量，就会有折合人民币的提示，输入姓名提交</li>
-        <li>温馨提示：请每次充值时务必核对最新的二维码钱包地址信息!平台会用不定期更换新的二维码钱包地址。如因本人原因造成的损失平台概不负责！</li>
-      </ul>
-<!-- 
-      <div class="btn" @click="submit">
-        <img src="@/assets/confirm.png" alt />
-      </div> -->
     </div>
   </div>
 </template>
@@ -149,9 +119,9 @@ export default {
 
 <style lang='less' scope>
 .qrCharge {
-  width: 100%;
-  height: 100%;
-  background: url(../../../assets/myBg.jpg);
+  // width: 100%;
+  // height: 100%;
+  // background: url(../../../assets/myBg.jpg);
   display: flex;
   flex-direction: column;
   overflow-y: auto;

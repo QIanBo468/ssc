@@ -34,19 +34,19 @@
     <div class="wallet">
       <div>
         <p>中心钱包</p>
-        <span>￥{{wallet.credit_1}}</span>
+        <span>￥{{credit_1}}</span>
       </div>
       <div>
         <p>金币钱包</p>
-        <span>￥{{wallet.credit_2}}</span>
+        <span>￥{{credit_2}}</span>
       </div>
       <div>
         <p>盈利钱包</p>
-        <span>￥{{wallet.credit_3}}</span>
+        <span>￥{{credit_3}}</span>
       </div>
       <div>
         <p>收益钱包</p>
-        <span>￥{{wallet.credit_4}}</span>
+        <span>￥{{credit_4}}</span>
       </div>
     </div>
 
@@ -97,7 +97,7 @@ export default {
   },
   data() {
     return {
-      leixing: "",
+      leixing: "中心钱包转金币",
       jine: "",
       showPicker: false,
       columns: [
@@ -114,7 +114,11 @@ export default {
         // money: 180000,
         // progress: 50
       },
-      wallet: {}
+      wallet: {},
+      credit_1 :'',
+      credit_2 :'',
+      credit_3 :'',
+      credit_4 :'',
     };
   },
   created() {
@@ -141,10 +145,10 @@ export default {
           interface: "1000"
         })
         .then(res => {
-          this.wallet.credit_1 = res.data.creditList.credit_1.value;
-          this.wallet.credit_2 = res.data.creditList.credit_2.value;
-          this.wallet.credit_3 = res.data.creditList.credit_3.value;
-          this.wallet.credit_4 = res.data.creditList.credit_4.value;
+          this.credit_1 = res.data.creditList.credit_1.value;
+          this.credit_2 = res.data.creditList.credit_2.value;
+          this.credit_3 = res.data.creditList.credit_3.value;
+          this.credit_4 = res.data.creditList.credit_4.value;
           window.console.log("钱包信息", res);
         });
   },
@@ -163,10 +167,10 @@ export default {
           interface: "1000"
         })
         .then(res => {
-          this.wallet.credit_1 = res.data.creditList.credit_1.value;
-          this.wallet.credit_2 = res.data.creditList.credit_2.value;
-          this.wallet.credit_3 = res.data.creditList.credit_3.value;
-          this.wallet.credit_4 = res.data.creditList.credit_4.value;
+          this.credit_1 = res.data.creditList.credit_1.value;
+          this.credit_2 = res.data.creditList.credit_2.value;
+          this.credit_3 = res.data.creditList.credit_3.value;
+          this.credit_4 = res.data.creditList.credit_4.value;
           window.console.log("钱包信息", res);
         });
     },
@@ -189,7 +193,7 @@ export default {
         zhuanchu = "credit_4";
         zhuanru = "credit_1";
       }
-      let that = this
+      // let that = this
       this.$axios
         .fetchPost("portal", {
           source: "web",
@@ -210,7 +214,7 @@ export default {
             this.jine = "";
             this.qianbao()
            setTimeout(() => {
-             that.$router.go(0)
+              window.location.reload();
            }, 500);
             // 
           }

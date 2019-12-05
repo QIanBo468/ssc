@@ -54,6 +54,14 @@ export default {
     };
   },
   created() {
+      if (this.$route.query.item == 0) {
+      //credit_1 中心钱包  credit_2金币钱包  credit_3盈利钱包 credit_4收益钱包
+      this.type = "credit_1";
+    } else if (this.$route.query.item == 1) {
+      this.type = "credit_4";
+    } else if (this.$route.query.item == 2) {
+      this.type = "credit_3";
+    }
      this.$axios
         .fetchPost("/portal/Digiccy", {
           source: "web",
@@ -61,7 +69,6 @@ export default {
           module: "Finance",
           interface: "2000",
           data: {
-
           }
         }).then(res=>{
           window.console.log(res)
@@ -102,16 +109,7 @@ export default {
         });
     }
   },
-  created() {
-    if (this.$route.query.item == 0) {
-      //credit_1 中心钱包  credit_2金币钱包  credit_3盈利钱包 credit_4收益钱包
-      this.type = "credit_1";
-    } else if (this.$route.query.item == 1) {
-      this.type = "credit_4";
-    } else if (this.$route.query.item == 2) {
-      this.type = "credit_3";
-    }
-  }
+
 };
 </script>
 
