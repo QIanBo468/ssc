@@ -96,18 +96,20 @@ export default {
   padding: 20px;
 }
 .adds > p {
-  color: #fff;
+  color: #AF53D1;
   font-size: 14px;
 }
 .adds > input {
   width: 100%;
   height: 40px;
   border: none;
-  background: #d3b787;
+  // background: #d3b787;
   /* border: 1px solid #d8d8d8; */
-  border-radius: 4px;
+  border-bottom: 1px solid #AF53D1;
+  // border-radius: 4px;
   padding: 0 0 0 7px;
-  color: #fff;
+  color: #AF53D1;
+  margin-bottom: 2rem;
 }
 // .adds >>> input::placeholder {
 //   color: #999999;
@@ -124,7 +126,7 @@ export default {
   justify-content: center;
 }
 .sure-btn {
-  background: #d3b787;
+  background: #AF53D1;
   width: 95%;
   border: none;
   height: 45px;

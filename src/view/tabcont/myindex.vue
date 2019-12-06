@@ -1,45 +1,45 @@
 <template>
   <div class="myindex">
     <van-nav-bar title="我的" :border="false">
-
       <slot slot="right" name="right">
         <img width="30px" height="30px" src="@/assets/set@3x.png" alt />
       </slot>
     </van-nav-bar>
     <div class="mindex-contnet">
-      <div class="userdata">
-        <div class="user">
-          <div class="avatar">
-            <img class="touxiang" :src="user.avatar" alt />
-            <div class="level">
-              <span>{{user.account}}</span>
-              <span>id: {{user.id}}</span>
+      <div class="mindex-contnet-box">
+        <div class="userdata">
+          <div class="user">
+            <div class="avatar">
+              <img class="touxiang" :src="user.avatar" alt />
+              <div class="level">
+                <span>{{user.account}}</span>
+                <span>ID: {{user.id}}</span>
+              </div>
+              <div class="indexAdderss" @click="$router.push('myAddress')">
+                <img src="@/assets/card_icon@3x.png" alt />
+                地址簿
+              </div>
             </div>
-            <div class="indexAdderss">
-              <img src="@/assets/card_icon@3x.png" alt />
-              地址簿
-            </div>
-          </div>
-          <!-- <div class="level">
+            <!-- <div class="level">
             <span>级别</span>
             <span>VIP{{user.level}}</span>
-          </div>-->
+            </div>-->
+          </div>
+          <!-- <div class="index-jindu"> -->
+          <div class="jindu">
+            <span>VIP{{user.levelLeft}}</span>
+            <van-progress
+              stroke-width="8"
+              track-color="#DCDEEA"
+              color="#6803A3"
+              pivot-text
+              :percentage="user.levelPercent"
+            />
+            <span>VIP{{user.levelRight}}</span>
+          </div>
+          <p>{{user.levelTxt}}</p>
         </div>
-        <!-- <div class="index-jindu"> -->
-        <div class="jindu">
-          <span>VIP{{user.levelLeft}}</span>
-          <van-progress
-            stroke-width="8"
-            track-color="#DCDEEA"
-            color="#6803A3"
-            pivot-text
-            :percentage="user.levelPercent"
-          />
-          <span>VIP{{user.levelRight}}</span>
-        </div>
-        <p>{{user.levelTxt}}</p>
       </div>
-
       <div class="myindex-wallet">
         <div class="wallet-item">
           <img src="@/assets/zhongxinqianbao_icon@3x.png" alt />
@@ -72,11 +72,11 @@
       </div>
 
       <div class="myindexrouter">
-        <div class="router-cont" @click="$router.push('charge')">
+        <div class="router-cont" @click="$router.push('topUpcharge')">
           <img width="58px" height="58px" src="@/assets/home_recharge@3x.png" alt />
           <span>充值</span>
         </div>
-        <div class="router-cont" @click="$router.push('deposit')">
+        <div class="router-cont" @click="$router.push('depcharge')">
           <img width="58px" height="58px" src="@/assets/home_withdrawal@3x.png" alt />
           <span>提现</span>
         </div>
@@ -84,7 +84,7 @@
           <img width="58px" height="58px" src="@/assets/home_conversion@3x.png" alt />
           <span>额度转换</span>
         </div>
-        <div class="router-cont"  @click="$router.push('notice')">
+        <div class="router-cont" @click="$router.push('notice')">
           <img width="58px" height="58px" src="@/assets/home_money@3x.png" alt />
           <span>公告</span>
         </div>
@@ -144,6 +144,12 @@
             <img src="@/assets/more@3x.png" alt />
           </router-link>
         </li>
+        <li>
+          <div @click="exit">
+            <p>退出登录</p>
+            <img src="@/assets/more@3x.png" alt />
+          </div>
+        </li>
         <!-- <li>
           <router-link to="notice">
             <p></p>
@@ -163,14 +169,13 @@
             <p></p>
             <img src="@/assets/more@3x.png" alt />
           </router-link>
-        </li> -->
-
-        
+        </li>-->
       </ul>
 
       <!-- <div class="mindexbtn" @click="exit">
         <img class="mindexbtn-img" src="@/assets/btn_loginout.png" alt />
-      </div> -->
+        退出登录
+      </div>-->
     </div>
   </div>
 </template>
@@ -250,13 +255,14 @@ export default {
   background: url("../../assets/index@3x.png") no-repeat;
   background-size: 100%;
   .mindex-contnet {
-    height: 100vh;
+    // height: 100vh;
     display: flex;
     flex-direction: column;
     padding: 1rem;
   }
   .userdata {
     width: 100%;
+    height: 9rem;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -321,6 +327,7 @@ export default {
     }
     .jindu {
       width: 80%;
+      height: 3rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -353,6 +360,7 @@ export default {
   // border-bottom: 1px solid #504339;
   margin-top: 10px;
   width: 100%;
+
   .wallet-item {
     width: 50%;
     height: 3.75rem;
@@ -416,23 +424,32 @@ export default {
 
 .list {
   margin-top: 1.5rem;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   // width: 100%;
-  height: 16rem;
+  // height: 16rem;
   li {
     // width: 3.5rem;
     height: 3.2rem;
     // margin: 0.5rem;
-    a {
+    div {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      p{
+      p {
         font-size: 13px;
         color: #666;
         font-weight: bold;
       }
-      
+    }
+    a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        font-size: 13px;
+        color: #666;
+        font-weight: bold;
+      }
     }
     img {
       width: 18px;
@@ -443,13 +460,12 @@ export default {
 /deep/.van-nav-bar__title {
   color: #fff;
 }
-.van-nav-bar__right{
+.van-nav-bar__right {
   display: flex;
   align-items: center;
 }
 .mindexbtn {
   width: 80%;
-  // height: 100%;
   margin: 0 auto;
   margin-bottom: 50px;
   .mindexbtn-img {

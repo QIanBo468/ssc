@@ -1,14 +1,7 @@
 <template>
   <div class="charge">
-    <titlebar :title="active==0 ? '充值': '提现'"></titlebar>
-    <van-tabs
-      v-model="active"
-      background="transparent"
-      color="#e1cc9e"
-      title-active-color="#e1cc9e"
-      title-inactive-color="#fff"
-    >
-      <van-tab title-style="font-size:18px" title="充值">
+    <titlebar title="充值"></titlebar>
+    <!--   
         <div class="user">
           <img :src="user.avatar" alt />
           <div>
@@ -16,72 +9,65 @@
             <p>ID：{{user.id}}</p>
             <h3>中心钱包：{{tixian.value}}</h3>
           </div>
+    </div>-->
+    <UserXq :wallet=false></UserXq>
+    <div class="qrCharge">
+      <div class="qrCode">
+        <div class="qrCodecent">
+          <p>收款信息</p>
         </div>
-
-        <!-- <div class="wallet" @click="$router.push('qrCharge')">
-          <div class="walletone">
-            <img src="@/assets/cz_1.png" alt />
-            <span>USDT</span>
-          </div>
-          <img src="@/assets/cz_icon.png" alt />
-        </div> -->
-        <div class="qrCharge">
-          <div class="qrCode">
-            <div class="qrCodecent">
-              <p>收款信息</p>
-            </div>
-            <div class="qrCodecent">
-              <p>收款方式</p>
-              <span>USDT</span>
-            </div>
-            <div class="qrCodecent">
-              <p>链名称</p>
-              <span>ERC20</span>
-            </div>
-            <div class="qrCodecent">
-              <p>收款码</p>
-              <img :src="resdata.qrCode" alt />
-            </div>
-            <div class="qrCodecent qrwallet">
-              <div>
-                <p>收款钱包</p>
-                <span @click="copy(resdata.address)">复制</span>
-              </div>
-
-              <span>{{resdata.address}}</span>
-            </div>
-          </div>
-
-          <div class="hint">
-            <img src="@/assets/icon_tips.png" alt />扫码支付或者钱包支付
-          </div>
-
-          <div class="qrCode"></div>
+        <div class="qrCodecent">
+          <p>收款方式</p>
+          <span>USDT</span>
         </div>
-        <ul>
-          <li>充值步骤：</li>
-          <li
-            style="white-space: pre-wrap;
+        <div class="qrCodecent">
+          <p>链名称</p>
+          <span>ERC20</span>
+        </div>
+        <div class="qrCodecent">
+          <p>收款码</p>
+          <img :src="resdata.qrCode" alt />
+        </div>
+        <div class="qrCodecent qrwallet">
+          <div>
+            <p>收款钱包</p>
+            <span @click="copy(resdata.address)">一键复制</span>
+          </div>
+
+          <span class="address-text">{{resdata.address}}</span>
+        </div>
+      </div>
+
+      <div class="hint">
+        <img src="@/assets/icon_tips.png" alt />扫码支付或者钱包支付
+      </div>
+
+      <div class="qrCode"></div>
+    </div>
+    <ul>
+      <li>充值步骤：</li>
+      <li
+        style="white-space: pre-wrap;
         word-wrap: break-word;
         word-break: break-all;"
-            v-html="chongzhiText"
-          ></li>
-          <!-- <li>2.从法币账户转入币币账户</li>
+        v-html="chongzhiText"
+      ></li>
+      <!-- <li>2.从法币账户转入币币账户</li>
           <li>3.点击提笔输入USDT复制彩金彩钱包地址，输入提笔数量确定</li>
           <li>4后台提交褪影的USDT数量，就会有折合人民币的提示，输入姓名提交</li>
           <li>重要提示：请每次充值时务必核对最新的二维码钱包地址信息!平台会用不定期更换新的二维码钱包地址。如因本人原因造成的损失平台概不负责！</li>
           <li>温馨提示：人民币提现每日仅限1次，金额5000元以内。</li>
-          <li>USDT提现无上限</li>-->
-        </ul>
-      </van-tab>
+      <li>USDT提现无上限</li>-->
+    </ul>
+    <!-- </van-tab> -->
 
-      <van-tab title="提现">
-        <div class="user">
+    <!-- <van-tab title="提现"> -->
+    <!-- <div class="user">
           <img :src="user.avatar" alt />
           <div>
             <p>{{user.account}}</p>
             <p>ID:{{user.id}}</p>
-            <!-- <h3>中心钱包：{{user.wallet}}</h3> -->
+            <h3>中心钱包：{{user.wallet}}</h3>
           </div>
         </div>
 
@@ -121,15 +107,15 @@
         word-break: break-all;"
             v-html="tixianText"
           ></li>
-        </ul>
-      </van-tab>
-    </van-tabs>
+    </ul>-->
+    <!-- </van-tab> -->
+    <!-- </van-tabs> -->
   </div>
 </template>
 
 <script>
 import titlebar from "@/components/NavBar";
-
+import UserXq from "@/components/UserXq";
 export default {
   data() {
     return {
@@ -151,7 +137,8 @@ export default {
   },
 
   components: {
-    titlebar
+    titlebar,
+    UserXq
   },
   created() {
     this.$axios
@@ -170,17 +157,17 @@ export default {
         window.console.log(res);
       });
 
-    this.$axios
-      .fetchPost("portal", {
-        source: "web",
-        version: "v1",
-        module: "Finance",
-        interface: "1000"
-      })
-      .then(res => {
-        this.tixian = res.data.creditList.credit_1;
-        window.console.log("钱包信息", res);
-      });
+    // this.$axios
+    //   .fetchPost("portal", {
+    //     source: "web",
+    //     version: "v1",
+    //     module: "Finance",
+    //     interface: "1000"
+    //   })
+    //   .then(res => {
+    //     this.tixian = res.data.creditList.credit_1;
+    //     window.console.log("钱包信息", res);
+    //   });
 
     this.$axios
       .fetchPost("portal/Digiccy", {
@@ -277,13 +264,20 @@ export default {
   width: 100%;
   height: 100%;
   .user {
-    margin: 10px 0;
+    margin: 1rem;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding-left: 50px;
+    background: rgb(149, 34, 190);
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 8px;
     img {
-      width: 83px;
-      height: 83px;
-      border: 1px solid #f2e5ca;
+      width: 43px;
+      height: 43px;
+      // border: 1px solid #f2e5ca;
       border-radius: 50%;
       margin-right: 20px;
     }
@@ -292,15 +286,17 @@ export default {
       flex-direction: column;
       justify-content: space-around;
       p {
-        font-size: 18px;
-        color: #f2e5ca;
+        font-size: 14px;
+        color: #fff;
         margin: 0;
         padding: 0;
       }
       h3 {
-        color: #e1cc9e;
+        // color: #e1cc9e;
+        color: #fff;
         margin: 0;
         padding: 0;
+        font-size: 14px;
       }
     }
   }
@@ -334,7 +330,7 @@ export default {
   ul {
     padding: 20px;
     li {
-      color: #ff6600;
+      color: #333;
       font-size: 14px;
       margin-bottom: 10px;
     }
@@ -379,7 +375,9 @@ export default {
     flex-direction: column;
     padding: 5px 30px;
     color: #fff;
-
+    span {
+      color: rgb(149, 34, 190);
+    }
     .qrCodecent {
       display: flex;
       align-items: center;
@@ -387,7 +385,9 @@ export default {
       &:first-child {
         p {
           font-size: 18px;
+          font-weight: bold;
           margin-bottom: 10px;
+          color: rgb(149, 34, 190);
         }
         border-bottom: 1px solid #666;
       }
@@ -401,15 +401,19 @@ export default {
           align-items: center;
           margin-bottom: 5px;
           span {
-            color: #edd39a;
-            border: 1px solid #edd39a;
+            color: rgb(149, 34, 190);
+            border: 1px solid rgb(149, 34, 190);
             padding: 2px;
             border-radius: 3px;
+            font-size: 12px;
           }
+        }
+        .address-text {
+          font-size: 13px;
         }
       }
       p {
-        color: #fff;
+        color: rgb(149, 34, 190);
         font-size: 15px;
         margin-right: 50px;
       }
@@ -429,7 +433,7 @@ export default {
         color: #edd39a;
         width: 100%;
         border: none;
-        border-bottom: 1px solid #edd39a;
+        border-bottom: 1px solid rgb(149, 34, 190);
       }
     }
     ul {
@@ -454,7 +458,7 @@ export default {
   }
 
   .hint {
-    color: #edd39a;
+    color: rgb(149, 34, 190);
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -464,8 +468,7 @@ export default {
       width: 18px;
     }
   }
-  .qrwallet{
-    
+  .qrwallet {
   }
 }
 </style>

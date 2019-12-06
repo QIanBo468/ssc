@@ -3,9 +3,9 @@
     <titlebar title="安全设置"></titlebar>
     <van-tabs
       background="transparent"
-      title-active-color="#d3b787"
-      title-inactive-color="#fff"
-      color="#d3b787"
+      title-active-color="#af53d1"
+      title-inactive-color="#333"
+      color="#af53d1"
       :border="false"
       v-model="active"
     >
@@ -37,6 +37,7 @@
         <van-cell-group class="userSet">
           <van-field v-model="pay.retikuan" label-class="left-input" label="确认提款密码" />
         </van-cell-group>
+
       </van-tab>
     </van-tabs>
     <div class="setBtn">
@@ -45,7 +46,7 @@
 
     <p
       class="beizhu"
-    >{{active == 0 ? '备注：请妥善保管好您的登入密码，如遗忘请联系在线客服处理' : '备注：由纯数字组成6-13个数字，不能和登陆密码相同'}}</p>
+    >{{active == 0 ? '备注：请妥善保管好您的登入密码，如遗忘请联系在线客服处理' : '备注：由纯数字组成6-13个数字，不能和登陆密码相同(初始提款密码为登录密码)'}}</p>
     <div class="setfoot">
       未满18周岁禁止购买
       <br />Copyright © LOTTERY |彩金彩| 版权所有
@@ -78,19 +79,18 @@ export default {
   methods: {
     submit() {
       // let inactive = "";
-
+        window.console.log(this.active)
       if (this.active == 0) {
         if (!this.mima.oldpassword) {
-          this.$toast("请输入原密码");
+          this.$toast("请输入原登录密码");
           return;
         } else if (!this.mima.password) {
-          this.$toast("请输入新密码");
+          this.$toast("请输入新登录密码");
           return;
         } else if (!this.mima.repassword) {
           this.$toast("请再次输入密码");
           return;
         }
-
         this.$axios
           .fetchPost("portal", {
             source: "web",
@@ -116,13 +116,13 @@ export default {
             }
           });
       } else {
-        if (!this.mima.oldtikuan) {
-          this.$toast("请输入原密码");
+        if (!this.pay.oldtikuan) {
+          this.$toast("请输入原提款密码");
           return;
-        } else if (!this.mima.tikuan) {
-          this.$toast("请输入新密码");
+        } else if (!this.pay.tikuan) {
+          this.$toast("请输入新提款密码");
           return;
-        } else if (!this.mima.retikuan) {
+        } else if (!this.pay.retikuan) {
           this.$toast("请再次输入密码");
           return;
         }
@@ -153,11 +153,15 @@ export default {
 .setting {
   width: 100%;
   height: 100%;
+  p{
+    color: #999;
+  }
 }
 .userSet {
   margin-top: 0.8rem;
   border: none;
   display: flex;
+  color: #af53d1;
 }
 .left-input {
   color: #fff;
@@ -183,15 +187,26 @@ export default {
 .setbtn {
   width: 80%;
   margin: 3rem 0;
-  background: #d3b787;
+  background: #af53d1;
   border: none;
   font-size: 1rem;
   color: #fff;
   font-weight: bold;
+  border-radius: 20px;
 }
 .beizhu {
   color: #fff;
   font-size: 0.8px;
   text-align: center;
+  padding: 2rem;
+  box-sizing: border-box;
 }
+
+.van-cell__title{
+  color: #af53d1;
+}
+.van-cell{
+  // border-bottom: 1px solid #af53d1;
+}
+
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="mingxi">
     <titlebar title="账变明细"></titlebar>
-    <times ref="headerChild" title="账变记录"></times>
+    <!-- <times ref="headerChild" title="账变记录"></times> -->
 
     <div class="zhonglei">
       <div class="zlName">
@@ -11,7 +11,7 @@
         </van-dropdown-menu>
       </div>
     </div>
-    <button class="topupbtn" @click="submit">查询</button>
+    <!-- <button class="topupbtn" @click="submit">查询</button> -->
 
     <div class="list-c">
       <ul class="title">
@@ -45,11 +45,11 @@
 
 <script>
 import titlebar from "@/components/NavBar";
-import times from "@/components/recordTime";
+// import times from "@/components/recordTime";
 export default {
   components: {
-    titlebar,
-    times
+    titlebar
+    // times
   },
   data() {
     return {
@@ -93,31 +93,27 @@ export default {
       // let financeType;
       this.financeType = value;
       window.console.log(value);
+      this.submit(value)
       // this.submit(value);
     },
+    created() {
+      this.submit();
+    },
     onLoad() {
-      // if (a >= 0) {
-      //   if (this.lists.length < this.paginal && num > 0) {
-      //     this.$toast("没有更多了");
-      //     return;
-      //   }
-      //   this.lists = this.list.slice(a, a + this.paginal);
-      // } else {
-      //   this.lists = this.list.slice(0, this.paginal);
-      // }
+      this.submit();
     },
     updown(num) {
       this.page = this.page + num;
       window.console.log(this.page);
       this.submit();
     },
-    submit() {
-      let timeArry;
-      if (this.$refs.headerChild.start != "" && !this.$refs.headerChild.end) {
-        timeArry = [this.$refs.headerChild.start, this.$refs.headerChild.end];
-      } else {
-        timeArry = "";
-      }
+    submit(value) {
+      let timeArry = "";
+      // if (this.$refs.headerChild.start != "" && !this.$refs.headerChild.end) {
+      //   timeArry = [this.$refs.headerChild.start, this.$refs.headerChild.end];
+      // } else {
+      //   timeArry = "";
+      // }
 
       // if (!isNaN(financeType)) {
 
@@ -126,6 +122,9 @@ export default {
       //   Ftype = "";
       // }
       // window.console.log(typeof financeType)
+      if (!value) {
+          value = ""
+      }
       this.$axios
         .fetchPost("/portal", {
           source: "web",
@@ -136,7 +135,7 @@ export default {
             timeRange: timeArry,
             lastId: this.lastId,
             page: this.page,
-            financeType: this.financeType
+            financeType: value
           }
         })
         .then(res => {
@@ -146,9 +145,8 @@ export default {
             this.list = res.data.list;
             this.loading = false;
             this.finished = true;
-            this.onLoad();
-          } else if(res.code == 4500) {
-              this.$toast('没有上一页了')
+          } else if (res.code == 4500) {
+            this.$toast("没有上一页了");
           } else {
             this.$toast(res.message);
           }
@@ -170,7 +168,7 @@ export default {
     flex-direction: column;
     padding: 0 1rem;
     margin-top: 1rem;
-    background: #eee;
+    background: transparent;
     margin-bottom: 1rem;
     .zlName {
       display: flex;
@@ -196,18 +194,18 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: #999;
+  background: transparent;
   li {
     flex: 1;
     text-align: center;
     height: 2.5rem;
-    color: #fff;
+    color: #af53d1;
     line-height: 2.5rem;
     font-weight: bold;
   }
 }
 .list-content {
-  background: #666;
+  background: transparent;
   padding: 1rem;
   li {
     display: flex;
@@ -216,7 +214,7 @@ export default {
     margin-top: 0.5rem;
 
     span {
-      color: #eeeeee;
+      color: #af53d1;
       display: inline-block;
       flex: 1;
       text-align: center;
@@ -231,7 +229,10 @@ export default {
     border: none;
     //   padding: 0.5rem;
     width: 8rem;
-    height: 2.5rem;
+    
+    background: #af53d1;
+    color: #fff;
+    height: 2rem;
     margin-left: 0.2rem;
     border-right: 6px;
     margin-bottom: 2rem;

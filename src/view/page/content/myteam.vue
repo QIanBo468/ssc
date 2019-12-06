@@ -6,26 +6,24 @@
       <div class="mydata-content">
         <div class="content">
           <p>
-            用户名/
-            <br />ID
+      ID
           </p>
           <p>
-            {{mydata.yonghu}}
-            <br />
+          
             {{mydata.id}}
           </p>
         </div>
         <div class="content">
           <p>级别</p>
-          <p>VIP{{mydata.leavl}}</p>
+          <p>VIP{{mydata.level}}</p>
         </div>
         <div class="content">
-          <p>总流水(万)</p>
-          <p>{{mydata.liushui}}</p>
+          <p>总流水</p>
+          <p>{{mydata.prize}}</p>
         </div>
         <div class="content">
           <p>人数</p>
-          <p>{{mydata.num}}</p>
+          <p>{{mydata.number}}</p>
         </div>
       </div>
     </div>
@@ -34,13 +32,13 @@
       <div class="mydata-content">
         <div class="content">
           <p>级别</p>
-          <p>总流水(万)</p>
+          <p>总流水</p>
           <p>返佣金额</p>
         </div>
-        <div class="content" v-for="(item,index) of dengji" :key="index">
-          <p>{{item.le}}</p>
+        <div class="content" v-for="(item,index) of configs" :key="index">
+          <p>VIP{{item.level}}</p>
           <p>{{item.liushui}}</p>
-          <p>{{item.money}}</p>
+          <p>{{item.fanyong}}%</p>
         </div>
       </div>
     </div>
@@ -51,14 +49,16 @@
         <div class="content">
           <p>用户名/ID</p>
           <p>级别</p>
-          <p>总流水(万)</p>
+          <p>总流水</p>
           <p>人数</p>
         </div>
         <div class="content" v-for="(item,index) of xiaji" :key="index">
-          <p>{{item.id}}</p>
-          <p>{{item.le}}</p>
-          <p>{{item.liushui}}</p>
-          <p>{{item.money}}</p>
+          <p>{{item.id}}<br>
+            {{item.mobile}}
+          </p>
+          <p>{{item.level}}</p>
+          <p>{{item.prize}}</p>
+          <p>{{item.count}}</p>
         </div>
       </div>
     </div>
@@ -75,11 +75,12 @@ export default {
   data() {
     return {
       mydata: {
-        yonghu: "lil891229",
-        id: "5259",
-        leavl: 0,
-        liushui: 0,
-        num: 0
+        yonghu: "",
+        id: "",
+        leavl: "",
+        liushui: "",
+        num: 0,
+        configs:[]
       },
       dengji: [
         { le: "VIP0", liushui: 0, money: "0‰" },
@@ -99,8 +100,25 @@ export default {
         // { id: 123456, le: "VIP5", liushui: 2088, money: 5 },
         // { id: 123456, le: "VIP6", liushui: 6888, money: 6 }
       ]
-    };
-  }
+    }
+  },
+    created() {
+        this.$axios.fetchPost('portal',{
+          source: "web",
+            version: "v1",
+            module: "User",
+            interface: "6000",
+            // data:''
+        }).then(res=>{
+          //  debugger
+          this.mydata = res.data.userinfo
+          this.xiaji = res.data.list
+         
+          this.configs = res.data.config
+          window.console.log(res)
+        })
+
+    }
 };
 </script>
 
@@ -108,14 +126,14 @@ export default {
 .mydata {
   display: flex;
   flex-direction: column;
-  color: #e1cc9e;
+  color: #999;
   h3 {
     margin: 0.5rem;
   }
   .mydata-content {
     display: flex;
     // justify-content: space-around;
-    border: 1px solid #e1cc9e;
+    border: 1px solid #eee;
 
     // padding: 0.5rem;
     .content {
@@ -123,13 +141,13 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: 1px solid #e1cc9e;
+      border: 1px solid #eee;
       p {
         flex: 1;
         width: 100%;
         height: 100%;
         padding: 0.5rem;
-        border-bottom: 1px solid #e1cc9e;
+        border-bottom: 1px solid #eee;
         box-sizing: border-box;
         font-size: 0.8rem;
         text-align: center;
@@ -140,7 +158,7 @@ export default {
 .mydaili {
   display: flex;
   flex-direction: column;
-  color: #e1cc9e;
+  color: #999;
   margin-bottom: 1rem;
   h3 {
     margin: 0.5rem;
@@ -153,7 +171,7 @@ export default {
       p {
         flex: 1;
         text-align: center;
-        border: 1px solid #e1cc9e;
+        border: 1px solid #eee;
         box-sizing: border-box;
         padding: 0.5rem;
       }

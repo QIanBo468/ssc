@@ -3,8 +3,19 @@
     <titlebar :title=" type== 0 ? '北京PK拾':'幸运飞艇'"></titlebar>
     <!-- 开奖区 -->
     <div class="header">
-      <!-- logo区 -->
-      <div class="logo">
+      <div class="header-text">
+        <p>金币: {{jinbi}}</p>
+        <p>当前流水: {{jiangliushui}}</p>
+      </div>
+
+      <div class="qihaoimg">
+        <p>最新开奖结果</p>
+        <div  @click.stop="$router.push({path:'JinQi',query:{type:playtype}})">
+          开奖记录
+          <img src="@/assets/more@3x.png" alt />
+        </div>
+      </div>
+      <!-- <div class="logo">
         <img class="logoimg" :src="type ==0 ? logo : logo1" alt />
         <div class="kai">
           <div class="qihao">
@@ -12,9 +23,7 @@
               {{type ==0 ? '北京PK拾': '幸运飞艇'}}
               <span>{{qihao}}</span> 期
             </div>
-            <div class="qihaoimg" @click.stop="kjRecord = !kjRecord">
-              <img src="@/assets/louhao.png" alt />近期开奖
-            </div>
+            
           </div>
           <div class="jiang">
             <div class="jianghao" v-if="daojishi">
@@ -33,24 +42,34 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
 
       <!-- 期号 -->
       <div class="issue">
-        <div>
-          {{qihao}} 期 &nbsp;
-          <span></span> &nbsp;
+        <div class="issue-jiang">
+          第{{current}}期开奖号码
+          <ul>
+            <li v-for="(item,index) of num " :key="index">{{item}}</li>
+          </ul>
+        </div>
+        <div class="issue-feng">
+          {{qihao}} 期封盘时间:
           <van-count-down @finish="finished" :time="time*1000" />
         </div>
-
-        <p>金币: {{jinbi}} 当前流水: {{jiangliushui}}</p>
       </div>
     </div>
 
     <!-- 选号 -->
     <div class="xuanhao">
-      <h3>冠军</h3>
+      <div class="xuanhao-title">
+        <h3>冠军</h3>
 
+        <div @click="tzRecordes">
+          投注记录
+          <img src="@/assets/more@3x.png" alt />
+        </div>
+      </div>
+      <!-- <p>请选择号码</p> -->
       <ul>
         <li
           :class="item.flg ? 'xuanzhong':''"
@@ -68,12 +87,14 @@
 
       <div class="touzhu">
         <div class="stepper">
-          <span>元</span>
+          <span>元</span>模式
           <div class="stepper-cont">
+            <span>倍数:</span>
+
             <p @click="jianhao">-</p>
             <input onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" type="text" v-model="beishu" />
             <p @click="beishu++">+</p>
-          </div>倍
+          </div>
         </div>
         <button @click="pourzhus">添加投注</button>
       </div>
@@ -92,13 +113,13 @@
     <!-- 确认投注 -->
     <div class="affirm">
       <div class="affirm-content">
-        <div>
+        <!-- <div>
           <p>总注数4注</p>
           <div @click="tzRecordes">
             <img src="@/assets/iconfont-2jilu.png" alt />投注记录
           </div>
         </div>
-        <h3 v-if="pourzhu">总金额 {{beishu*4* +price}}.00 元</h3>
+        <h3 v-if="pourzhu">总金额 {{beishu*4* +price}}.00 元</h3>-->
         <van-button class="affirm-btn" @click="submit">确认投注</van-button>
       </div>
     </div>
@@ -121,53 +142,54 @@
       <div class="pops">
         <div>
           <ul class="pop-title">
-            <li>编号</li>
+            <!-- <li>编号</li> -->
             <li>期号</li>
             <li>倍数</li>
-            <li>模式</li>
+            <!-- <li>模式</li> -->
             <li>状态</li>
-            <!-- <li>操作</li> -->
+            <li>操作</li>
           </ul>
           <ul class="pop-content">
             <li v-for="item of tzRecords" :key="item.bianhao" @click="tzxq(item)">
-              <span>{{item.id}}</span>
+              <!-- <span>{{item.id}}</span> -->
               <span>{{item.number_periods}}</span>
               <span>{{item.multiple}}</span>
-              <span>{{item.typeName}}</span>
+              <!-- <span>{{item.typeName}}</span> -->
               <span>{{item.isWinName}}</span>
-              <!-- <span>{{item.caozuo}}</span> -->
+              <span>撤单</span>
             </li>
-            <li class="wu">没有更多了</li>
+            <!-- <li class="wu">没有更多了</li> -->
           </ul>
-          <button class="btn" @click="tzRecord = false">关闭</button>
+          <div class="btn-box">
+            <van-button class="btn" @click="tzRecord = false">关闭</van-button>
+          </div>
         </div>
       </div>
-
     </van-popup>
-    
-      <van-popup class="Tzxiangqing" v-model="touzhuxiangqing">
-        <div class="tzxq-cont">
-          <h3>投注信息</h3>
-          <div>
-            <p>购买金额:{{TZXQ.amount}}</p>
-            <p>期号:{{TZXQ.numberPeriods}}</p>
-          </div>
-          <div>
-            <p>中奖金额:{{TZXQ.winAmount}}</p>
-            <p>投注时间:{{TZXQ.createdAt}}</p>
-          </div>
-          <div>
-            <p>订单状态:{{TZXQ.isWinName}}</p>
-            <p>开奖时间:{{TZXQ.lotteryTime}}</p>
-          </div>
-          <div>购买盈亏:{{TZXQ.profit}}</div>
-          <div>开奖号码:{{TZXQ.winNumber}}</div>
-          <div>投注内容:{{TZXQ.number}}</div>
 
-          <van-button v-if="TZXQ.isWinName =='未开奖'"  @click="revocation(TZXQ)">是否撤单</van-button>
-          <van-button @click="touzhuxiangqing = false">关闭</van-button>
+    <van-popup class="Tzxiangqing" v-model="touzhuxiangqing">
+      <div class="tzxq-cont">
+        <h3>投注信息</h3>
+        <div>
+          <p>购买金额:{{TZXQ.amount}}</p>
+          <p>期号:{{TZXQ.numberPeriods}}</p>
         </div>
-      </van-popup>
+        <div>
+          <p>中奖金额:{{TZXQ.winAmount}}</p>
+          <p>投注时间:{{TZXQ.createdAt}}</p>
+        </div>
+        <div>
+          <p>订单状态:{{TZXQ.isWinName}}</p>
+          <p>开奖时间:{{TZXQ.lotteryTime}}</p>
+        </div>
+        <div class="tzxq-cont-down">购买盈亏:{{TZXQ.profit}}</div>
+        <div class="tzxq-cont-down">开奖号码:{{TZXQ.winNumber}}</div>
+        <div class="tzxq-cont-down">投注内容:{{TZXQ.number}}</div>
+
+        <van-button v-if="TZXQ.isWinName =='未开奖'" @click="revocation(TZXQ)">是否撤单</van-button>
+        <van-button @click="touzhuxiangqing = false">关闭</van-button>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -183,7 +205,7 @@ export default {
     return {
       type: 0,
       touzhuxiangqing: false,
-      TZXQ:{},
+      TZXQ: {},
       qihao: "",
       jinbi: "0.00",
       jiangliushui: 0,
@@ -195,16 +217,16 @@ export default {
       logo1: require("../../../assets/tw_pk10.png"),
       num: [
         // 上期中奖号码
-        { nums: "01", src1: require("../../../assets/m_c_01.png") },
-        { nums: "03", src1: require("../../../assets/m_c_03.png") },
-        { nums: "02", src1: require("../../../assets/m_c_02.png") },
-        { nums: "04", src1: require("../../../assets/m_c_04.png") },
-        { nums: "05", src1: require("../../../assets/m_c_05.png") },
-        { nums: "06", src1: require("../../../assets/m_c_06.png") },
-        { nums: "07", src1: require("../../../assets/m_c_07.png") },
-        { nums: "08", src1: require("../../../assets/m_c_08.png") },
-        { nums: "09", src1: require("../../../assets/m_c_09.png") },
-        { nums: "10", src1: require("../../../assets/m_c_10.png") }
+        // { nums: "01", src1: require("../../../assets/m_c_01.png") },
+        // { nums: "03", src1: require("../../../assets/m_c_03.png") },
+        // { nums: "02", src1: require("../../../assets/m_c_02.png") },
+        // { nums: "04", src1: require("../../../assets/m_c_04.png") },
+        // { nums: "05", src1: require("../../../assets/m_c_05.png") },
+        // { nums: "06", src1: require("../../../assets/m_c_06.png") },
+        // { nums: "07", src1: require("../../../assets/m_c_07.png") },
+        // { nums: "08", src1: require("../../../assets/m_c_08.png") },
+        // { nums: "09", src1: require("../../../assets/m_c_09.png") },
+        // { nums: "10", src1: require("../../../assets/m_c_10.png") }
       ],
       arry: [
         // 选择奖号
@@ -220,7 +242,9 @@ export default {
         { num: "10", flg: false }
       ],
       kjRecords: [],
-      tzRecords: [],
+      tzRecords: [
+        // { number_periods: 20191206073, multiple: 10, isWinName: "未开奖" }
+      ],
       number: [], //选择的奖号
       sums: -1,
       temp: "",
@@ -231,7 +255,8 @@ export default {
       lastId: 0,
       page: 1,
       playtype: "", // 玩法类型
-      price: "" //单价
+      price: "", //单价
+      current: ""
     };
   },
   created() {
@@ -252,11 +277,11 @@ export default {
   methods: {
     finished() {
       // console.log("时间结束");
-      // this.zhushubefore();
+      this.zhushubefore();
       this.singular();
       this.dangqian();
       this.jinqikaijiang();
-      // debugger
+      this.liushui();
     },
     //钱包流水
     liushui() {
@@ -324,8 +349,10 @@ export default {
         })
         .then(res => {
           this.kjRecords = res.data.list;
-          this.pitch = res.data.list.slice(0, 1);
-          window.console.log("近期开奖", this.pitch);
+          this.current = res.data.list[0].numberPeriods;
+          this.pitch = res.data.list[0].thirdNumber;
+          this.num = this.pitch.split(",");
+          window.console.log("近期开奖", this.num);
         });
       let that = this,
         // sum = 0,
@@ -361,7 +388,7 @@ export default {
           }
         })
         .then(res => {
-          this.tzRecords = res.data.list;
+          // this.tzRecords = res.data.list;
 
           window.console.log("投注记录", res);
         });
@@ -435,32 +462,31 @@ export default {
       }
     },
     tzxq(item) {
-      this.touzhuxiangqing = true
+      this.touzhuxiangqing = true;
       this.$axios
-              .fetchPost("/portal", {
-                source: "web",
-                version: "v1",
-                module: "Lottery",
-                interface: "1007",
-                data: {
-                  id: item.id.toString()
-                }
-              })
-              .then(res => {
-              this.TZXQ = res.data
-                window.console.log(res);
-              });
+        .fetchPost("/portal", {
+          source: "web",
+          version: "v1",
+          module: "Lottery",
+          interface: "1007",
+          data: {
+            id: item.id.toString()
+          }
+        })
+        .then(res => {
+          this.TZXQ = res.data;
+          window.console.log(res);
+        });
     },
 
-
-jianhao() {
-  if (this.beishu<=1) {
-      return
-  } else {
-    this.beishu --
-  }
-},
-
+    jianhao() {
+      if (this.beishu <= 1) {
+        return;
+      } else {
+        this.beishu--;
+      }
+    },
+ 
     // 选择号码
     xuanzhong(item) {
       let sum = 0;
@@ -540,92 +566,95 @@ jianhao() {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid #ffce6f;
-    .logoimg {
-      width: 6.8rem;
-      height: 4.8rem;
-    }
-    .logo {
+    .header-text {
+      width: 100%;
       display: flex;
-
-      .kai {
-        width: 100%;
+      border-bottom: 10px solid #f8f8f8;
+      padding-bottom: 0.8rem;
+      p {
+        flex: 1;
+        text-align: center;
       }
-      .qihao {
-        width: 100%;
+    }
+    .qihaoimg {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0.5rem;
+      p {
+        font-size: 15px;
+        color: #999;
+      }
+      img {
+        width: 18px;
+        height: 18px;
+      }
+      div {
         display: flex;
-        justify-content: space-around;
-        color: #ffc000;
-        font-size: 0.8rem;
-        span {
-          color: #ecc788;
-        }
-        .qihaoimg {
-          font-size: 0.5rem;
-          color: #e8673e;
-        }
-      }
-      .jiang {
-        .jianghao {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          overflow: hidden;
-          img {
-            // flex: 1;
-            width: 2.7rem;
-            height: 1.7rem;
-            margin-right: 8px;
-            margin-top: 5px;
-          }
-        }
-        .jianghint {
-          color: #ecc788;
-          display: flex;
-          width: 100%;
-          overflow: hidden;
-          .one {
-            display: inline-block;
-            height: 50px;
-            width: 50px;
-            border: 1px solid #ecc788;
-            text-align: center;
-            line-height: 50px;
-            border-radius: 50%;
-          }
-        }
+        align-items: center;
+        font-size: 15px;
+        color: #999;
       }
     }
     .issue {
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
-      color: #f00;
-      margin-top: 30px;
-      div {
+      box-sizing: border-box;
+      padding: 0.5rem;
+      .issue-jiang {
+        font-size: 14px;
+        color: #999;
+        margin-bottom: 5px;
+        ul {
+          display: flex;
+          li {
+            margin-right: 5px;
+            background: #af53d1;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+          }
+        }
+      }
+      .issue-feng {
         display: flex;
-        align-items: center;
-        font-size: 18px;
-      }
-      span {
-        width: 24px;
-        height: 24px;
-        background: url(../../../assets/iconfont-wodedingdan10.png);
-        background-size: 100%;
-      }
-      p {
-        margin-top: 20px;
-        color: #ad8460;
-        margin-bottom: 10px;
+        color: #999;
+        font-size: 14px;
       }
     }
   }
 
   .xuanhao {
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p {
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .xuanhao-title {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      img {
+        width: 18px;
+        height: 18px;
+      }
+      div {
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        color: #999;
+      }
+    }
     h3 {
-      color: #ffc000;
+      color: #999;
       margin: 10px 15px 0;
     }
     ul {
@@ -636,6 +665,7 @@ jianhao() {
       margin: 0 auto;
       li {
         // flex: 1;
+        border: 1px solid #999;
         background: #fff;
         border-radius: 50%;
         width: 2.5rem;
@@ -648,22 +678,24 @@ jianhao() {
         margin: 10px 0px;
       }
       .xuanzhong {
-        background: url("../../../assets/m_yuan2.png");
-        background-size: 100%;
+        // background: url("../../../assets/m_yuan2.png");
+        // background-size: 100%;
+        background: #af53d1;
         color: #fff;
       }
     }
   }
 
   .beilv {
-    border-top: 1px solid #ad8460;
+    // border-top: 1px solid #ad8460;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     p {
       margin-bottom: 20px;
-      color: #ffc000;
+      color: #666;
+      font-weight: bold;
     }
     .touzhu {
       box-sizing: border-box;
@@ -672,18 +704,34 @@ jianhao() {
       justify-content: space-between;
       align-items: center;
       padding: 0 10px;
-      color: #fff;
+      // color: #fff;.
+
       .stepper {
         display: flex;
         align-items: center;
+        font-size: 13px;
         .stepper-cont {
           display: flex;
           align-items: center;
+          margin-left: 1rem;
+          font-size: 13px;
           p {
-            background: #fff;
-            padding-left: 5px;
-            padding-right: 5px;
+            background: #af53d1;
+            color: #fff;
+            border-radius: 50%;
+            // padding-left: 5px;
+            // padding-right: 5px;
+            width: 16px;
+            height: 16px;
+            text-align: center;
+            line-height: 16px;
             margin: 0;
+            font-size: 14px;
+          }
+          span {
+            background: transparent;
+            color: #666;
+            width: 50px;
           }
         }
       }
@@ -693,21 +741,23 @@ jianhao() {
         height: 25px;
         width: 25px;
         text-align: center;
+        line-height: 25px;
         border-radius: 6px;
-        background: #ecc788;
+        background: #af53d1;
         margin-right: 5px;
       }
       input {
-        width: 80px;
+        width: 40px;
         height: 25px;
         border: none;
         border-radius: 8px;
         color: #000;
         font-weight: bold;
         text-align: center;
+        border: 1px solid #999;
       }
       button {
-        background: #cdaa6f;
+        background: #af53d1;
         color: #fff;
         border: none;
         width: 100px;
@@ -720,11 +770,11 @@ jianhao() {
       width: 100%;
       margin-top: 10px;
       padding: 0 15px;
-      background: #949494;
+      // background: #949494;
       height: 40px;
       div {
         line-height: 40px;
-        background: #a4a4a4;
+        // background: #a4a4a4;
         align-items: center;
         width: 100%;
         display: flex;
@@ -732,7 +782,7 @@ jianhao() {
         p {
           margin: 0;
           padding: 0;
-          color: #fff;
+          color: #af53d1;
         }
       }
     }
@@ -744,7 +794,7 @@ jianhao() {
   flex-direction: column;
   padding: 15px;
   .affirm-content {
-    background: #161618;
+    // background: #161618;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -754,11 +804,11 @@ jianhao() {
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
-      p {
-        color: #dcbf88;
-        font-size: 16px;
-        font-weight: bold;
-      }
+      // p {
+      //   color: #dcbf88;
+      //   font-size: 16px;
+      //   font-weight: bold;
+      // }
       div {
         color: #dcbf88;
         img {
@@ -773,9 +823,10 @@ jianhao() {
       margin-bottom: 5px;
     }
     .affirm-btn {
-      background: #cdaa6f;
+      background: #af53d1;
       color: #fff;
       border: none;
+      border-radius: 20px;
     }
   }
 }
@@ -818,50 +869,63 @@ jianhao() {
 }
 .tzRecord {
   width: 100%;
-  height: 400px;
+  height: 300px;
   background: transparent;
   padding: 15px;
   box-sizing: border-box;
+
   .pops {
-    background: #cdaa6f;
+    background: #ffffff;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
-    .btn {
-      position: absolute;
-      bottom: 0;
+    .btn-box {
       width: 100%;
-      height: 30px;
-      align-self: flex-end;
-      border: none;
+      display: flex;
+      justify-content: center;
+    }
+    .btn {
+      width: 80%;
+      height: 3rem;;
+      line-height: 30px;
+      background: #af53d1;
+      color: #fff;
+        border-radius: 40px;
+      // align-self: flex-end;
+      // border: none;
     }
     .pop-title {
       display: flex;
       justify-content: space-around;
       margin-top: 20px;
-      background: #48382b;
+      // background: #48382b;
       height: 30px;
       align-items: center;
-      color: #fff;
+      color: #333;
       font-size: 15px;
+      text-align: center;
+      padding: 1rem;
     }
     .pop-content {
       li {
         display: flex;
-        font-size: 12px;
-        color: #fff;
+        font-size: 14px;
+        color: #999;
         justify-content: space-around;
         text-align: center;
-        border-bottom: 1px solid #48382b;
+        box-sizing: border-box;
+        padding: 1rem;
+        // border-bottom: 1px solid #48382b;
 
         span {
           display: inline-block;
           flex: 1;
-          border-right: 1px solid #48382b;
+          // border-right: 1px solid #48382b;
           box-sizing: border-box;
           padding-bottom: 3px;
+          text-align: center;
         }
       }
       .wu {
@@ -883,23 +947,39 @@ jianhao() {
     padding: 1rem;
     box-sizing: border-box;
     h3 {
-      font-size: 22px;
+      font-size: 18px;
       margin-bottom: 1rem;
+      color: #999;
     }
-    div{
+    div {
       display: flex;
       justify-content: space-around;
-      margin-bottom: 1rem;
-      font-size: 18px;
-      p{
+      
+      font-size: 16px;
+      border: 1px solid #999;
+      // line-height: 18px;
+      p {
         flex: 4;
         text-align: start;
-        
+        font-size: 15px;
+        padding: 1rem;
+        border-right: 1px solid #666;
       }
-      p:last-child{
-       flex: 6; 
+      p:last-child {
+        flex: 6;
       }
     }
+    .tzxq-cont-down{
+      padding: .5rem;
+    }
+  }
+  button{
+    width: 80%;
+    height: 3rem;
+    background: #af53d1;
+    border-radius: 20px;
+    margin: 1rem auto;
+    color: #fff;
   }
 }
 // 倒计时颜色

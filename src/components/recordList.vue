@@ -3,13 +3,13 @@
     <div class="zhonglei" v-if="zhonglei">
       <div class="zlName">
         <p>彩种名称</p>
-        <van-dropdown-menu active-color='#d3b787'>
+        <van-dropdown-menu active-color="#d3b787">
           <van-dropdown-item v-model="cainame" :options="cai1" />
         </van-dropdown-menu>
       </div>
       <div class="zlActive">
         <p>彩种状态</p>
-        <van-dropdown-menu active-color='#d3b787'>
+        <van-dropdown-menu active-color="#d3b787">
           <van-dropdown-item v-model="caiactive" :options="cai2" />
         </van-dropdown-menu>
       </div>
@@ -53,18 +53,17 @@
           </li>
         </ul>
       </van-list>
-      <div class="upDown">
-        <!-- <p>显示{{}}</p> -->
+      <!-- <div class="upDown">
         <button @click="updown(-1)">上一页</button>
         <button @click="updown(1)">下一页</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props:['zhonglei','searchpop','pantData',"title"],
+  props: ["zhonglei", "searchpop", "pantData", "title"],
   data() {
     return {
       cainame: 0,
@@ -78,7 +77,7 @@ export default {
         { text: "所有状态", value: 0 },
         { text: "已派奖", value: 1 },
         { text: "未中奖", value: 2 },
-        { text: "未开奖", value: 3 },
+        { text: "未开奖", value: 3 }
       ],
       dropdown: "",
       option1: [
@@ -133,32 +132,31 @@ export default {
     };
   },
   created() {
-    window.console.log(this.pantData)
+    window.console.log(this.pantData);
     this.loading = false;
-        this.finished =true;
+    this.finished = true;
     // this.lists = pantData
   },
   methods: {
-    onLoad(a, num) {
-      
-      if (a >= 0) {
-        if (this.lists.length < this.paginal && num > 0) {
-          this.$toast("没有更多了");
-          return;
-        }
-        this.lists = this.list.slice(a, a + this.paginal);
-        //  this.loading = false;
-        // this.finished =true;
-      } else {
-        this.lists = this.list.slice(0, this.paginal);
-        this.loading = false;
-        this.finished =true;
-      }
+    onLoad() {
+      // if (a >= 0) {
+      //   if (this.lists.length < this.paginal && num > 0) {
+      //     this.$toast("没有更多了");
+      //     return;
+      //   }
+      //   this.lists = this.list.slice(a, a + this.paginal);
+      //   //  this.loading = false;
+      //   // this.finished =true;
+      // } else {
+      //   this.lists = this.list.slice(0, this.paginal);
+      //   this.loading = false;
+      //   this.finished = true;
+      // }
     },
     updown(num) {
-      if (this.page < 0) return;
-      this.page += num;
-      this.onLoad(this.page * this.paginal, num);
+      this.page = this.page + num;
+      window.console.log(this.page);
+      this.submit();
     },
     onSearch() {
       if (!this.searchs) {
@@ -219,7 +217,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 0 1rem;
-    background: #eee;
+    // background: #eee;
     margin-bottom: 1rem;
     .zlName {
       display: flex;
@@ -237,18 +235,18 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: #999;
+    background: transparent;
     li {
       flex: 1;
       text-align: center;
       height: 2.5rem;
-      color: #fff;
+      color: #af53d1;
       line-height: 2.5rem;
       font-weight: bold;
     }
   }
   .list-content {
-    background: #666;
+    background: transparent;
     padding: 1rem;
     li {
       display: flex;
@@ -257,7 +255,7 @@ export default {
       margin-top: 0.5rem;
 
       span {
-        color: #eeeeee;
+        color: #666;
         display: inline-block;
         flex: 1;
         text-align: center;

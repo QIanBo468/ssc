@@ -90,7 +90,7 @@ window.console.log(res);
   .notice-content {
     padding: 1rem;
     h3 {
-      color: #ff6600;
+      color: #AF53D1;
     }
     ul {
       width: 100%;
@@ -100,7 +100,7 @@ window.console.log(res);
         align-items: center;
         margin-top: 0.5rem;
         color: #fff;
-        background: #ddc887;
+        background: #AF53D1;
         box-sizing: border-box;
         padding: 1rem;
         border-radius: 8px;
@@ -109,8 +109,9 @@ window.console.log(res);
           width: 5rem;
           height: 2rem;
           font-size: 0.8rem;
-          background: #ff6600;
+          background: #fff;
           border-radius: 8px;
+          color: #333;
         }
         p {
           display: flex;

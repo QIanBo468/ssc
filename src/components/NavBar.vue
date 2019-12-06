@@ -31,7 +31,7 @@ export default {
 
 <style>
 .van-nav-bar__text{
-  color:#fff;
+  color:#333;
 }
 .van-icon{
   color: black !important;

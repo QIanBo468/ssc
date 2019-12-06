@@ -1,38 +1,28 @@
 <template>
   <div class="deposit">
     <titlebar title="提现"></titlebar>
-
+    <div class="deposithint">
+      <p>UDSDT实时汇率:</p>
+      <p>可提现金额:</p>
+      <p>USDT</p>
+      <p>实际到账:</p>
+    </div>
     <div class="qrCode">
       <div class="qrCodecent">
-        <p>钱包地址</p>
+        <!-- <p>钱包地址</p> -->
         <input placeholder="请输入USDT地址" v-model="usdt" type="text" />
       </div>
       <div class="qrCodecent">
-        <p>金额</p>
+        <!-- <p>金额</p> -->
         <input placeholder="请输入金额" v-model="RMB" type="text" />
       </div>
       <div class="qrCodecent">
-        <p>提现密码</p>
+        <!-- <p>提现密码</p> -->
         <input placeholder="请输入提现密码" v-model="pay" type="text" />
       </div>
-      <!-- <div class="qrCodecent">
-        <p>存款人姓名</p>
-        <input 
-        placeholder="请输入存款人姓名"
-        v-model="name"  type="text" />
-      </div>-->
-
-      <ul>
-        <li>充值步骤：</li>
-        <li>1.在火币网购买USDT</li>
-        <li>2.从法币账户转入币币账户</li>
-        <li>3.点击提笔输入USDT复制彩金彩钱包地址，输入提笔数量确定</li>
-        <li>4后台提交褪影的USDT数量，就会有折合人民币的提示，输入姓名提交</li>
-        <li>温馨提示：请每次充值时务必核对最新的二维码钱包地址信息!平台会用不定期更换新的二维码钱包地址。如因本人原因造成的损失平台概不负责！</li>
-      </ul>
-
       <div class="btn" @click="submit">
-        <img src="@/assets/confirm.png" alt />
+        提交
+        <!-- <img src="@/assets/confirm.png" alt /> -->
       </div>
     </div>
   </div>
@@ -54,7 +44,7 @@ export default {
     };
   },
   created() {
-      if (this.$route.query.item == 0) {
+    if (this.$route.query.item == 0) {
       //credit_1 中心钱包  credit_2金币钱包  credit_3盈利钱包 credit_4收益钱包
       this.type = "credit_1";
     } else if (this.$route.query.item == 1) {
@@ -62,29 +52,29 @@ export default {
     } else if (this.$route.query.item == 2) {
       this.type = "credit_3";
     }
-     this.$axios
-        .fetchPost("/portal/Digiccy", {
-          source: "web",
-          version: "v1",
-          module: "Finance",
-          interface: "2000",
-          data: {
-          }
-        }).then(res=>{
-          window.console.log(res)
-        })
+    this.$axios
+      .fetchPost("/portal/Digiccy", {
+        source: "web",
+        version: "v1",
+        module: "Finance",
+        interface: "2000",
+        data: {}
+      })
+      .then(res => {
+        window.console.log(res);
+      });
   },
   methods: {
     submit() {
       if (!this.usdt) {
-          this.$toast('请输入USDT地址')
-          return
+        this.$toast("请输入USDT地址");
+        return;
       } else if (!this.RMB) {
-        this.$toast('请输入金额')
-        return
+        this.$toast("请输入金额");
+        return;
       } else if (!this.pay) {
-        this.$toast('请输入提现密码')
-        return
+        this.$toast("请输入提现密码");
+        return;
       }
       this.$axios
         .fetchPost("/portal/Digiccy", {
@@ -100,16 +90,14 @@ export default {
           }
         })
         .then(res => {
-          
           this.usdt = "";
           this.RMB = "";
           this.pay = "";
-          this.$toast(res.message)
+          this.$toast(res.message);
           window.console.log(res);
         });
     }
-  },
-
+  }
 };
 </script>
 
@@ -121,28 +109,42 @@ h2 {
 }
 .deposit {
   width: 100%;
-  height: 100%;
-  background: url(../../../assets/myBg.jpg);
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  // align-items: center;
   overflow-y: auto;
+  .deposithint{
+    padding:.2rem 2rem;
+    p{
+      color: #333;
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+  }
   .qrCode {
     // width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding: 5px 30px;
     color: #fff;
-    margin-top: 4rem;
+    margin-top: 1rem;
     .qrCodecent {
       display: flex;
       align-items: center;
       margin-bottom: 15px;
+      width: 100%;
       input {
-        color: #e1cc9e;
+        color: #af53d1;
         background: transparent;
         border: none;
-        border-bottom: 1px solid #e1cc9e;
+        border-bottom: 1px solid #af53d1;
+        width: 100%;
+        font-size: 15px;
+        margin-bottom: 0.8rem;
       }
       &:last-child {
         display: flex;
@@ -162,7 +164,7 @@ h2 {
         }
       }
       p {
-        color: #fff;
+        color: #000;
         font-size: 15px;
         margin-right: 50px;
       }
@@ -185,6 +187,12 @@ h2 {
   }
   .btn {
     text-align: center;
+    background: #af53d1;
+    text-align: center;
+    line-height: 3rem;
+    width: 80%;
+    height: 3rem;
+    border-radius: 20px;
     img {
       width: 150px;
       height: 45px;

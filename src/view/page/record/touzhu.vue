@@ -1,20 +1,20 @@
 <template>
   <div class="touzhurecord">
     <titlebar title="投注记录"></titlebar>
-    <times ref="headerChild" title="投注记录"></times>
-    <button @click="submit(type,status)" class="topupbtn">查询</button>
-    <recordList @showSubmit='submit' :zhonglei="true" :pantData="pantData" :searchpop="true"></recordList>
+    <!-- <times ref="headerChild" title="投注记录"></times> -->
+    <!-- <button @click="submit(type,status)" class="topupbtn">查询</button> -->
+    <recordList @showSubmit='submit' :zhonglei="true" :pantData="pantData" ></recordList>
   </div>
 </template>
 
 <script>
 import titlebar from "@/components/NavBar";
-import times from "@/components/recordTime";
+// import times from "@/components/recordTime";
 import recordList from "@/components/recordListTou";
 
 export default {
   components: {
-    times,
+    // times,
     titlebar,
     recordList
   },
@@ -33,13 +33,18 @@ export default {
   methods: {
     submit(type,status) {
         window.console.log(type,status)
-        let timeArry
-        if(this.$refs.headerChild.start !="" && !this.$refs.headerChild.end !=""){
-            timeArry = [this.$refs.headerChild.start,this.$refs.headerChild.end];
-        }  else{
-            timeArry=''
-        } 
-      
+        let timeArry =""
+        // if(this.$refs.headerChild.start !="" && !this.$refs.headerChild.end !=""){
+        //     timeArry = [this.$refs.headerChild.start,this.$refs.headerChild.end];
+        // }  else{
+        //     timeArry=''
+        // } 
+      if (!status) {
+          status = ""
+      }
+      if (!type) {
+          type = ""
+      }
       this.$axios
         .fetchPost("/portal", {
           source: "web",

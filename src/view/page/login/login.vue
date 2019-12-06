@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- <img class="logo" src="../../../assets/logo.png" alt /> -->
-    <div>
+    <div class="shuru">
       <van-cell-group :border="false">
         <img src="@/assets/xingming@3x.png" alt />
         <van-field maxlength="16" v-model="name" placeholder="请输入用户名" />
@@ -82,7 +82,8 @@ export default {
 <style lang='less' scope>
 .container {
   width: 100%;
-  height: 100%;
+  min-height: 667px;
+  height: 100vh;
   background: url(../../../assets/bg@3x.png) no-repeat;
   // background: #fff;
   background-size: 100%;
@@ -90,6 +91,9 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .shuru{
+    margin-bottom: 2rem;
+  }
   .logo {
     width: 280px;
     height: 170px;

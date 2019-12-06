@@ -151,7 +151,7 @@ export default {
 }
 .address_list {
   padding: 15px;
-  background: #d3b787;
+  background: #AF53D1;
   
   margin-top: 10px;
   display: flex;

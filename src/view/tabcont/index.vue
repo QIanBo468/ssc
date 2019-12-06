@@ -19,20 +19,20 @@
       </div>
 
       <div class="indexrouter">
-           <div class="router-cont" @click="$router.push('charge')">
-          <img width="58px" height="58px" src="@/assets/home_recharge@3x.png" alt />
+           <div class="router-cont" @click="$router.push('topUpcharge')">
+          <img width="58px" height="58px" src="@/assets/chongzhi_icon@3x.png" alt />
           <span>充值</span>
         </div>
-        <div class="router-cont" @click="$router.push('deposit')">
-          <img width="58px" height="58px" src="@/assets/home_withdrawal@3x.png" alt />
+        <div class="router-cont" @click="$router.push('depcharge')">
+          <img width="58px" height="58px" src="@/assets/tixian_icon@3x.png" alt />
           <span>提现</span>
         </div>
         <div class="router-cont" @click="$router.push('edSwitch')">
-          <img width="58px" height="58px" src="@/assets/home_conversion@3x.png" alt />
+          <img width="58px" height="58px" src="@/assets/eduzhuanhuan_icon@3x.png" alt />
           <span>额度转换</span>
         </div>
         <div class="router-cont"  @click="$router.push('notice')">
-          <img width="58px" height="58px" src="@/assets/home_money@3x.png" alt />
+          <img width="58px" height="58px" src="@/assets/qianbao_icon@3x.png" alt />
           <span>公告</span>
         </div>
       </div>
@@ -60,9 +60,9 @@
             <p>详情</p>
           </div>
           <div class="playlist-item-contnet">
-            <img src="@/assets/play@3x.png" alt />
+            <img src="@/assets/7@3x.png" alt />
             <div>
-              <p>{{beijing.qihao}}期开奖号码</p>
+              <p>{{beijingbefor.numberPeriods}}期开奖号码</p>
               <ul>
                 <li v-for="(item,index) of beijingnum " :key="index">{{item}}</li>
               </ul>
@@ -85,9 +85,9 @@
             <p>详情</p>
           </div>
           <div class="playlist-item-contnet">
-            <img src="@/assets/paly@3x(1).png" alt />
+            <img src="@/assets/7@3x1.png" alt />
             <div>
-              <p>{{youting.qihao}}期开奖号码</p>
+              <p>{{youtingbefor.numberPeriods}}期开奖号码</p>
               <ul>
                 <li v-for="(item,index) of youtingnum " :key="index">{{item}}</li>
               </ul>
@@ -129,7 +129,9 @@ export default {
       lastId: 0,
       page: 1,
       beijingnum: [],
-      youtingnum: []
+      beijingbefor:"",
+      youtingnum: [],
+      youtingbefor:""
     };
   },
   created() {
@@ -205,10 +207,10 @@ export default {
         })
         .then(res => {
           this.pitch = res.data.list.slice(0, 1)[0].thirdNumber;
-
+          this.beijingbefor = res.data.list[0]
           this.beijingnum = this.pitch.split(",");
 
-          window.console.log("近期开奖", this.beijingnum);
+          window.console.log("近期开奖", res);
         });
     },
     youtingkj() {
@@ -222,12 +224,12 @@ export default {
           data: {
             lastId: this.lastId,
             page: this.page,
-            type: "1"
+            type: "2"
           }
         })
         .then(res => {
           this.pitchs = res.data.list.slice(0, 1)[0].thirdNumber;
-
+          this.youtingbefor = res.data.list[0]
           this.youtingnum = this.pitchs.split(",");
 
           window.console.log("近期开奖", this.youtingnum);
@@ -235,9 +237,27 @@ export default {
     },
     finishedone() {
       // window.location.reload();
+      
+    //    this.beijingdangqian();
+    // this.youtingdangqian();
+    // this.beijingkj();
+    // this.youtingkj();
     },
     finishedtwo() {
       // window.location.reload();
+      window.console.log('12')
+      // setTimeout(()=> {
+        // this.$router.go(0)
+        // this.shuaxin()
+      // },5000)
+       
+    //    this.beijingdangqian();
+    // this.youtingdangqian();
+    // this.beijingkj();
+    // this.youtingkj();
+    },
+    shuaxin() {
+      this.$router.go(0)
     }
   }
 };
@@ -335,7 +355,7 @@ export default {
 
   .playlist {
     width: 100%;
-    height: 8rem;
+    // height: 8rem;
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -344,6 +364,7 @@ export default {
     margin-bottom: 2rem;
     a {
       width: 100%;
+      height:8rem;
       border-radius: 6px;
       box-shadow: 6px 2px 10px #ddd4ec;
       margin-bottom: 1rem;

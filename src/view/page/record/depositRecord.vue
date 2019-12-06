@@ -1,20 +1,20 @@
 <template>
   <div class="depositrocrd">
     <titlebar ref="headerChild" title="提现记录"></titlebar>
-    <times title="提现记录"></times>
-    <button class="topupbtn" @click="submit">查询</button>
+    <!-- <times title="提现记录"></times> -->
+    <!-- <button class="topupbtn" @click="submit">查询</button> -->
     <recordList  :pantData="pantData"></recordList>
   </div>
 </template>
 
 <script>
 import titlebar from "@/components/NavBar";
-import times from "@/components/recordTime";
+// import times from "@/components/recordTime";
 import recordList from "@/components/recordList";
 
 export default {
   components: {
-    times,
+    // times,
     titlebar,
     recordList
   },
@@ -22,7 +22,8 @@ export default {
     return {
       timeRange: "",
       lastId: 0,
-      page: 1
+      page: 1,
+      pantData:''
     };
   },
   mounted() {
@@ -30,14 +31,14 @@ export default {
   },
   methods: {
     submit() {
-       let timeArry;
-      if (this.$refs.headerChild.start != "" && !this.$refs.headerChild.end) {
-        timeArry = [this.$refs.headerChild.start, this.$refs.headerChild.end];
+       let timeArry="";
+      // if (this.$refs.headerChild.start != "" && !this.$refs.headerChild.end) {
+      //   timeArry = [this.$refs.headerChild.start, this.$refs.headerChild.end];
           
-      } else {
-        timeArry = "";
-        window.console.log('1111')
-      }
+      // } else {
+      //   timeArry = "";
+      //   window.console.log('1111')
+      // }
       this.$axios
         .fetchPost("portal/Digiccy", {
           source: "web",
