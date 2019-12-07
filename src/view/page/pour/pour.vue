@@ -53,8 +53,12 @@
           </ul>
         </div>
         <div class="issue-feng">
-          {{qihao}} 期封盘时间:
-          <van-count-down @finish="finished" :time="time*1000" />
+          <p  v-if="querenTime">
+              {{qihao}} 期封盘时间:
+          <van-count-down @finish="finished" :time="time+(times*(time-1000))" />
+          </p>
+        
+          <p v-else style="font-size:16px;margin-top:.5rem; color:#f00">正在封盘中，无法投注。。。</p>
         </div>
       </div>
     </div>
@@ -91,9 +95,9 @@
           <div class="stepper-cont">
             <span>倍数:</span>
 
-            <p @click="jianhao">-</p>
+            <p @click="jianhao" style="margin-right:5px;"> - </p>
             <input onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" type="text" v-model="beishu" />
-            <p @click="beishu++">+</p>
+            <p @click="beishu++" style="margin-left:5px;"> + </p>
           </div>
         </div>
         <button @click="pourzhus">添加投注</button>
@@ -140,7 +144,7 @@
     <!-- 投注记录 -->
     <van-popup class="tzRecord" v-model="tzRecord">
       <div class="pops">
-        <div>
+        <!-- <div> -->
           <ul class="pop-title">
             <!-- <li>编号</li> -->
             <li>期号</li>
@@ -163,7 +167,7 @@
           <div class="btn-box">
             <van-button class="btn" @click="tzRecord = false">关闭</van-button>
           </div>
-        </div>
+        <!-- </div> -->
       </div>
     </van-popup>
 
@@ -186,7 +190,7 @@
         <div class="tzxq-cont-down">开奖号码:{{TZXQ.winNumber}}</div>
         <div class="tzxq-cont-down">投注内容:{{TZXQ.number}}</div>
 
-        <van-button v-if="TZXQ.isWinName =='未开奖'" @click="revocation(TZXQ)">是否撤单</van-button>
+        <van-button v-if="TZXQ.isWinName =='未开奖'" @click="revocation(TZXQ)">撤单</van-button>
         <van-button @click="touzhuxiangqing = false">关闭</van-button>
       </div>
     </van-popup>
@@ -211,7 +215,8 @@ export default {
       jiangliushui: 0,
       kjRecord: false, //开奖记录
       tzRecord: false, // 投注记录
-      time: 100000, //倒计时
+      time: 2000, //倒计时
+      times:'',
       daojishi: true,
       logo: require("../../../assets/bj_pk10.png"),
       logo1: require("../../../assets/tw_pk10.png"),
@@ -256,7 +261,8 @@ export default {
       page: 1,
       playtype: "", // 玩法类型
       price: "", //单价
-      current: ""
+      current: "",
+      querenTime:true
     };
   },
   created() {
@@ -276,12 +282,23 @@ export default {
 
   methods: {
     finished() {
+      this.querenTime = false
       // console.log("时间结束");
-      this.zhushubefore();
-      this.singular();
-      this.dangqian();
-      this.jinqikaijiang();
-      this.liushui();
+      // this.$router.go(0)
+      setTimeout(()=>{
+        this.finishedss()
+      },38000)
+    },
+    finishedss() {
+      setTimeout(()=>{
+        if (this.times>=0) {
+            this.$router.go(0)
+        } 
+        // 
+      },2000)
+      if (this.time) {
+        // 
+      }
     },
     //钱包流水
     liushui() {
@@ -331,7 +348,11 @@ export default {
           window.console.log(res);
           // this.price = res.data.price;
           this.qihao = res.data.qishu;
-          this.time = res.data.fengpan;
+        
+          this.times = res.data.fengpan+20;
+          
+           window.console.log(res.data.fengpan)
+          // this.times =20;
         });
     },
     jinqikaijiang() {
@@ -384,11 +405,12 @@ export default {
             timeRange: "",
             lastId: this.lastId,
             page: this.page,
-            type: this.playtype
+            type: this.playtype,
+            status:""
           }
         })
         .then(res => {
-          // this.tzRecords = res.data.list;
+          this.tzRecords = res.data.list;
 
           window.console.log("投注记录", res);
         });
@@ -402,6 +424,10 @@ export default {
       if (!this.pourzhu) {
         this.$toast("请添加投注");
         return;
+      }
+      if (!this.querenTime) {
+          this.$toast('封盘中，请稍后...')
+          return
       }
       this.$axios
         .fetchPost("/portal", {
@@ -625,6 +651,13 @@ export default {
         display: flex;
         color: #999;
         font-size: 14px;
+        p{
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          
+        }
+
       }
     }
   }
@@ -869,7 +902,7 @@ export default {
 }
 .tzRecord {
   width: 100%;
-  height: 300px;
+  height: 500px;
   background: transparent;
   padding: 15px;
   box-sizing: border-box;
@@ -881,13 +914,18 @@ export default {
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow-y: auto;
     .btn-box {
-      width: 100%;
+      width: 91%;
       display: flex;
       justify-content: center;
+      position: fixed;
+      bottom: 20px;
+      box-sizing: border-box;
+      // left: 10%;
     }
     .btn {
-      width: 80%;
+      width: 100%;
       height: 3rem;;
       line-height: 30px;
       background: #af53d1;
@@ -909,6 +947,7 @@ export default {
       padding: 1rem;
     }
     .pop-content {
+      overflow-y: auto;
       li {
         display: flex;
         font-size: 14px;
@@ -917,6 +956,7 @@ export default {
         text-align: center;
         box-sizing: border-box;
         padding: 1rem;
+        overflow-y: auto;
         // border-bottom: 1px solid #48382b;
 
         span {

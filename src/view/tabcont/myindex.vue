@@ -320,7 +320,7 @@ export default {
           border-radius: 50%;
           border: 1px solid #ffc000;
           position: absolute;
-          top: -2rem;
+          top: -2.3rem;
           left: 2rem;
         }
       }

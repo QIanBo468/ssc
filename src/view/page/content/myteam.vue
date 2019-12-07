@@ -5,12 +5,11 @@
       <h3>我的信息</h3>
       <div class="mydata-content">
         <div class="content">
-          <p>
-      ID
+          <p>用户名
           </p>
           <p>
           
-            {{mydata.id}}
+            {{mydata.username}}
           </p>
         </div>
         <div class="content">
@@ -18,8 +17,8 @@
           <p>VIP{{mydata.level}}</p>
         </div>
         <div class="content">
-          <p>总流水</p>
-          <p>{{mydata.prize}}</p>
+          <p>总流水(万)</p>
+          <p>{{mydata.prize/10000}}</p>
         </div>
         <div class="content">
           <p>人数</p>
@@ -32,12 +31,17 @@
       <div class="mydata-content">
         <div class="content">
           <p>级别</p>
-          <p>总流水</p>
+          <p>总流水(万)</p>
           <p>返佣金额</p>
+        </div>
+          <div class="content">
+          <p>VIP0</p>
+          <p>0</p>
+          <p>0%</p>
         </div>
         <div class="content" v-for="(item,index) of configs" :key="index">
           <p>VIP{{item.level}}</p>
-          <p>{{item.liushui}}</p>
+          <p>{{item.liushui/10000}}</p>
           <p>{{item.fanyong}}%</p>
         </div>
       </div>
@@ -47,17 +51,15 @@
       <h3>我的下级</h3>
       <div class="mydata-content">
         <div class="content">
-          <p>用户名/ID</p>
+          <p>用户名</p>
           <p>级别</p>
-          <p>总流水</p>
+          <p>总流水(万)</p>
           <p>人数</p>
         </div>
         <div class="content" v-for="(item,index) of xiaji" :key="index">
-          <p>{{item.id}}<br>
-            {{item.mobile}}
-          </p>
-          <p>{{item.level}}</p>
-          <p>{{item.prize}}</p>
+          <p>{{item.username}}</p>
+          <p>VIP{{item.level}}</p>
+          <p>{{item.prize/10000}}</p>
           <p>{{item.count}}</p>
         </div>
       </div>

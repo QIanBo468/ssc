@@ -30,7 +30,8 @@
 
 <script>
 import titlebar from "@/components/NavBar";
-import UserXq from "@/components/UserXq";
+import UserXq from "@/components/Titlewallet";
+
 export default {
   data() {
     return {
@@ -172,7 +173,7 @@ export default {
       //   line-height: 60px;
       margin-left: 5px;
       color: #333;
-      font-size: 13px;
+      font-size: 15px;
     }
     img {
       width: 25px;

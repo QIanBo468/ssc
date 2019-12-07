@@ -116,7 +116,7 @@
 
 <script>
 import titlebar from "@/components/NavBar";
-import UserXq from "@/components/UserXq";
+import UserXq from "@/components/Titlewallet";
 export default {
   data() {
     return {

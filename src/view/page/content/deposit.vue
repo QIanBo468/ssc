@@ -2,10 +2,10 @@
   <div class="deposit">
     <titlebar title="提现" routes="depcharge"></titlebar>
     <div class="deposithint">
-      <p>USDT实时汇率:{{canshu.feeRate}}</p>
+      <p>USDT实时汇率:7.05</p>
       <p>可提现金额:{{Yue}}</p>
       <p>USDT</p>
-      <p>实际到账:{{RMB-RMB*canshu.feeRate*0.01}}</p>
+      <p>实际到账:{{((RMB-RMB*canshu.feeRate*0.01)/7.05).toFixed(2)}}</p>
     </div>
     <div class="qrCode">
       <div class="qrCodecent">
@@ -47,7 +47,9 @@ export default {
   },
   data() {
     return {
-      canshu:'',
+      canshu:{
+        feeRate:5
+      }, 
       Yue:'',
       usdt: "",
       RMB: "",
@@ -74,7 +76,7 @@ export default {
         data: {}
       })
       .then(res => {
-        this.canshu = res.data.params
+        // this.canshu = res.data.params
         window.console.log(res);
       });
         this.$axios

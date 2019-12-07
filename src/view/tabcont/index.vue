@@ -69,7 +69,7 @@
               <p>当前期数:{{beijing.qihao}}</p>
               <div>
                 <p>剩余时间:</p>
-                <van-count-down @finish="finishedone" :time="beijing.time*1000" />
+                <van-count-down @finish="finishedone" :time="beijing.time*1000+1" />
               </div>
             </div>
           </div>
@@ -94,7 +94,7 @@
               <p>当前期数:{{youting.qihao}}</p>
               <div>
                 <p>剩余时间:</p>
-                <van-count-down @finish="finishedtwo" :time="youting.time*1000" />
+                <van-count-down @finish="finishedtwo" :time="youting.time*1000+1" />
               </div>
             </div>
           </div>
@@ -110,6 +110,7 @@
 </template>
 
 <script>
+// import { Dialog } from "vant";
 export default {
   data() {
     return {
@@ -132,7 +133,7 @@ export default {
       beijingbefor: "",
       youtingnum: [],
       youtingbefor: "",
-      Rtime:false
+      Rtime: false
     };
   },
   created() {
@@ -150,16 +151,15 @@ export default {
         this.swiper = res.data;
       });
     // setTimeout(()=>{
-      this.beijingdangqian();
+    this.beijingdangqian();
     this.youtingdangqian();
     this.beijingkj();
     this.youtingkj();
     // },1000)
-    
   },
   methods: {
     beijingdangqian() {
-      let _this= this;
+      let _this = this;
       this.$axios
         .fetchPost("/portal", {
           source: "web",
@@ -178,7 +178,8 @@ export default {
         });
     },
     youtingdangqian() {
-      let _this= this;
+      window.console.log('14684321')
+      let _this = this;
       this.$axios
         .fetchPost("/portal", {
           source: "web",
@@ -197,7 +198,7 @@ export default {
         });
     },
     beijingkj() {
-      let _this= this;
+      let _this = this;
       // let _this = this;
       this.$axios
         .fetchPost("/portal", {
@@ -220,7 +221,7 @@ export default {
         });
     },
     youtingkj() {
-      let _this= this;
+      let _this = this;
       // let _this = this;
       this.$axios
         .fetchPost("/portal", {
@@ -248,23 +249,11 @@ export default {
       // this.youtingdangqian();
       // this.beijingkj();
       // this.youtingkj();
+      // this.$router.go(0);
     },
     finishedtwo() {
       // window.location.reload();
-      if (this.Rtime) {
-        window.console.log("12");
-        
-      }
-
-      setTimeout(() => {
-      //  this.beijingdangqian();
-      // this.youtingdangqian();
-      // this.beijingkj();
-      // this.youtingkj();
-      // window.location.reload();
-      }, 3000);
-
-     
+      
     },
     shuaxin() {
       this.$router.go(0);

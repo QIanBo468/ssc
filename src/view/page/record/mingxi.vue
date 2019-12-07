@@ -13,7 +13,7 @@
     </div>
     <!-- <button class="topupbtn" @click="submit">查询</button> -->
 
-    <div class="list-c">
+    <!-- <div class="list-c">
       <ul class="title">
         <li>账变类型</li>
         <li>单号</li>
@@ -35,11 +35,28 @@
         </ul>
       </van-list>
       <div class="upDown">
-        <!-- <p>显示{{}}</p> -->
         <button @click="updown(-1)">上一页</button>
         <button @click="updown(1)">下一页</button>
       </div>
-    </div>
+    </div>-->
+
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <div class="kjRecord-content">
+        <!-- <h3>近期开奖</h3> -->
+        <ul>
+          <li v-for="item of list" :key="item.qihao">
+            <div class="kjRecord-content-item">
+              <p>{{item.typeName}}</p>
+              <span>{{item.remark}}</span>
+              <div class="kjRecord-content-one">
+                <p>{{item.createdAt}}</p>
+              </div>
+            </div>
+            <h3 :class="[item.is_win == 1? 'red': '']">{{item.num}}</h3>
+          </li>
+        </ul>
+      </div>
+    </van-list>
   </div>
 </template>
 
@@ -93,7 +110,7 @@ export default {
       // let financeType;
       this.financeType = value;
       window.console.log(value);
-      this.submit(value)
+      this.submit(value);
       // this.submit(value);
     },
     created() {
@@ -123,7 +140,7 @@ export default {
       // }
       // window.console.log(typeof financeType)
       if (!value) {
-          value = ""
+        value = "";
       }
       this.$axios
         .fetchPost("/portal", {
@@ -181,6 +198,50 @@ export default {
       color: #666;
     }
   }
+  ul {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    li {
+      // background: #333;
+      display: flex;
+      // flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid #f8f8f8;
+      .kjRecord-content-item {
+        // flex: 1;
+      }
+      p {
+        font-size: 14px;
+        color: #000;
+        margin-bottom: 0.2rem;
+      }
+      span {
+        color: #333;
+        margin-bottom: 0.2rem;
+        font-size: 13px;
+      }
+      .kjRecord-content-one {
+        display: flex;
+        align-items: center;
+
+        p {
+          color: #999;
+          font-size: 12px;
+          margin-right: 0.5rem;
+        }
+      }
+      h3 {
+        // flex: 1;
+        color: #999;
+        font-size: 14px;
+      }
+    }
+  }
 }
 .topupbtn {
   margin: 1rem;
@@ -229,7 +290,7 @@ export default {
     border: none;
     //   padding: 0.5rem;
     width: 8rem;
-    
+
     background: #af53d1;
     color: #fff;
     height: 2rem;
