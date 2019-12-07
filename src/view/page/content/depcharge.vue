@@ -1,6 +1,6 @@
 <template>
   <div class="depcharge">
-    <titlebar title="提现"></titlebar>
+    <titlebar title="提现" routes='/'></titlebar>
     <UserXq :wallet="false"></UserXq>
 
     <div class="wallet" @click="$router.push({path:'deposit',query:{item:0}})">

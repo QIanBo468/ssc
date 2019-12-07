@@ -37,33 +37,47 @@
     </div>
 
     <div class="list-c">
-      <ul class="title">
+      <ul class="title" v-if="topDes==1">
         <li>金额</li>
-        <li>地址</li>
         <li>钱包名称</li>
+        <li>时间</li>
+        <li>状态</li>
+      </ul>
+      <ul class="title" v-else>
+        <li>金额</li>
+        <!-- <li>地址</li> -->
+        <li>时间</li>
         <li>状态</li>
       </ul>
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <ul class="list-content">
+        <ul class="list-content" v-if="topDes==1">
+          <li v-for="(item,index) of pantData" :key="index">
+            <span>{{item.money}}</span>
+            <span>{{item.creditName}}</span>
+            <span>{{item.createdAt}}</span>
+            <span>{{item.status == 0 ? '申请中': (item.status == 1 ? '提币成功':'申请被驳回')}}</span>
+          </li>
+        </ul>
+        <ul class="list-content" v-else>
           <li v-for="(item,index) of pantData" :key="index">
             <span>{{item.amount}}</span>
-            <span>{{item.address}}</span>
-            <span>{{item.money ?item.money :item.creditName}}</span>
-            <span>{{item.status == 0 ? '申请中': (item.status == 1 ? '成功':'失败')}}</span>
+            <!-- <span>{{item.address}}</span> -->
+            <span>{{item.createdAt}}</span>
+            <span>{{!item.status ? '成功': (item.status == 1 ? '申请中':'失败')}}</span>
           </li>
         </ul>
       </van-list>
       <!-- <div class="upDown">
         <button @click="updown(-1)">上一页</button>
         <button @click="updown(1)">下一页</button>
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["zhonglei", "searchpop", "pantData", "title"],
+  props: ["zhonglei", "searchpop", "pantData", "title", "topDes"],
   data() {
     return {
       cainame: 0,
@@ -133,6 +147,7 @@ export default {
   },
   created() {
     window.console.log(this.pantData);
+    window.console.log(this.Types);
     this.loading = false;
     this.finished = true;
     // this.lists = pantData
@@ -232,6 +247,7 @@ export default {
   }
   .title {
     margin-top: 1rem;
+    padding: 1rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -259,6 +275,7 @@ export default {
         display: inline-block;
         flex: 1;
         text-align: center;
+        font-size: 14px;
       }
     }
   }

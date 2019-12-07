@@ -3,7 +3,7 @@
     <titlebar title="充值记录"></titlebar>
     <!-- <times ref="headerChild" title="充值记录"></times> -->
     <!-- <button class="topupbtn" @click="submit">查询</button> -->
-    <recordList :pantData=pantData></recordList>
+    <recordList :pantData=pantData :topDes=2></recordList>
   </div>
 </template>
 
@@ -22,7 +22,9 @@ export default {
     return {
         lastId:0,
         page:1,
-        pantData:''
+        pantData:[
+          // {amount:123456,createdAt:'2019-12-7 13:43',status:0}
+        ]
     };
   },
   mounted() {

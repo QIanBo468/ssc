@@ -19,7 +19,7 @@
       </div>
 
       <div class="indexrouter">
-           <div class="router-cont" @click="$router.push('topUpcharge')">
+        <div class="router-cont" @click="$router.push('topUpcharge')">
           <img width="58px" height="58px" src="@/assets/chongzhi_icon@3x.png" alt />
           <span>充值</span>
         </div>
@@ -31,7 +31,7 @@
           <img width="58px" height="58px" src="@/assets/eduzhuanhuan_icon@3x.png" alt />
           <span>额度转换</span>
         </div>
-        <div class="router-cont"  @click="$router.push('notice')">
+        <div class="router-cont" @click="$router.push('notice')">
           <img width="58px" height="58px" src="@/assets/qianbao_icon@3x.png" alt />
           <span>公告</span>
         </div>
@@ -117,11 +117,11 @@ export default {
       swiper: [],
       beijing: {
         qihao: "",
-        time: ""
+        time: 10
       },
       youting: {
         qihao: "",
-        time: ""
+        time: 10
       },
       pitch: [],
       pitchs: [],
@@ -129,9 +129,10 @@ export default {
       lastId: 0,
       page: 1,
       beijingnum: [],
-      beijingbefor:"",
+      beijingbefor: "",
       youtingnum: [],
-      youtingbefor:""
+      youtingbefor: "",
+      Rtime:false
     };
   },
   created() {
@@ -148,14 +149,17 @@ export default {
         window.console.log(res);
         this.swiper = res.data;
       });
-
-    this.beijingdangqian();
+    // setTimeout(()=>{
+      this.beijingdangqian();
     this.youtingdangqian();
     this.beijingkj();
     this.youtingkj();
+    // },1000)
+    
   },
   methods: {
     beijingdangqian() {
+      let _this= this;
       this.$axios
         .fetchPost("/portal", {
           source: "web",
@@ -169,11 +173,12 @@ export default {
         .then(res => {
           window.console.log(res);
           // this.price = res.data.price;
-          this.beijing.qihao = res.data.qishu;
-          this.beijing.time = res.data.kaijiang;
+          _this.beijing.qihao = res.data.qishu;
+          _this.beijing.time = res.data.kaijiang;
         });
     },
     youtingdangqian() {
+      let _this= this;
       this.$axios
         .fetchPost("/portal", {
           source: "web",
@@ -187,11 +192,12 @@ export default {
         .then(res => {
           window.console.log(res);
           // this.price = res.data.price;
-          this.youting.qihao = res.data.qishu;
-          this.youting.time = res.data.kaijiang;
+          _this.youting.qihao = res.data.qishu;
+          _this.youting.time = res.data.kaijiang;
         });
     },
     beijingkj() {
+      let _this= this;
       // let _this = this;
       this.$axios
         .fetchPost("/portal", {
@@ -206,14 +212,15 @@ export default {
           }
         })
         .then(res => {
-          this.pitch = res.data.list.slice(0, 1)[0].thirdNumber;
-          this.beijingbefor = res.data.list[0]
-          this.beijingnum = this.pitch.split(",");
+          _this.pitch = res.data.list.slice(0, 1)[0].thirdNumber;
+          _this.beijingbefor = res.data.list[0];
+          _this.beijingnum = this.pitch.split(",");
 
           window.console.log("近期开奖", res);
         });
     },
     youtingkj() {
+      let _this= this;
       // let _this = this;
       this.$axios
         .fetchPost("/portal", {
@@ -228,36 +235,39 @@ export default {
           }
         })
         .then(res => {
-          this.pitchs = res.data.list.slice(0, 1)[0].thirdNumber;
-          this.youtingbefor = res.data.list[0]
-          this.youtingnum = this.pitchs.split(",");
+          _this.pitchs = res.data.list.slice(0, 1)[0].thirdNumber;
+          _this.youtingbefor = res.data.list[0];
+          _this.youtingnum = this.pitchs.split(",");
 
           window.console.log("近期开奖", this.youtingnum);
         });
     },
     finishedone() {
       // window.location.reload();
-      
-    //    this.beijingdangqian();
-    // this.youtingdangqian();
-    // this.beijingkj();
-    // this.youtingkj();
+      //    this.beijingdangqian();
+      // this.youtingdangqian();
+      // this.beijingkj();
+      // this.youtingkj();
     },
     finishedtwo() {
       // window.location.reload();
-      window.console.log('12')
-      // setTimeout(()=> {
-        // this.$router.go(0)
-        // this.shuaxin()
-      // },5000)
-       
-    //    this.beijingdangqian();
-    // this.youtingdangqian();
-    // this.beijingkj();
-    // this.youtingkj();
+      if (this.Rtime) {
+        window.console.log("12");
+        
+      }
+
+      setTimeout(() => {
+      //  this.beijingdangqian();
+      // this.youtingdangqian();
+      // this.beijingkj();
+      // this.youtingkj();
+      // window.location.reload();
+      }, 3000);
+
+     
     },
     shuaxin() {
-      this.$router.go(0)
+      this.$router.go(0);
     }
   }
 };
@@ -364,7 +374,7 @@ export default {
     margin-bottom: 2rem;
     a {
       width: 100%;
-      height:8rem;
+      height: 8rem;
       border-radius: 6px;
       box-shadow: 6px 2px 10px #ddd4ec;
       margin-bottom: 1rem;
@@ -413,7 +423,7 @@ export default {
             text-align: center;
             line-height: 1.2rem;
             font-size: 10px;
-            margin-right: .1rem;
+            margin-right: 0.1rem;
           }
         }
         img {

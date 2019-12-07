@@ -3,7 +3,7 @@
     <titlebar title="地址簿" right='添加地址' url='newAddress'></titlebar>
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="get_address">
       <van-swipe-cell :on-close="onClose" v-for="(item,index) in list" :key="index">
-        <div class="address_list">
+        <div class="address_list"  @click="employ(item)">
           <!--<img :src="item.auther" alt="">-->
           <div class="list_address">
             <span>姓名：{{item.name}}</span>
@@ -22,6 +22,8 @@
 <script>
 import titlebar from "@/components/NavBar";
 
+import { Dialog } from "vant";
+
 export default {
   components: {
     titlebar
@@ -39,6 +41,19 @@ export default {
     }
   },
    methods: {
+     employ(item) {
+         Dialog.confirm({
+          confirmButtonColor: "#ffdd00",
+          cancelButtonColor: "#cdaa6f",
+          // title: "标题",
+          message: "是否使用当前地址"
+        })
+          .then(() => {
+            window.console.log(item)
+            this.$router.push({path:'deposit',query:{address: item.address}})
+          })
+          .catch(() => {});
+     },
     onClickLeft () {
       this.$router.go(-1)
     },

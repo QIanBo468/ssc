@@ -10,36 +10,37 @@
             <h3>中心钱包：{{tixian.value}}</h3>
           </div>
     </div>-->
-    <UserXq :wallet=false></UserXq>
+    <UserXq :wallet="false"></UserXq>
     <div class="qrCharge">
       <div class="qrCode">
         <div class="qrCodecent">
-          <p>收款信息</p>
+          <p>收款方式: USDT</p>
         </div>
-        <div class="qrCodecent">
+        <!-- <div class="qrCodecent">
           <p>收款方式</p>
           <span>USDT</span>
-        </div>
+        </div>-->
         <div class="qrCodecent">
           <p>链名称</p>
           <span>ERC20</span>
         </div>
-        <div class="qrCodecent">
-          <p>收款码</p>
+        <div class="qrCodecentimg">
+          <!-- <p>收款码</p> -->
           <img :src="resdata.qrCode" alt />
         </div>
-        <div class="qrCodecent qrwallet">
+        <div class="qrwallet">
           <div>
             <p>收款钱包</p>
-            <span @click="copy(resdata.address)">一键复制</span>
           </div>
-
-          <span class="address-text">{{resdata.address}}</span>
+          <div>
+            <span class="address-text">{{resdata.address}}</span>
+            <span @click="copy(resdata.address)">复制地址</span>
+          </div>
         </div>
       </div>
 
       <div class="hint">
-        <img src="@/assets/icon_tips.png" alt />扫码支付或者钱包支付
+        <!-- <img src="@/assets/icon_tips.png" alt />扫码支付或者钱包支付 -->
       </div>
 
       <div class="qrCode"></div>
@@ -49,7 +50,7 @@
       <li
         style="white-space: pre-wrap;
         word-wrap: break-word;
-        word-break: break-all;"
+        word-break: break-all; color:#999999"
         v-html="chongzhiText"
       ></li>
       <!-- <li>2.从法币账户转入币币账户</li>
@@ -342,7 +343,7 @@ export default {
   .walletshouyi {
     display: flex;
     padding: 10px;
-    border: 1px solid #f2e5ca;
+    // border: 1px solid #f2e5ca;
     div {
       flex: 1;
       display: flex;
@@ -376,7 +377,8 @@ export default {
     padding: 5px 30px;
     color: #fff;
     span {
-      color: rgb(149, 34, 190);
+      color: #666;
+      font-weight: bold;
     }
     .qrCodecent {
       display: flex;
@@ -387,75 +389,86 @@ export default {
           font-size: 18px;
           font-weight: bold;
           margin-bottom: 10px;
-          color: rgb(149, 34, 190);
+          color: #333;
         }
-        border-bottom: 1px solid #666;
+        border-bottom: none;
       }
-      &:last-child {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: space-between;
-        div {
-          display: flex;
-          align-items: center;
-          margin-bottom: 5px;
-          span {
-            color: rgb(149, 34, 190);
-            border: 1px solid rgb(149, 34, 190);
-            padding: 2px;
-            border-radius: 3px;
-            font-size: 12px;
-          }
-        }
-        .address-text {
-          font-size: 13px;
-        }
-      }
+      // &:last-child {
+      //   display: flex;
+      //   flex-direction: column;
+      //   align-items: flex-start;
+      //   justify-content: space-between;
+      //   div {
+      //     display: flex;
+      //     align-items: center;
+      //     margin-bottom: 5px;
+      //     span {
+      //       color: rgb(149, 34, 190);
+
+      //       border: 1px solid rgb(149, 34, 190);
+      //       padding: 2px;
+      //       border-radius: 3px;
+      //       font-size: 12px;
+      //     }
+      //   }
+      //   .address-text {
+      //     font-size: 13px;
+      //   }
+      // }
       p {
         color: rgb(149, 34, 190);
         font-size: 15px;
         margin-right: 50px;
+        font-weight: bold;
       }
       img {
         width: 175px;
         height: 175px;
       }
     }
-  }
-  .qrCode:last-child {
-    .qrCodecent {
-      span {
-        color: #edd39a;
-      }
-      input {
-        background: transparent;
-        color: #edd39a;
-        width: 100%;
-        border: none;
-        border-bottom: 1px solid rgb(149, 34, 190);
-      }
-    }
-    ul {
-      padding: 20px;
-      li {
-        color: #ff6600;
-        font-size: 14px;
-        margin-bottom: 10px;
-      }
-      span {
-        color: #f00;
-      }
-    }
-
-    .btn {
-      text-align: center;
+    .qrCodecentimg {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
       img {
-        width: 150px;
-        height: 45px;
+        width: 175px;
+        height: 175px;
       }
     }
   }
+  // .qrCode:last-child {
+  //   .qrCodecent {
+  //     span {
+  //       color: #edd39a;
+  //     }
+  //     input {
+  //       background: transparent;
+  //       color: #edd39a;
+  //       width: 100%;
+  //       border: none;
+  //       // border-bottom: 1px solid rgb(149, 34, 190);
+  //     }
+  //   }
+  //   ul {
+  //     padding: 20px;
+  //     li {
+  //       color: #ff6600;
+  //       font-size: 14px;
+  //       margin-bottom: 10px;
+  //     }
+  //     span {
+  //       color: #f00;
+  //     }
+  //   }
+
+  //   .btn {
+  //     text-align: center;
+  //     img {
+  //       width: 150px;
+  //       height: 45px;
+  //     }
+  //   }
+  // }
 
   .hint {
     color: rgb(149, 34, 190);
@@ -469,6 +482,34 @@ export default {
     }
   }
   .qrwallet {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    div {
+      display: flex;
+      width: 100%;
+      p {
+        color: rgb(149, 34, 190);
+        font-weight: bold;
+        font-size: 15px;
+        margin-bottom: 0.5rem;
+      }
+      span:first-child {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border: none;
+        font-size: 13px;
+      }
+      span:last-child{
+        font-size: 13px;
+        display: inline-block;
+        width: 6rem;
+        text-align: center;
+        border-left: solid #666;
+      }
+    }
   }
 }
 </style>

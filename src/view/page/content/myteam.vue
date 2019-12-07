@@ -108,7 +108,7 @@ export default {
             version: "v1",
             module: "User",
             interface: "6000",
-            // data:''
+            data:{}
         }).then(res=>{
           //  debugger
           this.mydata = res.data.userinfo

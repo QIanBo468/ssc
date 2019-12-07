@@ -10,7 +10,7 @@
 <script>
 
 export default {
-    props:["title","right","url"],
+    props:["title","right","url",'routes'],
     data() {
         return{
 
@@ -18,7 +18,12 @@ export default {
     },
     methods:{
         onClickLeft() {
+          if (!this.routes) {
             this.$router.go(-1)
+          } else{
+            this.$router.push({path:this.routes})
+          }
+            
         },
         onClickRight() {
           window.console.log(this.url)

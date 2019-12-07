@@ -3,7 +3,7 @@
     <titlebar ref="headerChild" title="提现记录"></titlebar>
     <!-- <times title="提现记录"></times> -->
     <!-- <button class="topupbtn" @click="submit">查询</button> -->
-    <recordList  :pantData="pantData"></recordList>
+    <recordList  :pantData="pantData" :topDes=1></recordList>
   </div>
 </template>
 
@@ -23,7 +23,8 @@ export default {
       timeRange: "",
       lastId: 0,
       page: 1,
-      pantData:''
+      pantData:[
+      ]
     };
   },
   mounted() {

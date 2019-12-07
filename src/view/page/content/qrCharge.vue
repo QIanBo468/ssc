@@ -118,104 +118,104 @@ export default {
 </script>
 
 <style lang='less' scope>
-.qrCharge {
-  // width: 100%;
-  // height: 100%;
-  // background: url(../../../assets/myBg.jpg);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  .qrCode {
-    // width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 5px 30px;
-    color: #fff;
+// .qrCharge {
+//   // width: 100%;
+//   // height: 100%;
+//   // background: url(../../../assets/myBg.jpg);
+//   display: flex;
+//   flex-direction: column;
+//   overflow-y: auto;
+//   .qrCode {
+//     // width: 100%;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+//     padding: 5px 30px;
+//     color: #fff;
 
-    .qrCodecent {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-      &:first-child {
-        p {
-          font-size: 18px;
-          margin-bottom: 10px;
-        }
-        border-bottom: 1px solid #666;
-      }
-      &:last-child {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: space-between;
-        div {
-          display: flex;
-          align-items: center;
-          margin-bottom: 5px;
-          span {
-            color: #edd39a;
-            border: 1px solid #edd39a;
-            padding: 2px;
-            border-radius: 3px;
-          }
-        }
-      }
-      p {
-        color: #fff;
-        font-size: 15px;
-        margin-right: 50px;
-      }
-      img {
-        width: 175px;
-        height: 175px;
-      }
-    }
-  }
-  .qrCode:last-child {
-    .qrCodecent {
-      span {
-        color: #edd39a;
-      }
-      input {
-        background: transparent;
-        color: #edd39a;
-        width: 100%;
-        border: none;
-        border-bottom: 1px solid #edd39a;
-      }
-    }
-    ul {
-      padding: 20px;
-      li {
-        color: #ff6600;
-        font-size: 14px;
-        margin-bottom: 10px;
-      }
-      span {
-        color: #f00;
-      }
-    }
+//     .qrCodecent {
+//       display: flex;
+//       align-items: center;
+//       margin-bottom: 15px;
+//       &:first-child {
+//         p {
+//           font-size: 18px;
+//           margin-bottom: 10px;
+//         }
+//         border-bottom: 1px solid #666;
+//       }
+//       &:last-child {
+//         display: flex;
+//         flex-direction: column;
+//         align-items: flex-start;
+//         justify-content: space-between;
+//         div {
+//           display: flex;
+//           align-items: center;
+//           margin-bottom: 5px;
+//           span {
+//             color: #edd39a;
+//             border: 1px solid #edd39a;
+//             padding: 2px;
+//             border-radius: 3px;
+//           }
+//         }
+//       }
+//       p {
+//         color: #fff;
+//         font-size: 15px;
+//         margin-right: 50px;
+//       }
+//       img {
+//         width: 175px;
+//         height: 175px;
+//       }
+//     }
+//   }
+//   .qrCode:last-child {
+//     .qrCodecent {
+//       span {
+//         color: #edd39a;
+//       }
+//       input {
+//         background: transparent;
+//         color: #edd39a;
+//         width: 100%;
+//         border: none;
+//         border-bottom: 1px solid #edd39a;
+//       }
+//     }
+//     ul {
+//       padding: 20px;
+//       li {
+//         color: #ff6600;
+//         font-size: 14px;
+//         margin-bottom: 10px;
+//       }
+//       span {
+//         color: #f00;
+//       }
+//     }
 
-    .btn {
-      text-align: center;
-      img {
-        width: 150px;
-        height: 45px;
-      }
-    }
-  }
+//     .btn {
+//       text-align: center;
+//       img {
+//         width: 150px;
+//         height: 45px;
+//       }
+//     }
+//   }
 
-  .hint {
-    color: #edd39a;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    img {
-      height: 18px;
-      width: 18px;
-    }
-  }
-}
+//   .hint {
+//     color: #edd39a;
+//     margin: 0 auto;
+//     display: flex;
+//     align-items: center;
+//     margin-bottom: 10px;
+//     img {
+//       height: 18px;
+//       width: 18px;
+//     }
+//   }
+// }
 </style>

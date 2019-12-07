@@ -1,24 +1,34 @@
 <template>
   <div class="deposit">
-    <titlebar title="提现"></titlebar>
+    <titlebar title="提现" routes="depcharge"></titlebar>
     <div class="deposithint">
-      <p>UDSDT实时汇率:</p>
-      <p>可提现金额:</p>
+      <p>USDT实时汇率:{{canshu.feeRate}}</p>
+      <p>可提现金额:{{Yue}}</p>
       <p>USDT</p>
-      <p>实际到账:</p>
+      <p>实际到账:{{RMB-RMB*canshu.feeRate*0.01}}</p>
     </div>
     <div class="qrCode">
       <div class="qrCodecent">
         <!-- <p>钱包地址</p> -->
-        <input placeholder="请输入USDT地址" v-model="usdt" type="text" />
+        <van-cell-group>
+          <van-field v-model="usdt" right-icon="contact" placeholder="请输入USDT地址"  @click-right-icon="$router.push('myAddress')" />
+        </van-cell-group>
+        <!-- <input placeholder="请输入USDT地址" v-model="usdt" type="text" />
+        <van-icon name="manager-o"></van-icon>-->
       </div>
       <div class="qrCodecent">
         <!-- <p>金额</p> -->
-        <input placeholder="请输入金额" v-model="RMB" type="text" />
+        <van-cell-group>
+          <van-field v-model="RMB"  placeholder="请输入金额" />
+        </van-cell-group>
+        <!-- <input placeholder="请输入金额" v-model="RMB" type="text" /> -->
       </div>
       <div class="qrCodecent">
         <!-- <p>提现密码</p> -->
-        <input placeholder="请输入提现密码" v-model="pay" type="text" />
+        <van-cell-group>
+          <van-field v-model="pay"  placeholder="请输入提现密码" />
+        </van-cell-group>
+        <!-- <input placeholder="请输入提现密码" v-model="pay" type="text" /> -->
       </div>
       <div class="btn" @click="submit">
         提交
@@ -37,6 +47,8 @@ export default {
   },
   data() {
     return {
+      canshu:'',
+      Yue:'',
       usdt: "",
       RMB: "",
       pay: "",
@@ -52,6 +64,7 @@ export default {
     } else if (this.$route.query.item == 2) {
       this.type = "credit_3";
     }
+    this.usdt = this.$route.query.address;
     this.$axios
       .fetchPost("/portal/Digiccy", {
         source: "web",
@@ -61,6 +74,24 @@ export default {
         data: {}
       })
       .then(res => {
+        this.canshu = res.data.params
+        window.console.log(res);
+      });
+        this.$axios
+      .fetchPost("/portal", {
+        source: "web",
+        version: "v1",
+        module: "Finance",
+        interface: "1000",
+        data: {}
+      })
+      .then(res => {
+        // this.canshu = res.data.params
+        if (this.type == "credit_1") {
+            this.Yue = res.data.creditList.credit_1.value
+        } else if (this.type == "credit_3") {
+          this.Yue = res.data.creditList.credit_3.value
+        }
         window.console.log(res);
       });
   },
@@ -114,9 +145,9 @@ h2 {
   flex-direction: column;
   // align-items: center;
   overflow-y: auto;
-  .deposithint{
-    padding:.2rem 2rem;
-    p{
+  .deposithint {
+    padding: 0.2rem 2rem;
+    p {
       color: #333;
       font-size: 15px;
       font-weight: bold;
@@ -135,13 +166,14 @@ h2 {
     .qrCodecent {
       display: flex;
       align-items: center;
+
       margin-bottom: 15px;
       width: 100%;
       input {
         color: #af53d1;
         background: transparent;
         border: none;
-        border-bottom: 1px solid #af53d1;
+      
         width: 100%;
         font-size: 15px;
         margin-bottom: 0.8rem;
@@ -197,6 +229,14 @@ h2 {
       width: 150px;
       height: 45px;
     }
+  }
+  .van-cell{
+    margin: 0;
+    padding: 0;
+      border-bottom: 1px solid #af53d1;
+  }
+  .van-field__control{
+    color: #af53d1 !important;
   }
 }
 </style>

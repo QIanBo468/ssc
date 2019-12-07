@@ -76,8 +76,8 @@ export default {
       ],
       cai2: [
         { text: "所有状态", value: 0 },
-        { text: "未中奖", value: 1 },
-        { text: "未开奖", value: 2 }
+        { text: "未开奖", value: 1 },
+        { text: "已开奖", value: 2 }
       ],
       dropdown: "",
       option1: [
@@ -215,10 +215,18 @@ export default {
       this.$emit("showSubmit", this.cainame.toString(), "");
     },
     xialatwo() {
+      let caiactiveType;
+      if (!this.caiactive) {
+        caiactiveType= ''
+      } else if (this.caiactive == 1) {
+          caiactiveType= "0"
+      } else if (this.caiactive == 2) {
+          caiactiveType = "1"
+      }
       this.$emit(
         "showSubmit",
         this.cainame.toString(),
-        this.caiactive.toString()
+        caiactiveType
       );
     }
   }
