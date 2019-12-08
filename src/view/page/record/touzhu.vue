@@ -24,7 +24,7 @@
         <ul>
           <li v-for="item of kjRecords" :key="item.qihao">
             <div class="kjRecord-content-item">
-              <p>{{playtype == 1 ? '北京赛车' : '幸运游艇'}}</p>
+              <p>{{item.type == 1 ? '北京赛车' : '幸运游艇'}}</p>
               <span>第{{item.number_periods}}期</span>
               <div class="kjRecord-content-one">
                 <p>{{item.number}}</p>

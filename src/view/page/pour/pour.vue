@@ -160,7 +160,7 @@
               <span>{{item.multiple}}</span>
               <!-- <span>{{item.typeName}}</span> -->
               <span>{{item.isWinName}}</span>
-              <span>撤单</span>
+              <span>{{item.is_win ==0 ? '撤单': '不可操作'}}</span>
             </li>
             <!-- <li class="wu">没有更多了</li> -->
           </ul>
