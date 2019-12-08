@@ -15,7 +15,7 @@
 
       <div class="notice" @click="$router.push('notice')">
         <img src="@/assets/zhanbao@3x.png" slot alt="left-icon" />
-        <van-notice-bar text="热烈祝贺彩金多app全新上线！！"></van-notice-bar>
+        <van-notice-bar :text="notice.title"></van-notice-bar>
       </div>
 
       <div class="indexrouter">
@@ -36,18 +36,7 @@
           <span>公告</span>
         </div>
       </div>
-      <!-- <div class="index-btn">
-      <router-link to="charge">
-        <img src="@/assets/chongzhi.png" alt />
-      </router-link>
-      <div @click="exit">
-        <img src="@/assets/login.png" alt />
-      </div>
-      </div>-->
-
-      <!-- <div class="indeximgone">
-      <img :src="one" alt />
-      </div>-->
+   
 
       <div class="playlist">
         <!-- <div> -->
@@ -133,7 +122,8 @@ export default {
       beijingbefor: "",
       youtingnum: [],
       youtingbefor: "",
-      Rtime: false
+      Rtime: false,
+      notice:''
     };
   },
   created() {
@@ -149,6 +139,24 @@ export default {
       .then(res => {
         window.console.log(res);
         this.swiper = res.data;
+      });
+        this.$axios
+      .fetchPost("portal", {
+        source: "web",
+        version: "v1",
+        module: "Content",
+        interface: "3000",
+        data: {
+          lastId: 0,
+          page: 1
+        }
+      })
+      .then(res => {
+        if (res.code == 0) {
+         window.console.log(res)
+          this.notice = res.data.list[0];
+        }
+        
       });
     // setTimeout(()=>{
     this.beijingdangqian();

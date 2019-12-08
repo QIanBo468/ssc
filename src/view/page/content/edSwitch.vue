@@ -269,7 +269,7 @@ export default {
     }
   }
   .wallet-switch {
-    padding: 1.5rem;
+    padding:0 1.5rem;
     span {
       color: #333;
       font-size: 1rem;
@@ -285,7 +285,7 @@ export default {
     // background: url(../../../assets/btn_save.png) no-repeat;
     background: #af53d1;
     background-size: 100%;
-    margin: 2rem auto;
+    margin: 4rem auto;
     text-align: center;
     line-height: 2.5rem;
     color: #fff;
@@ -293,6 +293,7 @@ export default {
   }
   .switch-hint {
     padding-left: 2rem;
+    margin-top: 2rem;
     color: #333;
     li {
       font-size: 13px;

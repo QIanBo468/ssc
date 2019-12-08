@@ -21,9 +21,14 @@
           <span>USDT</span>
         </div>-->
         <div class="qrCodecent">
+          <p>实时汇率:</p>
+          <span>7.05</span>
+        </div>
+        <div class="qrCodecent">
           <p>链名称</p>
           <span>ERC20</span>
         </div>
+        
         <div class="qrCodecentimg">
           <!-- <p>收款码</p> -->
           <img :src="resdata.qrCode" alt />
@@ -53,64 +58,8 @@
         word-break: break-all; color:#999999"
         v-html="chongzhiText"
       ></li>
-      <!-- <li>2.从法币账户转入币币账户</li>
-          <li>3.点击提笔输入USDT复制彩金彩钱包地址，输入提笔数量确定</li>
-          <li>4后台提交褪影的USDT数量，就会有折合人民币的提示，输入姓名提交</li>
-          <li>重要提示：请每次充值时务必核对最新的二维码钱包地址信息!平台会用不定期更换新的二维码钱包地址。如因本人原因造成的损失平台概不负责！</li>
-          <li>温馨提示：人民币提现每日仅限1次，金额5000元以内。</li>
-      <li>USDT提现无上限</li>-->
     </ul>
-    <!-- </van-tab> -->
-
-    <!-- <van-tab title="提现"> -->
-    <!-- <div class="user">
-          <img :src="user.avatar" alt />
-          <div>
-            <p>{{user.account}}</p>
-            <p>ID:{{user.id}}</p>
-            <h3>中心钱包：{{user.wallet}}</h3>
-          </div>
-        </div>
-
-        <div class="walletshouyi">
-          <div>
-            <p>盈利钱包</p>
-            <span>{{tixian.yingli}}</span>
-          </div>
-          <div>
-            <p>收益钱包</p>
-            <span>{{tixian.shouyi}}</span>
-          </div>
-          <div>
-            <p>中心钱包</p>
-            <span>{{tixian.zhongxin}}</span>
-          </div>
-        </div>
-
-        <div class="wallet" @click="$router.push({path:'deposit',query:{item:0}})">
-          <span>中心钱包提现</span>
-          <img src="@/assets/cz_icon.png" alt />
-        </div>
-        <div class="wallet" @click="$router.push({path:'deposit',query:{item:1}})">
-          <span>收益钱包提现</span>
-          <img src="@/assets/cz_icon.png" alt />
-        </div>
-        <div class="wallet" @click="$router.push({path:'deposit',query:{item:2}})">
-          <span>盈利钱包提现</span>
-          <img src="@/assets/cz_icon.png" alt />
-        </div>
-
-        <ul>
-          <li>温馨提示</li>
-          <li
-            style="white-space: pre-wrap;
-        word-wrap: break-word;
-        word-break: break-all;"
-            v-html="tixianText"
-          ></li>
-    </ul>-->
-    <!-- </van-tab> -->
-    <!-- </van-tabs> -->
+  
   </div>
 </template>
 
@@ -486,7 +435,7 @@ export default {
     flex-direction: column;
     border: none;
     div {
-      display: flex;
+      // display: flex;
       width: 100%;
       p {
         color: rgb(149, 34, 190);
@@ -505,9 +454,9 @@ export default {
       span:last-child{
         font-size: 13px;
         display: inline-block;
-        width: 6rem;
+        // width: 6rem;
         text-align: center;
-        border-left: solid #666;
+        // border-left: solid #666;
       }
     }
   }

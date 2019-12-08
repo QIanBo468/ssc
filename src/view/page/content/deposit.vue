@@ -5,7 +5,7 @@
       <p>USDT实时汇率:7.05</p>
       <p>可提现金额:{{Yue}}</p>
       <p>USDT</p>
-      <p>实际到账:{{((RMB-RMB*canshu.feeRate*0.01)/7.05).toFixed(2)}}</p>
+      <!-- <p>实际到账:{{((RMB-RMB*canshu.feeRate*0.01)/7.05).toFixed(2)}}</p> -->
     </div>
     <div class="qrCode">
       <div class="qrCodecent">
@@ -148,7 +148,8 @@ h2 {
   // align-items: center;
   overflow-y: auto;
   .deposithint {
-    padding: 0.2rem 2rem;
+    margin-top: 2rem;
+    padding: .5rem 2rem;
     p {
       color: #333;
       font-size: 15px;
@@ -164,7 +165,7 @@ h2 {
     align-items: center;
     padding: 5px 30px;
     color: #fff;
-    margin-top: 1rem;
+    // margin-top: 1rem;
     .qrCodecent {
       display: flex;
       align-items: center;

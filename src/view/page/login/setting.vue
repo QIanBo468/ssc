@@ -49,7 +49,7 @@
     >{{active == 0 ? '备注：请妥善保管好您的登入密码，如遗忘请联系在线客服处理' : '备注：由纯数字组成6-13个数字，不能和登陆密码相同(初始提款密码为登录密码)'}}</p>
     <div class="setfoot">
       未满18周岁禁止购买
-      <br />Copyright © LOTTERY |彩金彩| 版权所有
+      <br />Copyright © LOTTERY |彩金多| 版权所有
     </div>
   </div>
 </template>

@@ -47,12 +47,12 @@
           <li v-for="item of list" :key="item.qihao">
             <div class="kjRecord-content-item">
               <p>{{item.typeName}}</p>
-              <span>{{item.remark}}</span>
+              <!-- <span>{{item.remark}}</span> -->
               <div class="kjRecord-content-one">
                 <p>{{item.createdAt}}</p>
               </div>
             </div>
-            <h3 :class="[item.is_win == 1? 'red': '']">{{item.num}}</h3>
+            <h3 class="red">{{item.num}}</h3>
           </li>
         </ul>
       </div>

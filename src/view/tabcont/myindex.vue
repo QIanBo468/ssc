@@ -286,7 +286,7 @@ export default {
           justify-content: space-around;
           align-items: flex-start;
           margin-left: 2rem;
-          margin-top: 2.5rem;
+          margin-top: 3.5rem;
           // span {
           span:first-child {
             font-size: 15px;

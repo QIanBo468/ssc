@@ -7,10 +7,10 @@
       <span>中心钱包提现</span>
       <img src="@/assets/more@3x.png" alt />
     </div>
-    <!-- <div class="wallet" @click="$router.push({path:'deposit',query:{item:1}})">
+    <div class="wallet" @click="$router.push({path:'deposit',query:{item:1}})">
       <span>收益钱包提现</span>
-      <img src="@/assets/cz_icon.png" alt />
-    </div> -->
+      <img src="@/assets/more@3x.png" alt />
+    </div>
     <div class="wallet" @click="$router.push({path:'deposit',query:{item:2}})">
       <span>盈利钱包提现</span>
       <img src="@/assets/more@3x.png" alt />
@@ -18,12 +18,21 @@
 
     <ul>
       <li>温馨提示</li>
-      <li
+      <!-- <li
         style="white-space: pre-wrap;
         word-wrap: break-word;
         word-break: break-all;"
         v-html="tixianText"
-      ></li>
+      ></li> -->
+      <li>
+        1. 出款需达到兑换金币30%流水;
+      </li>
+      <li>
+        2. 盈利钱包，收益钱包提现无手续费,中心钱包提现手续费10%;
+      </li>
+      <li>
+        3. USDT提现无上限;
+      </li>
     </ul>
   </div>
 </template>
@@ -182,10 +191,11 @@ export default {
   }
   ul {
     padding: 2rem;
+    margin-top: 2rem;
     li {
-      color: #999;
-      font-size: 14px;
-      margin-bottom: 10px;
+      color: #333;
+      font-size: 12px;
+      margin-bottom: 5px;
     }
     span {
       color: #f00;

@@ -58,7 +58,7 @@
           <van-count-down @finish="finished" :time="time+(times*(time-1000))" />
           </p>
         
-          <p v-else style="font-size:16px;margin-top:.5rem; color:#f00">正在封盘中，无法投注。。。</p>
+          <p v-else style="font-size:16px;margin-top:.5rem; color:#f00">开奖中</p>
         </div>
       </div>
     </div>
@@ -156,7 +156,7 @@
           <ul class="pop-content">
             <li v-for="item of tzRecords" :key="item.bianhao" @click="tzxq(item)">
               <!-- <span>{{item.id}}</span> -->
-              <span>{{item.number_periods}}</span>
+              <span>{{item.number_periods}} 期</span>
               <span>{{item.multiple}}</span>
               <!-- <span>{{item.typeName}}</span> -->
               <span>{{item.isWinName}}</span>
@@ -175,20 +175,20 @@
       <div class="tzxq-cont">
         <h3>投注信息</h3>
         <div>
-          <p>购买金额:{{TZXQ.amount}}</p>
-          <p>期号:{{TZXQ.numberPeriods}}</p>
+          <p>购买金额: <span> {{TZXQ.amount}}</span></p>
+          <p>期号:<span>{{TZXQ.numberPeriods}}</span> </p>
         </div>
         <div>
-          <p>中奖金额:{{TZXQ.winAmount}}</p>
-          <p>投注时间:{{TZXQ.createdAt}}</p>
+          <p>中奖金额:<span>{{TZXQ.winAmount}}</span> </p>
+          <p>投注时间:<span>{{TZXQ.createdAt}}</span> </p>
         </div>
         <div>
-          <p>订单状态:{{TZXQ.isWinName}}</p>
-          <p>开奖时间:{{TZXQ.lotteryTime}}</p>
+          <p>订单状态:<br><span> {{TZXQ.isWinName}}</span></p>
+          <p>开奖时间:<span> {{TZXQ.lotteryTime}}</span></p>
         </div>
-        <div class="tzxq-cont-down">购买盈亏:{{TZXQ.profit}}</div>
-        <div class="tzxq-cont-down">开奖号码:{{TZXQ.winNumber}}</div>
-        <div class="tzxq-cont-down">投注内容:{{TZXQ.number}}</div>
+        <div class="tzxq-cont-down">购买盈亏:<span> {{TZXQ.profit}}</span></div>
+        <div class="tzxq-cont-down">开奖号码:<span>{{TZXQ.winNumber}}</span> </div>
+        <div class="tzxq-cont-down">投注内容:<span style="margin-right:40px;"> {{TZXQ.number}}</span></div>
 
         <van-button v-if="TZXQ.isWinName =='未开奖'" @click="revocation(TZXQ)">撤单</van-button>
         <van-button @click="touzhuxiangqing = false">关闭</van-button>
@@ -754,12 +754,12 @@ export default {
             border-radius: 50%;
             // padding-left: 5px;
             // padding-right: 5px;
-            width: 16px;
-            height: 16px;
+            width: 1.4rem;
+            height: 1.4rem;
             text-align: center;
-            line-height: 16px;
+            line-height: 1.4rem;
             margin: 0;
-            font-size: 14px;
+            font-size: 16px;
           }
           span {
             background: transparent;
@@ -945,6 +945,10 @@ export default {
       font-size: 15px;
       text-align: center;
       padding: 1rem;
+      li{
+        flex: 1;
+        border: 1px solid #999;
+      }
     }
     .pop-content {
       overflow-y: auto;
@@ -957,7 +961,7 @@ export default {
         box-sizing: border-box;
         padding: 1rem;
         overflow-y: auto;
-        // border-bottom: 1px solid #48382b;
+        // border: 1px solid #48382b;
 
         span {
           display: inline-block;
@@ -966,6 +970,7 @@ export default {
           box-sizing: border-box;
           padding-bottom: 3px;
           text-align: center;
+          // border: 1px solid #333;
         }
       }
       .wu {
@@ -1004,6 +1009,9 @@ export default {
         font-size: 15px;
         padding: 1rem;
         border-right: 1px solid #666;
+        span{
+          color: #666;
+        }
       }
       p:last-child {
         flex: 6;
@@ -1011,6 +1019,9 @@ export default {
     }
     .tzxq-cont-down{
       padding: .5rem;
+      span{
+        color: #666;
+      }
     }
   }
   button{

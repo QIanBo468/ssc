@@ -19,7 +19,7 @@
 
     <div class="foot">
       未满18周岁禁止购买
-      <br />Copyright © LOTTERY |彩金彩| 版权所有
+      <br />Copyright © LOTTERY |彩金多| 版权所有
     </div>
   </div>
 </template>
