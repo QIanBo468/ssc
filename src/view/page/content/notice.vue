@@ -6,7 +6,7 @@
       <ul>
         <li v-for="(item, index) of notice" :key="index">
           <div>
-            <p>{{item.id}}</p>
+            <!-- <p>{{item.id}}</p> -->
             <p>
               <van-icon name="clock-o" />
               {{item.title}}
@@ -20,7 +20,7 @@
     <van-popup class="pop" v-model="show">
       <div>
         <h3>{{noticeing.title}}</h3>
-        <p v-html="noticeing.content"></p>
+        <div v-html="noticeing.content"></div>
         <van-button class="showBtn" @click="show = false">关闭</van-button>
       </div>
     </van-popup>
@@ -38,9 +38,7 @@ export default {
     return {
       show: false,
       notice: [],
-      noticeing:{
-
-      }
+      noticeing: {}
     };
   },
   created() {
@@ -56,26 +54,28 @@ export default {
         }
       })
       .then(res => {
+        window.console.log(res);
         if (res.code == 0) {
           this.notice = res.data.list;
         }
-        
       });
   },
   methods: {
     showPop(item) {
-      this.$axios.fetchPost("portal", {
-        source: "web",
-        version: "v1",
-        module: "Content",
-        interface: "3001",
-        data: {
-          id:item.id
-        }
-      }).then(res=>{
-        this.noticeing = res.data
-window.console.log(res);
-      })
+      this.$axios
+        .fetchPost("portal", {
+          source: "web",
+          version: "v1",
+          module: "Content",
+          interface: "3001",
+          data: {
+            id: item.id
+          }
+        })
+        .then(res => {
+          this.noticeing = res.data;
+          window.console.log(res);
+        });
       this.show = true;
       this.shows = item;
     }
@@ -90,7 +90,8 @@ window.console.log(res);
   .notice-content {
     padding: 1rem;
     h3 {
-      color: #AF53D1;
+      color: #0197f1;
+      
     }
     ul {
       width: 100%;
@@ -100,10 +101,11 @@ window.console.log(res);
         align-items: center;
         margin-top: 0.5rem;
         color: #fff;
-        background: #AF53D1;
+        background: #0197f1;
         box-sizing: border-box;
         padding: 1rem;
         border-radius: 8px;
+        overflow-y: auto;
         button {
           border: none;
           width: 5rem;
@@ -113,9 +115,19 @@ window.console.log(res);
           border-radius: 8px;
           color: #333;
         }
+        div {
+          width: 80%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
         p {
+          width: 80%;
           display: flex;
           align-items: center;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
     }
@@ -132,19 +144,24 @@ window.console.log(res);
       background: #fff;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      // align-items: center;
       justify-content: space-around;
       h3 {
         color: #ff6600;
         font-size: 1.5rem;
+        width: 80%;
+        text-align: center;
+        overflow: hidden;
       }
-      p {
+      div {
         background: #f8fafb;
         width: 100%;
         text-align: center;
         padding: 1rem;
         box-sizing: border-box;
         border: 1px solid #eee;
+        overflow-y: auto;
+        height: 60%;
       }
       .showBtn {
         align-self: flex-end;

@@ -40,7 +40,7 @@
       </div>
     </div>-->
 
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" :offset="10">
       <div class="kjRecord-content">
         <!-- <h3>近期开奖</h3> -->
         <ul>
@@ -89,14 +89,6 @@ export default {
       loading: false,
       finished: false,
       list: [
-        { money: "0.00", number: "123456", type: "转账" },
-        { money: "0.00", number: "123456", type: "转账" },
-        { money: "0.00", number: "123456", type: "转账" },
-        { money: "0.00", number: "123456", type: "转账" },
-        { money: "0.00", number: "123456", type: "转账" },
-        { money: "0.00", number: "123456", type: "转账" },
-        { money: "0.00", number: "123456", type: "转账" },
-        { money: "0.00", number: "123456", type: "转账" }
       ],
       lists: [],
       page: 1,
@@ -125,7 +117,7 @@ export default {
       this.submit();
     },
     submit(value) {
-      let timeArry = "";
+      let timeArry = "", _this= this;
       // if (this.$refs.headerChild.start != "" && !this.$refs.headerChild.end) {
       //   timeArry = [this.$refs.headerChild.start, this.$refs.headerChild.end];
       // } else {
@@ -158,17 +150,19 @@ export default {
         .then(res => {
           //  this.tzRecords = res.data.list;
           if (res.code == 0) {
-            this.lastId = res.data.lastId;
-            this.list = res.data.list;
-            this.loading = false;
-            this.finished = true;
-          } else if (res.code == 4500) {
-            this.$toast("没有上一页了");
-          } else {
+            _this.lastId = res.data.lastId;
+            // _this.list = res.data.list;
+            _this.loading = false;
+             res.data.list.forEach(element => {
+              _this.list.push(element)
+            });
+          } 
+          else {
             this.$toast(res.message);
+            this.finished = true;
           }
 
-          window.console.log(res);
+           window.console.log("投注记录",res);
         });
     }
   }
@@ -260,7 +254,7 @@ export default {
     flex: 1;
     text-align: center;
     height: 2.5rem;
-    color: #af53d1;
+    color: #0197f1;
     line-height: 2.5rem;
     font-weight: bold;
   }
@@ -275,7 +269,7 @@ export default {
     margin-top: 0.5rem;
 
     span {
-      color: #af53d1;
+      color: #0197f1;
       display: inline-block;
       flex: 1;
       text-align: center;
@@ -291,7 +285,7 @@ export default {
     //   padding: 0.5rem;
     width: 8rem;
 
-    background: #af53d1;
+    background: #0197f1;
     color: #fff;
     height: 2rem;
     margin-left: 0.2rem;

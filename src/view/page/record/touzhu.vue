@@ -18,7 +18,7 @@
         </van-dropdown-menu>
       </div>-->
     </div>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" :offset="10" @load="onLoad">
       <div class="kjRecord-content">
         <!-- <h3>近期开奖</h3> -->
         <ul>
@@ -109,7 +109,7 @@ export default {
       status: "",
       loading: false,
       finished: false,
-      kjRecords: "",
+      kjRecords: [],
       playtype: 1,
       cai1: [
         { text: "全部彩种", value: 0 },
@@ -122,12 +122,50 @@ export default {
     };
   },
   mounted() {
-    this.submit();
+   
   },
   methods: {
-    onLoad() {},
+    onLoad() {
+      window.console.log('1111')
+       this.submit();
+    },
     xialaone() {
-      this.submit();
+      // this.submit();
+          window.console.log(this.cainame);
+      let timeArry = "",_this = this;
+      this.$axios
+        .fetchPost("/portal", {
+          source: "web",
+          version: "v1",
+          interface: "1003",
+          module: "Lottery",
+          data: {
+            timeRange: timeArry,
+            lastId: this.lastId,
+            page: this.page,
+            type: this.cainame,
+            status: status
+          }
+        })
+        .then(res => {
+          //  this.tzRecords = res.data.list;
+          if (res.code == 0) {
+            _this.lastId = res.data.lastId;
+            _this.kjRecords =res.data.list
+            _this.loading = false,
+            
+            res.data.list.forEach(element => {
+              _this.kjRecords.push(element)
+            });
+          } else {
+            _this.$toast(res.message);
+            _this.finished = true;
+          }
+          window.console.log(res)
+          _this.kjRecords.concat(res.data.list)
+          window.console.log("投注记录",_this.kjRecords);
+        });
+    
     },
     recrd(item) {
       this.touzhuxiangqing = true;
@@ -148,18 +186,7 @@ export default {
     },
     submit() {
       window.console.log(this.cainame);
-      let timeArry = "";
-      // if(this.$refs.headerChild.start !="" && !this.$refs.headerChild.end !=""){
-      //     timeArry = [this.$refs.headerChild.start,this.$refs.headerChild.end];
-      // }  else{
-      //     timeArry=''
-      // }
-      // if (!status) {
-      //   status = "";
-      // }
-      // if (!type) {
-      //   type = "";
-      // }
+      let timeArry = "",_this = this;
       this.$axios
         .fetchPost("/portal", {
           source: "web",
@@ -177,14 +204,20 @@ export default {
         .then(res => {
           //  this.tzRecords = res.data.list;
           if (res.code == 0) {
-            this.lastId = res.data.lastId;
-            this.kjRecords = res.data.list;
-            (this.loading = false), (this.finished = true);
+            _this.lastId = res.data.lastId;
+            _this.kjRecords.concat(res.data.list)
+            _this.loading = false,
+            
+            res.data.list.forEach(element => {
+              _this.kjRecords.push(element)
+            });
           } else {
-            this.$toast(res.message);
+            _this.$toast(res.message);
+            _this.finished = true;
           }
-
-          window.console.log("投注记录", res);
+          window.console.log(res)
+          _this.kjRecords.concat(res.data.list)
+          window.console.log("投注记录",_this.kjRecords);
         });
     }
   }
@@ -256,6 +289,9 @@ export default {
       }
     }
   }
+  .van-dropdown-menu__item{
+    border-bottom: 1px dashed #333;
+  }
 }
 .Tzxiangqing {
   display: flex;
@@ -301,7 +337,7 @@ export default {
   button {
     width: 80%;
     height: 3rem;
-    background: #af53d1;
+    background: #0197f1;
     border-radius: 20px;
     margin: 1rem auto;
     color: #fff;

@@ -13,17 +13,13 @@
               <img class="touxiang" :src="user.avatar" alt />
               <div class="level">
                 <span>{{user.account}}</span>
-                <span>ID: {{user.id}}</span>
+                <!-- <span>ID: {{user.id}}</span> -->
               </div>
               <div class="indexAdderss" @click="$router.push('myAddress')">
-                <img src="@/assets/card_icon@3x.png" alt />
+                <img src="@/assets/card_icon@3x1.png" alt />
                 地址簿
               </div>
             </div>
-            <!-- <div class="level">
-            <span>级别</span>
-            <span>VIP{{user.level}}</span>
-            </div>-->
           </div>
           <!-- <div class="index-jindu"> -->
           <div class="jindu">
@@ -31,7 +27,7 @@
             <van-progress
               stroke-width="8"
               track-color="#DCDEEA"
-              color="#6803A3"
+              color="#1989fa"
               pivot-text
               :percentage="user.levelPercent"
             />
@@ -150,32 +146,8 @@
             <img src="@/assets/more@3x.png" alt />
           </div>
         </li>
-        <!-- <li>
-          <router-link to="notice">
-            <p></p>
-            <img src="@/assets/more@3x.png" alt />
-          </router-link>
-        </li>
-        <li>
-          <router-link to="myAddress">
-            <p></p>
-            <img src="@/assets/more@3x.png" alt />
-          </router-link>
-        </li>
-        
-
-        <li>
-          <router-link to="zhongjiang">
-            <p></p>
-            <img src="@/assets/more@3x.png" alt />
-          </router-link>
-        </li>-->
       </ul>
 
-      <!-- <div class="mindexbtn" @click="exit">
-        <img class="mindexbtn-img" src="@/assets/btn_loginout.png" alt />
-        退出登录
-      </div>-->
     </div>
   </div>
 </template>
@@ -248,11 +220,11 @@ export default {
 <style lang='less' sceop>
 .myindex {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   // background: url(../../assets/myBg.jpg);
   // display: flex;
   // flex-direction: column;
-  background: url("../../assets/index@3x.png") no-repeat;
+  background: url("../../assets/index2@3x.png") no-repeat;
   background-size: 100%;
   .mindex-contnet {
     // height: 100vh;
@@ -302,7 +274,7 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #e3cfff;
+          background: #6cc0f5;
           width: 4.5rem;
           height: 2rem;
           font-size: 13px;
@@ -334,7 +306,7 @@ export default {
       margin: 0 auto;
 
       span {
-        color: #6803a3;
+        color: #0197f1;
         font-size: 13px;
       }
       // }

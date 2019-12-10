@@ -90,7 +90,7 @@ export default {
         "中心钱包转金币",
         "金币钱包转中心",
         "盈利钱包转中心",
-        "收益钱包转中心"
+        "收益钱包转盈利"
       ],
       wallet: {
         credit_1: "",
@@ -181,9 +181,9 @@ export default {
         zhuanchu = "credit_3";
         zhuanru = "credit_1";
       }
-      if (this.leixing == "收益钱包转中心") {
+      if (this.leixing == "收益钱包转盈利") {
         zhuanchu = "credit_4";
-        zhuanru = "credit_1";
+        zhuanru = "credit_3";
       }
       // let that = this
       this.$axios
@@ -219,7 +219,7 @@ export default {
 <style lang='less' scope>
 .edSwitch {
   /deep/.van-field__control {
-    color: #af53d1 !important;
+    color: #0197f1 !important;
   }
   .myindex-wallet {
     display: flex;
@@ -283,7 +283,7 @@ export default {
     width: 12rem;
     height: 2.5rem;
     // background: url(../../../assets/btn_save.png) no-repeat;
-    background: #af53d1;
+    background: #0197f1;
     background-size: 100%;
     margin: 4rem auto;
     text-align: center;

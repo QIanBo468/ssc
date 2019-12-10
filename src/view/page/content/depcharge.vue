@@ -7,10 +7,10 @@
       <span>中心钱包提现</span>
       <img src="@/assets/more@3x.png" alt />
     </div>
-    <div class="wallet" @click="$router.push({path:'deposit',query:{item:1}})">
+    <!-- <div class="wallet" @click="$router.push({path:'deposit',query:{item:1}})">
       <span>收益钱包提现</span>
       <img src="@/assets/more@3x.png" alt />
-    </div>
+    </div> -->
     <div class="wallet" @click="$router.push({path:'deposit',query:{item:2}})">
       <span>盈利钱包提现</span>
       <img src="@/assets/more@3x.png" alt />

@@ -4,8 +4,8 @@
     <div class="new_add">
       <div class="add">
         <div class="adds">
-          <p>姓名</p>
-          <input type="text" placeholder="请输入姓名" v-model="name" />
+          <p>名称</p>
+          <input type="text" placeholder="请输入名称" v-model="name" />
         </div>
         <div class="adds">
           <p>地址</p>
@@ -96,7 +96,7 @@ export default {
   padding: 20px;
 }
 .adds > p {
-  color: #AF53D1;
+  color: #0197f1;
   font-size: 14px;
 }
 .adds > input {
@@ -105,10 +105,10 @@ export default {
   border: none;
   // background: #d3b787;
   /* border: 1px solid #d8d8d8; */
-  border-bottom: 1px solid #AF53D1;
+  border-bottom: 1px solid #0197f1;
   // border-radius: 4px;
   padding: 0 0 0 7px;
-  color: #AF53D1;
+  color: #0197f1;
   margin-bottom: 2rem;
 }
 // .adds >>> input::placeholder {
@@ -126,7 +126,7 @@ export default {
   justify-content: center;
 }
 .sure-btn {
-  background: #AF53D1;
+  background: #0197f1;
   width: 95%;
   border: none;
   height: 45px;

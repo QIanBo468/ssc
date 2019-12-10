@@ -18,7 +18,7 @@
         </div>
         <div class="content">
           <p>总流水(万)</p>
-          <p>{{mydata.prize/10000}}</p>
+          <p>{{mydata.prize}}</p>
         </div>
         <div class="content">
           <p>人数</p>
@@ -41,7 +41,7 @@
         </div>
         <div class="content" v-for="(item,index) of configs" :key="index">
           <p>VIP{{item.level}}</p>
-          <p>{{item.liushui/10000}}</p>
+          <p>{{item.liushui}}</p>
           <p>{{item.fanyong}}%</p>
         </div>
       </div>
@@ -59,7 +59,7 @@
         <div class="content" v-for="(item,index) of xiaji" :key="index">
           <p>{{item.username}}</p>
           <p>VIP{{item.level}}</p>
-          <p>{{item.prize/10000}}</p>
+          <p>{{item.prize}}</p>
           <p>{{item.count}}</p>
         </div>
       </div>

@@ -28,7 +28,7 @@
           <p>链名称</p>
           <span>ERC20</span>
         </div>
-        
+
         <div class="qrCodecentimg">
           <!-- <p>收款码</p> -->
           <img :src="resdata.qrCode" alt />
@@ -40,6 +40,21 @@
           <div>
             <span class="address-text">{{resdata.address}}</span>
             <span @click="copy(resdata.address)">复制地址</span>
+          </div>
+        </div>
+
+        <div class="topUp-box">
+          <p style="color:#0197f1">汇率计算:</p>
+          <div>
+            <van-field
+              class="topUp-input"
+              v-model="huilv"
+              type="number"
+              placeholder="请输入RMB金额"
+            />≈
+            <!-- <van-field class="topUp-input" v-model="huilvusde" type="number" placeholder="换算为USDT" /> -->
+            <p class="huansuan">换算为{{(huilv/7.05).toFixed(2)}}USDT</p>
+            
           </div>
         </div>
       </div>
@@ -59,7 +74,6 @@
         v-html="chongzhiText"
       ></li>
     </ul>
-  
   </div>
 </template>
 
@@ -71,6 +85,8 @@ export default {
     return {
       active: 0,
       user: {},
+      huilv: null,
+      huilvusde:null,
       tixian: {
         yingli: "0.00",
         shouyi: "0.00",
@@ -85,7 +101,11 @@ export default {
       resdata: {}
     };
   },
-
+  watch : {
+    huilv () {
+      this.huilvusde =   Math.ceil(this.huilv/7.05/100)
+    }
+  },
   components: {
     titlebar,
     UserXq
@@ -220,7 +240,7 @@ export default {
     justify-content: center;
     align-items: center;
     padding-left: 50px;
-    background: rgb(149, 34, 190);
+    background: #0197f1;
     padding: 1rem;
     box-sizing: border-box;
     border-radius: 8px;
@@ -338,7 +358,7 @@ export default {
           font-size: 18px;
           font-weight: bold;
           margin-bottom: 10px;
-          color: #333;
+          color: #0197f1;
         }
         border-bottom: none;
       }
@@ -365,7 +385,7 @@ export default {
       //   }
       // }
       p {
-        color: rgb(149, 34, 190);
+        color: #0197f1;
         font-size: 15px;
         margin-right: 50px;
         font-weight: bold;
@@ -385,42 +405,40 @@ export default {
       }
     }
   }
-  // .qrCode:last-child {
-  //   .qrCodecent {
-  //     span {
-  //       color: #edd39a;
-  //     }
-  //     input {
-  //       background: transparent;
-  //       color: #edd39a;
-  //       width: 100%;
-  //       border: none;
-  //       // border-bottom: 1px solid rgb(149, 34, 190);
-  //     }
-  //   }
-  //   ul {
-  //     padding: 20px;
-  //     li {
-  //       color: #ff6600;
-  //       font-size: 14px;
-  //       margin-bottom: 10px;
-  //     }
-  //     span {
-  //       color: #f00;
-  //     }
-  //   }
 
-  //   .btn {
-  //     text-align: center;
-  //     img {
-  //       width: 150px;
-  //       height: 45px;
-  //     }
-  //   }
-  // }
+  .topUp-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #333;
+    p{
+      color: #0197f1;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .huansuan{
+      font-size: 13px;
+      margin-left: 1rem;
+      color: #999;
+    }
+    div{
+      display: flex;
+      align-items: center;
+    }
+    .van-field__control{
+      font-size: 13px !important;
+    }
+    .van-cell{
+      border-bottom: 1px solid #eee;
+      width: 150px;
+    }
+    .van-cell:not(:last-child)::after{
+      border: none;
+    }
+  }
 
   .hint {
-    color: rgb(149, 34, 190);
+    color: #0197f1;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -438,7 +456,7 @@ export default {
       // display: flex;
       width: 100%;
       p {
-        color: rgb(149, 34, 190);
+        color: #0197f1;
         font-weight: bold;
         font-size: 15px;
         margin-bottom: 0.5rem;
@@ -451,7 +469,7 @@ export default {
         border: none;
         font-size: 13px;
       }
-      span:last-child{
+      span:last-child {
         font-size: 13px;
         display: inline-block;
         // width: 6rem;
@@ -459,6 +477,10 @@ export default {
         // border-left: solid #666;
       }
     }
+  }
+  .van-field__control {
+    color: #999 !important;
+    // border-bottom: 1px solid #999;
   }
 }
 </style>

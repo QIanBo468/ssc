@@ -51,7 +51,7 @@
         <li>金额</li>
         <li>状态</li>
       </ul>
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" :offset="10">
         <ul class="list-content" v-if="topDes==1">
           <li v-for="(item,index) of pantData" :key="index">
             <span>{{item.createdAt}}</span>
@@ -260,7 +260,7 @@ export default {
       flex: 1;
       text-align: center;
       height: 2.5rem;
-      color: #af53d1;
+      color: #0197f1;
       line-height: 2.5rem;
       font-weight: bold;
     }
@@ -273,7 +273,7 @@ export default {
       justify-content: space-around;
       align-content: center;
       margin-top: 0.5rem;
-
+      border-bottom: 1px solid #eee;
       span {
         color: #666;
         display: inline-block;

@@ -2,8 +2,8 @@
   <div class="index">
     <div class="index-box">
       <div class="nav">
-        <!-- <img src="@/assets/logo.png" alt /> -->
-        <p>首页</p>
+        <img src="@/assets/icon-512.png" alt width="30px" height="30px" />
+        <p>JinDuoduo</p>
       </div>
       <div class="index-ad">
         <van-swipe :height="150" :autoplay="3000" indicator-color="#f00">
@@ -36,7 +36,6 @@
           <span>公告</span>
         </div>
       </div>
-   
 
       <div class="playlist">
         <!-- <div> -->
@@ -58,7 +57,7 @@
               <p>当前期数:{{beijing.qihao}}</p>
               <div>
                 <p>剩余时间:</p>
-                <van-count-down @finish="finishedone" :time="beijing.time*1000+1" />
+                <van-count-down @finish="finished" :time="beijing.time*1000+1" />
               </div>
             </div>
           </div>
@@ -83,7 +82,7 @@
               <p>当前期数:{{youting.qihao}}</p>
               <div>
                 <p>剩余时间:</p>
-                <van-count-down @finish="finishedtwo" :time="youting.time*1000+1" />
+                <van-count-down @finish="finished" :time="youting.time*1000+1" />
               </div>
             </div>
           </div>
@@ -123,7 +122,7 @@ export default {
       youtingnum: [],
       youtingbefor: "",
       Rtime: false,
-      notice:''
+      notice: ""
     };
   },
   created() {
@@ -140,7 +139,7 @@ export default {
         window.console.log(res);
         this.swiper = res.data;
       });
-        this.$axios
+    this.$axios
       .fetchPost("portal", {
         source: "web",
         version: "v1",
@@ -153,10 +152,9 @@ export default {
       })
       .then(res => {
         if (res.code == 0) {
-         window.console.log(res)
+          window.console.log(res);
           this.notice = res.data.list[0];
         }
-        
       });
     // setTimeout(()=>{
     this.beijingdangqian();
@@ -166,6 +164,59 @@ export default {
     // },1000)
   },
   methods: {
+    // xinkaijiangs() {
+    //   setInterval(() => {
+    //     this.xinkaijiang();
+    //   }, 60000);
+    // },
+    // xinkaijiang() {
+    //   this.$axios
+    //     .fetchPost("portal", {
+    //       source: "web",
+    //       version: "v1",
+    //       module: "Lottery",
+    //       interface: "1008",
+    //       data: {
+    //         type: this.playtype
+    //       }
+    //     })
+    //     .then(res => {
+    //       // this.jinbi = res.data.creditList.credit_2.value;
+    //       // this.jiangliushui = res.data.prize;
+    //       window.console.log("最新开奖号码", res);
+    //       this.current = res.data.numberPeriods;
+    //       this.num = res.data.thirdNumber.split(",");
+    //       if (!res.data.isLottery) {
+    //         this.thirdNumber = 0;
+    //       } else {
+    //         this.thirdNumber = 1;
+    //       }
+    //       //       setInterval(()=>{
+    //       //         this.xinkaijiang()
+    //       // },5000)
+    //     });
+    // },
+    finished() {
+      // this.querenTime = false;
+      window.console.log("时间结束");
+      // this.$router.go(0)
+      setTimeout(() => {
+        this.finishedss();
+      }, 3000);
+    },
+    finishedss() {
+      setTimeout(() => {
+        // if (this.time >= 0) {
+          this.$router.go(0);
+        // }
+        //
+      }, 2000);
+    },
+
+
+
+
+    
     beijingdangqian() {
       let _this = this;
       this.$axios
@@ -186,7 +237,7 @@ export default {
         });
     },
     youtingdangqian() {
-      window.console.log('14684321')
+      window.console.log("14684321");
       let _this = this;
       this.$axios
         .fetchPost("/portal", {
@@ -261,7 +312,6 @@ export default {
     },
     finishedtwo() {
       // window.location.reload();
-      
     },
     shuaxin() {
       this.$router.go(0);
@@ -284,12 +334,12 @@ export default {
   display: flex;
   flex-direction: column;
   //   align-items: center;
-  background: url("../../assets/index@3x.png") no-repeat;
+  background: url("../../assets/index2@3x.png") no-repeat;
   background-size: 100%;
-
+  padding-top: 2rem;
   .index-box {
     padding: 1rem;
-    padding-top: 3rem;
+    // padding-top: 3rem;
     box-sizing: border-box;
     .indexrouter {
       display: flex;
@@ -308,14 +358,29 @@ export default {
   .nav {
     //   background: #000;
     //   color: @color-font;
-    position: absolute;
+    position: fixed;
+    width: 280px;
+    // border:1px solid #333;
     z-index: 10;
     top: 10px;
     left: 50%;
+    margin-left: -140px;
     color: #fff;
-    text-align: center;
-    // width: 100%;
+    // text-align: center;
+    display: flex;
+    justify-content: space-between;
     box-sizing: border-box;
+    margin-bottom: 0.5rem;
+    p {
+      padding-top: 10px;
+      position: absolute;
+      right: 27%;
+      top: 10%;
+    }
+    img {
+      position: absolute;
+      left: 28%;
+    }
     //   height: 40px;
     //   display: flex;
     //   justify-content: space-around;
@@ -412,7 +477,7 @@ export default {
         ul {
           display: flex;
           li {
-            background: #0197f1;
+            background: #af53d1;
             width: 1.2rem;
             height: 1.2rem;
             border-radius: 50%;

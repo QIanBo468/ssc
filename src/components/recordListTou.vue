@@ -265,7 +265,7 @@ export default {
       flex: 1;
       text-align: center;
       height: 2.5rem;
-      color: #af53d1;
+      color: #0197f1;
       line-height: 2.5rem;
       font-weight: bold;
     }
@@ -294,7 +294,7 @@ export default {
     button {
       border: none;
       //   padding: 0.5rem;
-      background: #af53d1;
+      background: #0197f1;
       color: #fff;
 
       width: 8rem;

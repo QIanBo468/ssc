@@ -3,7 +3,7 @@
     <router-view style="flex:1"></router-view>
     <van-tabbar
       style="background-color: #fff;"
-      active-color="#6803A3"
+      active-color="#0197f1"
       inactive-color="#999"
       v-model="active"
     >
@@ -18,7 +18,7 @@
       <van-tabbar-item to="addpople"  >
         <img
          
-          src="../assets/tianjiahuiyuan_btn@3x.png"
+          src="../assets/tianjiahuiyuan_btn2@3x.png"
           width="58px"
           height="58px"
           alt
@@ -44,19 +44,19 @@ export default {
     return {
       active: 0,
       icon: {
-        active: require("../assets/home_icon_xuanze@3x.png"),
+        active: require("../assets/home_icon_xuanze@3x1.png"),
         normal: require("../assets/home_icon_moren@3x.png")
       },
       mall: {
-        active: require("../assets/kefu_icon_xuanze@3x.png"),
+        active: require("../assets/kefu_icon_xuanze@3x1.png"),
         normal: require("../assets/kefu_icon_moren@3x.png")
       },
       deal: {
-        active: require("../assets/yaoqinghaoyou_icon_xuanze@3x.png"),
+        active: require("../assets/yaoqinghaoyou_icon_xuanze@3x1.png"),
         normal: require("../assets/yaoqinghaoyou_icon_moren@3x.png")
       },
       user: {
-        active: require("../assets/wode_icon_xuanze@3x.png"),
+        active: require("../assets/wode_icon_moren@3x1.png"),
         normal: require("../assets/wode_icon_moren@3x.png")
       }
     };

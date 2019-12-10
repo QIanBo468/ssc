@@ -1,38 +1,51 @@
 <template>
   <div class="deposit">
-    <titlebar title="提现" routes="depcharge"></titlebar>
-    <div class="deposithint">
-      <p>USDT实时汇率:7.05</p>
-      <p>可提现金额:{{Yue}}</p>
-      <p>USDT</p>
-      <!-- <p>实际到账:{{((RMB-RMB*canshu.feeRate*0.01)/7.05).toFixed(2)}}</p> -->
-    </div>
-    <div class="qrCode">
-      <div class="qrCodecent">
-        <!-- <p>钱包地址</p> -->
-        <van-cell-group>
-          <van-field v-model="usdt" right-icon="contact" placeholder="请输入USDT地址"  @click-right-icon="$router.push('myAddress')" />
-        </van-cell-group>
-        <!-- <input placeholder="请输入USDT地址" v-model="usdt" type="text" />
-        <van-icon name="manager-o"></van-icon>-->
+   
+      <titlebar title="提现" routes="depcharge"></titlebar>
+       <div class="depoist-box">
+      <div class="deposithint">
+        <p>USDT实时汇率:{{rate}}</p>
+        <p>可提现金额:{{Yue}}</p>
+        <p v-if="type=='credit_1'">手续费:{{canshu.feeRate}}%</p>
+        <p style="margin-top:1.5rem;">USDT</p>
+        <p  v-if="type=='credit_1'">实际到账:{{((RMB-RMB*canshu.feeRate*0.01)/rate).toFixed(2)}}</p>
+        <p v-else>实际到账:{{Math.floor(RMB/rate*100)/100}}</p>
+         <!-- <p v-else>实际到账:{{(RMB/rate).toFixed(2)}}</p> -->
       </div>
-      <div class="qrCodecent">
-        <!-- <p>金额</p> -->
-        <van-cell-group>
-          <van-field v-model="RMB"  placeholder="请输入金额" />
-        </van-cell-group>
-        <!-- <input placeholder="请输入金额" v-model="RMB" type="text" /> -->
-      </div>
-      <div class="qrCodecent">
-        <!-- <p>提现密码</p> -->
-        <van-cell-group>
-          <van-field v-model="pay"  placeholder="请输入提现密码" />
-        </van-cell-group>
-        <!-- <input placeholder="请输入提现密码" v-model="pay" type="text" /> -->
-      </div>
-      <div class="btn" @click="submit">
-        提交
-        <!-- <img src="@/assets/confirm.png" alt /> -->
+      <div class="qrCode">
+        <div class="qrCodecent">
+          <!-- <p>钱包地址</p> -->
+          <van-cell-group>
+            <van-field
+              v-model="usdt"
+              right-icon="contact"
+              placeholder="请输入USDT地址"
+              @click-right-icon="$router.push('myAddress')"
+            />
+          </van-cell-group>
+          <!-- <input placeholder="请输入USDT地址" v-model="usdt" type="text" />
+          <van-icon name="manager-o"></van-icon>-->
+        </div>
+        <div class="qrCodecent">
+          <!-- <p>金额</p> -->
+          <van-cell-group>
+            <van-field v-model="RMB" placeholder="请输入金额" />
+          </van-cell-group>
+          <!-- <input placeholder="请输入金额" v-model="RMB" type="text" /> -->
+        </div>
+        <div class="qrCodecent">
+          <!-- <p>提现密码</p> -->
+          <van-cell-group>
+            <van-field v-model="pay" placeholder="请输入提现密码" />
+          </van-cell-group>
+          <!-- <input placeholder="请输入提现密码" v-model="pay" type="text" /> -->
+        </div>
+        
+        <div class="btn" @click="submit">
+          提交
+          <!-- <img src="@/assets/confirm.png" alt /> -->
+        </div>
+     
       </div>
     </div>
   </div>
@@ -47,14 +60,15 @@ export default {
   },
   data() {
     return {
-      canshu:{
-        feeRate:5
-      }, 
-      Yue:'',
+      canshu: {
+        feeRate: 5
+      },
+      Yue: "",
       usdt: "",
       RMB: "",
       pay: "",
-      type: ""
+      type: "",
+      rate:''
     };
   },
   created() {
@@ -76,10 +90,10 @@ export default {
         data: {}
       })
       .then(res => {
-        // this.canshu = res.data.params
+        this.canshu = res.data.params
         window.console.log(res);
       });
-        this.$axios
+    this.$axios
       .fetchPost("/portal", {
         source: "web",
         version: "v1",
@@ -90,12 +104,25 @@ export default {
       .then(res => {
         // this.canshu = res.data.params
         if (this.type == "credit_1") {
-            this.Yue = res.data.creditList.credit_1.value
+          this.Yue = res.data.creditList.credit_1.value;
         } else if (this.type == "credit_3") {
-          this.Yue = res.data.creditList.credit_3.value
+          this.Yue = res.data.creditList.credit_3.value;
+        } else if (this.type == "credit_4") {
+          this.Yue = res.data.creditList.credit_4.value;
         }
         window.console.log(res);
       });
+       this.$axios
+      .fetchPost("/portal/Digiccy", {
+        source: "web",
+        version: "v1",
+        module: "Finance",
+        interface: "1000",
+        data: {}
+      }).then(res=> {
+        this.rate = res.data.rate
+        window.console.log(res)
+      })
   },
   methods: {
     submit() {
@@ -145,11 +172,24 @@ h2 {
   height: 100vh;
   display: flex;
   flex-direction: column;
+
   // align-items: center;
   overflow-y: auto;
+  .depoist-box{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .deposithint {
-    margin-top: 2rem;
-    padding: .5rem 2rem;
+    width: 100%;
+    // margin-top: 2rem;
+    // padding: 0.5rem 2rem;
+     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 5rem;
+    padding-top: 2rem;
     p {
       color: #333;
       font-size: 15px;
@@ -158,12 +198,13 @@ h2 {
     }
   }
   .qrCode {
-    // width: 100%;
+    width: 100%;
     height: 100%;
+    padding-left: 5rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 5px 30px;
+    // align-items: center;
+    // padding: 5px 30px;
     color: #fff;
     // margin-top: 1rem;
     .qrCodecent {
@@ -173,10 +214,10 @@ h2 {
       margin-bottom: 15px;
       width: 100%;
       input {
-        color: #af53d1;
+        color: #0197f1;
         background: transparent;
         border: none;
-      
+
         width: 100%;
         font-size: 15px;
         margin-bottom: 0.8rem;
@@ -222,7 +263,7 @@ h2 {
   }
   .btn {
     text-align: center;
-    background: #af53d1;
+    background: #0197f1;
     text-align: center;
     line-height: 3rem;
     width: 80%;
@@ -233,13 +274,13 @@ h2 {
       height: 45px;
     }
   }
-  .van-cell{
+  .van-cell {
     margin: 0;
     padding: 0;
-      border-bottom: 1px solid #af53d1;
+    border-bottom: 1px solid #0197f1;
   }
-  .van-field__control{
-    color: #af53d1 !important;
+  .van-field__control {
+    color: #0197f1 !important;
   }
 }
 </style>

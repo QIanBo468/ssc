@@ -2,149 +2,125 @@
   <div class="downPour" @click.stop="kjRecord = false">
     <titlebar :title=" type== 0 ? '北京PK拾':'幸运飞艇'"></titlebar>
     <!-- 开奖区 -->
-    <div class="header">
-      <div class="header-text">
-        <p>金币: {{jinbi}}</p>
-        <p>当前流水: {{jiangliushui}}</p>
-      </div>
-
-      <div class="qihaoimg">
-        <p>最新开奖结果</p>
-        <div  @click.stop="$router.push({path:'JinQi',query:{type:playtype}})">
-          开奖记录
-          <img src="@/assets/more@3x.png" alt />
+    <div class="downPour-box">
+      <div class="header">
+        <div class="header-text">
+          <p>金币: {{jinbi}}</p>
+          <p>当前流水: {{jiangliushui}}</p>
         </div>
-      </div>
-      <!-- <div class="logo">
-        <img class="logoimg" :src="type ==0 ? logo : logo1" alt />
-        <div class="kai">
-          <div class="qihao">
-            <div class="qihaonum">
-              {{type ==0 ? '北京PK拾': '幸运飞艇'}}
-              <span>{{qihao}}</span> 期
-            </div>
-            
-          </div>
-          <div class="jiang">
-            <div class="jianghao" v-if="daojishi">
-              <transition v-for="(item,index) of num" :key="index">
-                <img :src="item.src1" alt />
-              </transition>
-            </div>
-            <div class="jianghint" v-else>
-              <transition-group>
-                <span class="one" :key="1">正</span>
-                <span class="one" :key="2">在</span>
-                <span class="one" :key="3">开</span>
-                <span class="one" :key="4">奖</span>
-                <span class="one" :key="5">中</span>
-              </transition-group>
-            </div>
+
+        <div class="qihaoimg">
+          <p>最新开奖结果</p>
+          <div @click.stop="$router.push({path:'JinQi',query:{type:playtype}})">
+            开奖记录
+            <img src="@/assets/more@3x.png" alt />
           </div>
         </div>
-      </div>-->
 
-      <!-- 期号 -->
-      <div class="issue">
-        <div class="issue-jiang">
-          第{{current}}期开奖号码
-          <ul>
-            <li v-for="(item,index) of num " :key="index">{{item}}</li>
-          </ul>
-        </div>
-        <div class="issue-feng">
-          <p  v-if="querenTime">
+        <!-- 期号 -->
+        <div class="issue">
+          <div class="issue-jiang">
+            第{{current}}期 {{thirdNumber? '开奖号码': '开奖中....'}}
+            <ul v-if="thirdNumber">
+              <li v-for="(item,index) of num " :key="index">{{item}}</li>
+            </ul>
+            <ul v-else>
+              <li v-for="(item,index) of 10 " :key="index">-</li>
+            </ul>
+          </div>
+          <div class="issue-feng">
+            <p v-if="querenTime">
               {{qihao}} 期封盘时间:
-          <van-count-down @finish="finished" :time="time+(times*(time-1000))" />
-          </p>
-        
-          <p v-else style="font-size:16px;margin-top:.5rem; color:#f00">开奖中</p>
-        </div>
-      </div>
-    </div>
+              <van-count-down @finish="finished" :time="time+(times*(time-1000))" />
+            </p>
 
-    <!-- 选号 -->
-    <div class="xuanhao">
-      <div class="xuanhao-title">
-        <h3>冠军</h3>
-
-        <div @click="tzRecordes">
-          投注记录
-          <img src="@/assets/more@3x.png" alt />
-        </div>
-      </div>
-      <!-- <p>请选择号码</p> -->
-      <ul>
-        <li
-          :class="item.flg ? 'xuanzhong':''"
-          v-for="item of arry"
-          :key="item.num"
-          @click="xuanzhong(item)"
-        >{{item.num}}</li>
-      </ul>
-    </div>
-
-    <!-- 倍率 -->
-    <div class="beilv">
-      <p v-if="beilv">共4注，金额{{beishu*4* +price}}.00元</p>
-      <p v-else>请选择四位数字</p>
-
-      <div class="touzhu">
-        <div class="stepper">
-          <span>元</span>模式
-          <div class="stepper-cont">
-            <span>倍数:</span>
-
-            <p @click="jianhao" style="margin-right:5px;"> - </p>
-            <input onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" type="text" v-model="beishu" />
-            <p @click="beishu++" style="margin-left:5px;"> + </p>
+            <p v-else style="font-size:16px;margin-top:.5rem; color:#f00">封盘中</p>
           </div>
         </div>
-        <button @click="pourzhus">添加投注</button>
       </div>
 
-      <div class="pours">
-        <div v-if="pourzhu">
-          <p>[4注]</p>
-          <p>{{beishu* 4 * +price}}.00元</p>
-          <p>{{beishu}}倍</p>
-          <p>元模式</p>
-          <van-icon name="close" @click="pourzhu = false"></van-icon>
+      <!-- 选号 -->
+      <div class="xuanhao">
+        <div class="xuanhao-title">
+          <h3>冠军</h3>
+
+          <div @click="tzRecordes">
+            投注记录
+            <img src="@/assets/more@3x.png" alt />
+          </div>
+        </div>
+        <!-- <p>请选择号码</p> -->
+        <ul>
+          <li
+            :class="item.flg ? 'xuanzhong':''"
+            v-for="item of arry"
+            :key="item.num"
+            @click="xuanzhong(item)"
+          >{{item.num}}</li>
+        </ul>
+      </div>
+
+      <!-- 倍率 -->
+      <div class="beilv">
+        <p v-if="beilv">共4注，金额{{beishu*4* +price}}.00元</p>
+        <p v-else>请选择四位数字</p>
+
+        <div class="touzhu">
+          <div class="stepper">
+            <span>元</span>模式
+            <div class="stepper-cont">
+              <span>倍数:</span>
+
+              <p @click="jianhao" style="margin-right:5px;">-</p>
+              <input onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" type="text" v-model="beishu" />
+              <p @click="beishu++" style="margin-left:5px;">+</p>
+            </div>
+          </div>
+          <button @click="pourzhus">添加投注</button>
+        </div>
+
+        <div class="pours">
+          <div v-if="pourzhu">
+            <p>[4注]</p>
+            <p>{{beishu* 4 * +price}}.00元</p>
+            <p>{{beishu}}倍</p>
+            <p>元模式</p>
+            <van-icon name="close" @click="pourzhu = false"></van-icon>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 确认投注 -->
-    <div class="affirm">
-      <div class="affirm-content">
-        <!-- <div>
+      <!-- 确认投注 -->
+      <div class="affirm">
+        <div class="affirm-content">
+          <!-- <div>
           <p>总注数4注</p>
           <div @click="tzRecordes">
             <img src="@/assets/iconfont-2jilu.png" alt />投注记录
           </div>
         </div>
-        <h3 v-if="pourzhu">总金额 {{beishu*4* +price}}.00 元</h3>-->
-        <van-button class="affirm-btn" @click="submit">确认投注</van-button>
+          <h3 v-if="pourzhu">总金额 {{beishu*4* +price}}.00 元</h3>-->
+          <van-button class="affirm-btn" @click="submit">确认投注</van-button>
+        </div>
       </div>
-    </div>
 
-    <!-- 开奖记录 -->
-    <van-popup class="kjRecord" v-model="kjRecord">
-      <div class="kjRecord-content">
-        <h3>近期开奖</h3>
-        <ul>
-          <li v-for="item of kjRecords" :key="item.qihao">
-            <p>{{item.thirdNumberPeriods}}</p>
-            <span>{{item.thirdNumber}}</span>
-          </li>
-        </ul>
-        <div @click="kjRecord = !kjRecord">关闭</div>
-      </div>
-    </van-popup>
-    <!-- 投注记录 -->
-    <van-popup class="tzRecord" v-model="tzRecord">
-      <div class="pops">
-        <!-- <div> -->
+      <!-- 开奖记录 -->
+      <van-popup class="kjRecord" v-model="kjRecord">
+        <div class="kjRecord-content">
+          <h3>近期开奖</h3>
+          <ul>
+            <li v-for="item of kjRecords" :key="item.qihao">
+              <p>{{item.thirdNumberPeriods}}</p>
+              <span>{{item.thirdNumber}}</span>
+            </li>
+          </ul>
+          <div @click="kjRecord = !kjRecord">关闭</div>
+        </div>
+      </van-popup>
+      <!-- 投注记录 -->
+      <van-popup class="tzRecord" v-model="tzRecord">
+        <div class="pops">
+          <!-- <div> -->
           <ul class="pop-title">
             <!-- <li>编号</li> -->
             <li>期号</li>
@@ -154,46 +130,75 @@
             <li>操作</li>
           </ul>
           <ul class="pop-content">
-            <li v-for="item of tzRecords" :key="item.bianhao" @click="tzxq(item)">
+            <li v-for="item of tzRecords" :key="item.bianhao">
               <!-- <span>{{item.id}}</span> -->
-              <span>{{item.number_periods}} 期</span>
+              <span>{{item.number_periods}}</span>
               <span>{{item.multiple}}</span>
               <!-- <span>{{item.typeName}}</span> -->
-              <span>{{item.isWinName}}</span>
-              <span>{{item.is_win ==0 ? '撤单': '不可操作'}}</span>
+              <span :class="[item.is_win == 1? 'red' : '']">{{item.isWinName}}</span>
+              <span @click="tzxq(item)">{{item.is_win ==0 ? '撤单': '查看详情'}}</span>
             </li>
             <!-- <li class="wu">没有更多了</li> -->
           </ul>
           <div class="btn-box">
             <van-button class="btn" @click="tzRecord = false">关闭</van-button>
           </div>
-        <!-- </div> -->
-      </div>
-    </van-popup>
+          <!-- </div> -->
+        </div>
+      </van-popup>
 
-    <van-popup class="Tzxiangqing" v-model="touzhuxiangqing">
-      <div class="tzxq-cont">
-        <h3>投注信息</h3>
-        <div>
-          <p>购买金额: <span> {{TZXQ.amount}}</span></p>
-          <p>期号:<span>{{TZXQ.numberPeriods}}</span> </p>
-        </div>
-        <div>
-          <p>中奖金额:<span>{{TZXQ.winAmount}}</span> </p>
-          <p>投注时间:<span>{{TZXQ.createdAt}}</span> </p>
-        </div>
-        <div>
-          <p>订单状态:<br><span> {{TZXQ.isWinName}}</span></p>
-          <p>开奖时间:<span> {{TZXQ.lotteryTime}}</span></p>
-        </div>
-        <div class="tzxq-cont-down">购买盈亏:<span> {{TZXQ.profit}}</span></div>
-        <div class="tzxq-cont-down">开奖号码:<span>{{TZXQ.winNumber}}</span> </div>
-        <div class="tzxq-cont-down">投注内容:<span style="margin-right:40px;"> {{TZXQ.number}}</span></div>
+      <van-popup class="Tzxiangqing" v-model="touzhuxiangqing">
+        <div class="tzxq-cont">
+          <h3>投注信息</h3>
+          <div>
+            <p>
+              购买金额:
+              <span>{{TZXQ.amount}}</span>
+            </p>
+            <p>
+              期号:
+              <span>{{TZXQ.numberPeriods}}</span>
+            </p>
+          </div>
+          <div>
+            <p>
+              中奖金额:
+              <span>{{TZXQ.winAmount}}</span>
+            </p>
+            <p>
+              投注时间:
+              <span>{{TZXQ.createdAt}}</span>
+            </p>
+          </div>
+          <div>
+            <p>
+              订单状态:
+              <br />
+              <span>{{TZXQ.isWinName}}</span>
+            </p>
+            <p>
+              开奖时间:
+              <span>{{TZXQ.lotteryTime}}</span>
+            </p>
+          </div>
+          <div class="tzxq-cont-down">
+            购买盈亏:
+            <span>{{TZXQ.profit}}</span>
+          </div>
+          <div class="tzxq-cont-down">
+            开奖号码:
+            <span>{{TZXQ.winNumber}}</span>
+          </div>
+          <div class="tzxq-cont-down">
+            投注内容:
+            <span style="margin-right:40px;">{{TZXQ.number}}</span>
+          </div>
 
-        <van-button v-if="TZXQ.isWinName =='未开奖'" @click="revocation(TZXQ)">撤单</van-button>
-        <van-button @click="touzhuxiangqing = false">关闭</van-button>
-      </div>
-    </van-popup>
+          <van-button v-if="TZXQ.isWinName =='未开奖'" @click="revocation(TZXQ)">撤单</van-button>
+          <van-button @click="touzhuxiangqing = false">关闭</van-button>
+        </div>
+      </van-popup>
+    </div>
   </div>
 </template>
 
@@ -216,7 +221,7 @@ export default {
       kjRecord: false, //开奖记录
       tzRecord: false, // 投注记录
       time: 2000, //倒计时
-      times:'',
+      times: "",
       daojishi: true,
       logo: require("../../../assets/bj_pk10.png"),
       logo1: require("../../../assets/tw_pk10.png"),
@@ -262,7 +267,8 @@ export default {
       playtype: "", // 玩法类型
       price: "", //单价
       current: "",
-      querenTime:true
+      querenTime: true,
+      thirdNumber: ""
     };
   },
   created() {
@@ -272,32 +278,70 @@ export default {
     } else if (this.type == 1) {
       this.playtype = "2";
     }
+
+    // this.confirms(dangtian);
+    // window.console.log(dangtian);
     // console.log(this.num);
     this.zhushubefore();
     this.singular();
     this.dangqian();
     this.jinqikaijiang();
     this.liushui();
+    this.xinkaijiang();
+    this.xinkaijiangs();
   },
 
   methods: {
+    xinkaijiangs() {
+      setInterval(()=>{
+        this.xinkaijiang()
+      },60000)
+    },
+    xinkaijiang() {
+      this.$axios
+        .fetchPost("portal", {
+          source: "web",
+          version: "v1",
+          module: "Lottery",
+          interface: "1008",
+          data: {
+            type: this.playtype
+          }
+        })
+        .then(res => {
+          // this.jinbi = res.data.creditList.credit_2.value;
+          // this.jiangliushui = res.data.prize;
+          window.console.log("最新开奖号码", res);
+          this.current = res.data.numberPeriods;
+          this.num = res.data.thirdNumber.split(",");
+          if (!res.data.isLottery) {
+            this.thirdNumber = 0;
+          } else {
+            this.thirdNumber = 1;
+          }
+          //       setInterval(()=>{
+          //         this.xinkaijiang()
+          // },5000)
+          
+        });
+    },
     finished() {
-      this.querenTime = false
-      // console.log("时间结束");
+      this.querenTime = false;
+      window.console.log("时间结束");
       // this.$router.go(0)
-      setTimeout(()=>{
-        this.finishedss()
-      },38000)
+      setTimeout(() => {
+        this.finishedss();
+      }, 3000);
     },
     finishedss() {
-      setTimeout(()=>{
-        if (this.times>=0) {
-            this.$router.go(0)
-        } 
-        // 
-      },2000)
+      setTimeout(() => {
+        if (this.times >= 0) {
+          this.$router.go(0);
+        }
+        //
+      }, 2);
       if (this.time) {
-        // 
+        //
       }
     },
     //钱包流水
@@ -348,10 +392,10 @@ export default {
           window.console.log(res);
           // this.price = res.data.price;
           this.qihao = res.data.qishu;
-        
-          this.times = res.data.fengpan+20;
-          
-           window.console.log(res.data.fengpan)
+
+          this.times = res.data.fengpan;
+
+          window.console.log(res.data.fengpan);
           // this.times =20;
         });
     },
@@ -370,7 +414,7 @@ export default {
         })
         .then(res => {
           this.kjRecords = res.data.list;
-          this.current = res.data.list[0].numberPeriods;
+          // this.current = res.data.list[0].numberPeriods;
           this.pitch = res.data.list[0].thirdNumber;
           this.num = this.pitch.split(",");
           window.console.log("近期开奖", this.num);
@@ -395,6 +439,27 @@ export default {
       });
     },
     tzRecordes() {
+      let dangtian = new Date();
+      let start = [];
+
+      let date = dangtian;
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      // return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+      // if (this.showtype == 0) {
+      start = [
+        y + "-" + MM + "-" + d + " " + "00:00:00",
+        y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s
+      ];
       this.$axios
         .fetchPost("/portal", {
           source: "web",
@@ -402,11 +467,11 @@ export default {
           module: "Lottery",
           interface: "1003",
           data: {
-            timeRange: "",
+            timeRange: start,
             lastId: this.lastId,
             page: this.page,
             type: this.playtype,
-            status:""
+            status: ""
           }
         })
         .then(res => {
@@ -417,6 +482,7 @@ export default {
       this.tzRecord = true;
     },
     submit() {
+      let subArry = [];
       if (this.number.length < 4) {
         this.$toast("请选择冠军号码");
         return;
@@ -426,9 +492,16 @@ export default {
         return;
       }
       if (!this.querenTime) {
-          this.$toast('封盘中，请稍后...')
-          return
+        this.$toast("封盘中，请稍后...");
+        return;
       }
+      this.arry.forEach(item => {
+        // window.console.log(item)
+        if (item.flg) {
+          subArry.push(item.num);
+          window.console.log(subArry);
+        }
+      });
       this.$axios
         .fetchPost("/portal", {
           source: "web",
@@ -436,7 +509,7 @@ export default {
           module: "Lottery",
           interface: "1002",
           data: {
-            number: this.number.join(","), //下注号码
+            number: subArry.join(","), //下注号码
             price: this.price, //价格
             quantity: "4",
             multiple: this.beishu.toString(),
@@ -512,7 +585,7 @@ export default {
         this.beishu--;
       }
     },
- 
+
     // 选择号码
     xuanzhong(item) {
       let sum = 0;
@@ -550,6 +623,7 @@ export default {
 
       // 如果 是已经选中 则将其变为未选中  且从选中数组中删除
       if (item.flg) {
+        window.console.log(this.number);
         item.flg = !item.flg;
         sum--;
         if (sum <= 3) {
@@ -560,7 +634,7 @@ export default {
         });
         if (a != -1) {
           this.number.splice(a, 1);
-
+          window.console.log(this.number);
           return;
         }
       }
@@ -585,9 +659,12 @@ export default {
 <style lang='less' scope>
 .downPour {
   width: 100%;
-  height: 100%;
+  // height: 100vh;
   display: flex;
   flex-direction: column;
+  .downPour-box {
+    height: 100vh;
+  }
   .header {
     margin-top: 20px;
     display: flex;
@@ -636,7 +713,7 @@ export default {
           display: flex;
           li {
             margin-right: 5px;
-            background: #af53d1;
+            background: #0197f1;
             color: #fff;
             border-radius: 50%;
             font-size: 12px;
@@ -651,17 +728,17 @@ export default {
         display: flex;
         color: #999;
         font-size: 14px;
-        p{
+        p {
           display: flex;
           align-items: center;
           font-size: 14px;
-          
         }
-
       }
     }
   }
-
+  .red {
+    color: #f00;
+  }
   .xuanhao {
     margin-bottom: 10px;
     display: flex;
@@ -713,7 +790,7 @@ export default {
       .xuanzhong {
         // background: url("../../../assets/m_yuan2.png");
         // background-size: 100%;
-        background: #af53d1;
+        background: #0197f1;
         color: #fff;
       }
     }
@@ -749,7 +826,7 @@ export default {
           margin-left: 1rem;
           font-size: 13px;
           p {
-            background: #af53d1;
+            background: #0197f1;
             color: #fff;
             border-radius: 50%;
             // padding-left: 5px;
@@ -776,7 +853,7 @@ export default {
         text-align: center;
         line-height: 25px;
         border-radius: 6px;
-        background: #af53d1;
+        background: #0197f1;
         margin-right: 5px;
       }
       input {
@@ -790,7 +867,7 @@ export default {
         border: 1px solid #999;
       }
       button {
-        background: #af53d1;
+        background: #0197f1;
         color: #fff;
         border: none;
         width: 100px;
@@ -815,7 +892,7 @@ export default {
         p {
           margin: 0;
           padding: 0;
-          color: #af53d1;
+          color: #0197f1;
         }
       }
     }
@@ -856,7 +933,7 @@ export default {
       margin-bottom: 5px;
     }
     .affirm-btn {
-      background: #af53d1;
+      background: #0197f1;
       color: #fff;
       border: none;
       border-radius: 20px;
@@ -926,11 +1003,11 @@ export default {
     }
     .btn {
       width: 100%;
-      height: 3rem;;
+      height: 3rem;
       line-height: 30px;
-      background: #af53d1;
+      background: #0197f1;
       color: #fff;
-        border-radius: 40px;
+      border-radius: 40px;
       // align-self: flex-end;
       // border: none;
     }
@@ -945,9 +1022,9 @@ export default {
       font-size: 15px;
       text-align: center;
       padding: 1rem;
-      li{
+      li {
         flex: 1;
-        border: 1px solid #999;
+        // border: 1px solid #999;
       }
     }
     .pop-content {
@@ -961,7 +1038,7 @@ export default {
         box-sizing: border-box;
         padding: 1rem;
         overflow-y: auto;
-        // border: 1px solid #48382b;
+        border-bottom: 1px solid #eee;
 
         span {
           display: inline-block;
@@ -999,7 +1076,7 @@ export default {
     div {
       display: flex;
       justify-content: space-around;
-      
+
       font-size: 16px;
       border: 1px solid #999;
       // line-height: 18px;
@@ -1009,7 +1086,7 @@ export default {
         font-size: 15px;
         padding: 1rem;
         border-right: 1px solid #666;
-        span{
+        span {
           color: #666;
         }
       }
@@ -1017,17 +1094,17 @@ export default {
         flex: 6;
       }
     }
-    .tzxq-cont-down{
-      padding: .5rem;
-      span{
+    .tzxq-cont-down {
+      padding: 0.5rem;
+      span {
         color: #666;
       }
     }
   }
-  button{
+  button {
     width: 80%;
     height: 3rem;
-    background: #af53d1;
+    background: #0197f1;
     border-radius: 20px;
     margin: 1rem auto;
     color: #fff;

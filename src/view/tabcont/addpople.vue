@@ -3,15 +3,15 @@
     <titlebar title="注册"></titlebar>
     <div class="register-input">
       <div>
-        <img src="@/assets/xingming@3x.png" alt />
+        <img src="@/assets/xingming2@3x.png" alt />
         <input v-model="name" maxlength="16" type="text" placeholder="请输入账号" />
       </div>
       <div>
-        <img src="@/assets/jihuoma@3x.png" alt />
+        <img src="@/assets/jihuoma@3x(1).png" alt />
         <input v-model="password" maxlength="16" type="text" placeholder="请输入登录密码" />
       </div>
       <div>
-        <img src="@/assets/jihuoma@3x.png" alt />
+        <img src="@/assets/jihuoma@3x(1).png" alt />
         <input v-model="repassword" maxlength="16" type="text" placeholder="确认登录密码" />
       </div>
       <van-button class="btn" @click="submit">注册</van-button>
@@ -86,7 +86,7 @@ export default {
     align-items: center;
     div {
       width: 70%;
-      border-bottom: 1px solid #af53d1;
+      border-bottom: 1px solid #0197f1;
       display: flex;
       margin-bottom: 30px;
       img {
@@ -97,13 +97,13 @@ export default {
         width: 100%;
         background: transparent;
         border: none;
-        color: #af53d1;
+        color: #0197f1;
         padding-left: 30px;
       }
     }
   }
   .btn {
-    background: #af53d1;
+    background: #0197f1;
     border: none;
     width: 60%;
     font-size: 16px;

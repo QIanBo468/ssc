@@ -3,14 +3,14 @@
     <titlebar title="安全设置"></titlebar>
     <van-tabs
       background="transparent"
-      title-active-color="#af53d1"
+      title-active-color="#0197f1"
       title-inactive-color="#333"
-      color="#af53d1"
+      color="#0197f1"
       :border="false"
       v-model="active"
     >
       <van-tab title="修改登入密码">
-        <div class="tab-content">
+        <!-- <div class="tab-content"> -->
           <van-cell-group class="userSet">
             <van-field
               v-model="mima.oldpassword"
@@ -25,7 +25,7 @@
           <van-cell-group class="userSet">
             <van-field v-model="mima.repassword" label-class="left-input" label="确认新登入密码" />
           </van-cell-group>
-        </div>
+        <!-- </div> -->
       </van-tab>
       <van-tab title="设置提款密码">
         <van-cell-group class="userSet">
@@ -49,7 +49,7 @@
     >{{active == 0 ? '备注：请妥善保管好您的登入密码，如遗忘请联系在线客服处理' : '备注：由纯数字组成6-13个数字，不能和登陆密码相同(初始提款密码为登录密码)'}}</p>
     <div class="setfoot">
       未满18周岁禁止购买
-      <br />Copyright © LOTTERY |彩金多| 版权所有
+      <br />Copyright © LOTTERY |金多多| 版权所有
     </div>
   </div>
 </template>
@@ -161,7 +161,7 @@ export default {
   margin-top: 0.8rem;
   border: none;
   display: flex;
-  color: #af53d1;
+  color: #0197f1;
 }
 .left-input {
   color: #fff;
@@ -187,7 +187,7 @@ export default {
 .setbtn {
   width: 80%;
   margin: 3rem 0;
-  background: #af53d1;
+  background: #0197f1;
   border: none;
   font-size: 1rem;
   color: #fff;
@@ -203,10 +203,10 @@ export default {
 }
 
 .van-cell__title{
-  color: #af53d1;
+  color: #0197f1;
 }
 .van-cell{
-  // border-bottom: 1px solid #af53d1;
+  // border-bottom: 1px solid #0197f1;
 }
 
 </style>
